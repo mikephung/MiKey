@@ -15,11 +15,11 @@ BEGIN
   BEGIN
     BLOCK "040904b0"
     BEGIN
-      VALUE "CompanyName", "Tony Dinh"
+      VALUE "CompanyName", "Mike Phung"
       VALUE "FileDescription", "MiKey - Vietnamese typing"
       VALUE "FileVersion", VIKEY_VERSION
       VALUE "InternalName", "MiKey"
-      VALUE "LegalCopyright", "GPL-3.0. Based on OpenKey by Tuyen Mai."
+      VALUE "LegalCopyright", "GPL-3.0. Based on Vikey by Tony Dinh and OpenKey by Tuyen Mai."
       VALUE "OriginalFilename", "MiKey.exe"
       VALUE "ProductName", "MiKey"
       VALUE "ProductVersion", VIKEY_VERSION

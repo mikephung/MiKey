@@ -20,7 +20,7 @@ enum Acknowledgements {
         Credit(name: "HPLT v2", by: "High Performance Language Technologies", license: "CC0", url: "https://hplt-project.org"),
         Credit(name: "MADLAD-400", by: "Google", license: "ODC-By 1.0", url: "https://huggingface.co/datasets/allenai/MADLAD-400"),
         Credit(name: "Reddit comments", by: "tensorshield/reddit_dataset_157", license: "MIT", url: "https://huggingface.co/datasets/tensorshield/reddit_dataset_157"),
-        Credit(name: "Vietnamese forums and reader comments", by: "VnExpress, Tuổi Trẻ, Tinhte, Otofun, Dạy Nhau Học", license: "word statistics", url: "https://vikey.app/acknowledgements"),
+        Credit(name: "Vietnamese forums and reader comments", by: "VnExpress, Tuổi Trẻ, Tinhte, Otofun, Dạy Nhau Học", license: "word statistics", url: "https://mikey.mikephung.com/acknowledgements/"),
         Credit(name: "Emoji names and keywords (CLDR)", by: "Unicode, Inc.", license: "Unicode License v3", url: "https://cldr.unicode.org"),
         Credit(name: "Emojibase", by: "Miles Johnson", license: "MIT", url: "https://emojibase.dev"),
     ]

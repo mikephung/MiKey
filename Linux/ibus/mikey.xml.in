@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <component>
   <name>org.freedesktop.IBus.MiKey</name>
-  <description>MiKey - Vietnamese input with automatic English/Vietnamese switching</description>
+  <description>MiKey - Vietnamese Telex input that recognises English and German</description>
   <exec>@CMAKE_INSTALL_FULL_LIBEXECDIR@/ibus-engine-mikey --ibus</exec>
   <version>@VIKEY_VERSION@</version>
-  <author>Tony Dinh</author>
+  <author>Mike Phung (based on Vikey by Tony Dinh)</author>
   <license>GPL-3.0</license>
-  <homepage>https://mikey.app</homepage>
+  <homepage>https://mikey.mikephung.com</homepage>
   <textdomain>mikey</textdomain>
   <engines>
     <engine>
       <name>mikey</name>
       <language>vi</language>
       <license>GPL-3.0</license>
-      <author>Tony Dinh</author>
+      <author>Mike Phung (based on Vikey by Tony Dinh)</author>
       <icon>mikey</icon>
       <layout>default</layout>
       <longname>MiKey</longname>
-      <description>MiKey - Gõ tiếng Việt, tự chuyển Anh/Việt</description>
+      <description>MiKey - Gõ tiếng Việt, tự nhận ra tiếng Anh và tiếng Đức</description>
       <rank>99</rank>
-      <symbol>V</symbol>
+      <symbol>Mi</symbol>
       <setup>@CMAKE_INSTALL_FULL_BINDIR@/mikey-settings</setup>
     </engine>
   </engines>

@@ -32,18 +32,36 @@ APP=$ROOT/build/InputMethod/MiKey.app
 echo "== package"
 PKGROOT=$ROOT/build/pkgroot
 rm -rf $PKGROOT && mkdir -p "$PKGROOT/Library/Input Methods" $ROOT/build/pkgscripts
-cp -R $APP "$PKGROOT/Library/Input Methods/"
+COPYFILE_DISABLE=1 cp -R $APP "$PKGROOT/Library/Input Methods/"
+xattr -cr "$PKGROOT"   # no ._ AppleDouble files in the payload: inside Contents/MacOS they break the code signature
 cat > $ROOT/build/pkgscripts/postinstall <<'SH'
 #!/bin/sh
-# the running input method (an older MiKey) is replaced: macOS starts the new one on the next key
+# Runs as root after the files are in /Library/Input Methods.
+APP="/Library/Input Methods/MiKey.app"
+# 1. an older MiKey still running is replaced: macOS starts the new one on the next key
 pkill -f "Input Methods/MiKey.app/Contents/MacOS/MiKey" 2>/dev/null || true
+# 2. the logged-in user: remove a per-user copy (same bundle id, it would compete with this one),
+#    then register MiKey and turn it on in their input menu right away (no log out needed)
+USER_NAME=$(stat -f %Su /dev/console)
+if [ -n "$USER_NAME" ] && [ "$USER_NAME" != "root" ] && [ "$USER_NAME" != "loginwindow" ]; then
+  USER_ID=$(id -u "$USER_NAME")
+  USER_HOME=$(dscl . -read "/Users/$USER_NAME" NFSHomeDirectory 2>/dev/null | awk '{print $2}')
+  OLD="$USER_HOME/Library/Input Methods/MiKey.app"
+  if [ -d "$OLD" ] && [ "$(defaults read "$OLD/Contents/Info" CFBundleIdentifier 2>/dev/null)" = "com.mikey.inputmethod.MiKey" ]; then
+    rm -rf "$OLD"
+  fi
+  launchctl asuser "$USER_ID" sudo -u "$USER_NAME" "$APP/Contents/MacOS/mikey-register" "$APP" >> /tmp/mikey-install.log 2>&1 || true
+fi
 exit 0
 SH
 chmod +x $ROOT/build/pkgscripts/postinstall
+# never "relocate": without this, Installer puts the app over any other copy with the same bundle id it finds
+pkgbuild --analyze --root $PKGROOT $ROOT/build/pkgcomponents.plist >/dev/null
+/usr/libexec/PlistBuddy -c "Set :0:BundleIsRelocatable false" $ROOT/build/pkgcomponents.plist
 PKG=$DIST/MiKey-$VER-macOS.pkg
 SIGNARGS=()
 [ -n "$MIKEY_INSTALLER_ID" ] && SIGNARGS=(--sign "$MIKEY_INSTALLER_ID" --timestamp)
-pkgbuild --root $PKGROOT --identifier com.mikey.inputmethod.MiKey.pkg --version $VER \
+pkgbuild --root $PKGROOT --component-plist $ROOT/build/pkgcomponents.plist --identifier com.mikey.inputmethod.MiKey.pkg --version $VER \
          --scripts $ROOT/build/pkgscripts --install-location / $SIGNARGS $PKG
 if [ -n "$MIKEY_NOTARY_PROFILE" ] && [ -n "$MIKEY_INSTALLER_ID" ]; then
   xcrun notarytool submit $PKG --keychain-profile "$MIKEY_NOTARY_PROFILE" --wait
@@ -67,7 +85,7 @@ python3 Tools/release/mikey_appcast.py $VER $DIST
 echo
 echo "Release $VER is ready in $DIST:"
 ls -la $DIST | grep -v log
-[ -z "$MIKEY_INSTALLER_ID" ] && echo "NOTE: unsigned package (no Developer ID): users open it with right-click > Open, or allow it in Privacy & Security."
+[ -z "$MIKEY_INSTALLER_ID" ] && echo "NOTE: unsigned package (no Developer ID): users allow it once in System Settings > Privacy & Security > Open Anyway."
 [ -z "$NOTARIZED" ] && echo "NOTE: not notarized."
 
 if [ "$PUBLISH" = "--publish" ]; then

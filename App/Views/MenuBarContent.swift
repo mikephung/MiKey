@@ -73,7 +73,7 @@ struct DebugMenu: View {
 enum Feedback {
     static var url: URL {
         let v = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
-        return URL(string: "https://github.com/taaphmi3/MiKey/issues/new?title=Feedback&body=Version:\(v)")!
+        return URL(string: "https://github.com/mikephung/MiKey/issues/new?title=Feedback&body=Version:\(v)")!
     }
     static func open() { NSWorkspace.shared.open(url) }
 }

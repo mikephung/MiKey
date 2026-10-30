@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=MiKey
+Comment=Gõ tiếng Việt, tự nhận ra tiếng Anh và tiếng Đức
+Exec=mikey-settings
+Icon=mikey
+Categories=Utility;Settings;
+Keywords=vietnamese;telex;input;german;

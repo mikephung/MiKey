@@ -1,7 +1,7 @@
 import AppKit
 #if canImport(Sparkle)
 import Sparkle
-/// Updates from vikey.app/appcast.xml (Sparkle, EdDSA-signed). Checks daily; installs on its own when allowed.
+/// Updates from mikey.mikephung.com/appcast.xml (Sparkle, EdDSA-signed). Checks daily; installs on its own when allowed.
 final class Updater: ObservableObject {
     static let shared = Updater()
     private let controller = SPUStandardUpdaterController(startingUpdater: true, updaterDelegate: nil, userDriverDelegate: nil)

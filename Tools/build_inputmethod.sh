@@ -28,6 +28,13 @@ for ARCH in $ARCHS; do
   BINS+=($B/MiKey)
 done
 lipo -create $BINS -output $APP/Contents/MacOS/MiKey
+# the helper the .pkg runs after installing: registers MiKey and turns it on for the logged-in user
+REGS=()
+for ARCH in $ARCHS; do
+  swiftc -O -target $ARCH-apple-macos13.0 -sdk $SDK InputMethod/Tools/register.swift -o $ROOT/build/InputMethod/obj-$ARCH/mikey-register
+  REGS+=($ROOT/build/InputMethod/obj-$ARCH/mikey-register)
+done
+lipo -create $REGS -output $APP/Contents/MacOS/mikey-register
 
 cp InputMethod/Info.plist $APP/Contents/Info.plist
 if [ -n "$VERSION" ]; then
@@ -43,10 +50,13 @@ done
 cp LICENSE $APP/Contents/Resources/LICENSE.txt
 # Developer ID when MIKEY_SIGN_ID is set (release), ad hoc otherwise
 if [ -n "$MIKEY_SIGN_ID" ]; then
+  codesign --force --options runtime --timestamp --sign "$MIKEY_SIGN_ID" $APP/Contents/MacOS/mikey-register
   codesign --force --options runtime --timestamp --sign "$MIKEY_SIGN_ID" $APP
 else
+  codesign --force --sign - $APP/Contents/MacOS/mikey-register   # nested code is signed first
   codesign --force --sign - $APP
 fi
+codesign --verify --deep --strict $APP
 echo "Built $APP ($(lipo -archs $APP/Contents/MacOS/MiKey))"
 
 if [ "$1" = install ]; then
@@ -55,6 +65,6 @@ if [ "$1" = install ]; then
   pkill -f "Input Methods/MiKey.app/Contents/MacOS/MiKey" 2>/dev/null || true   # only the input method, not the menu bar app; macOS restarts it on the next key
   rm -rf "$DEST/MiKey.app"
   cp -R $APP "$DEST/"
-  swift InputMethod/Tools/register.swift "$DEST/MiKey.app" || true
+  "$DEST/MiKey.app/Contents/MacOS/mikey-register" "$DEST/MiKey.app" || true
   echo "Installed $DEST/MiKey.app"
 fi
