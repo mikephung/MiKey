@@ -4,6 +4,23 @@
     <title>MiKey</title>
     <link>https://mikey.mikephung.com</link>
     <item>
+      <title>MiKey 1.0.3</title>
+      <pubDate>Fri, 30 Oct 2026 19:22:49 +0000</pubDate>
+      <sparkle:version>1.0.3</sparkle:version>
+      <sparkle:shortVersionString>1.0.3</sparkle:shortVersionString>
+      <description><![CDATA[**MiKey 1.0.3**
+
+- macOS: MiKey được cài vào thư mục của bạn (~/Library/Input Methods) và tự bật. **Lần cài đầu tiên: đăng xuất rồi đăng nhập lại một lần** để menu bàn phím hiện MiKey. Nâng cấp sau này không cần.
+- Nâng cấp từ 1.0.1/1.0.2: bản cũ trong /Library được gỡ, máy chỉ còn một MiKey.
+- File .dmg có thêm script gỡ cài đặt.
+
+macOS: MiKey is installed in your user folder and turned on. **First install: log out and back in once** so the input menu shows MiKey; updates need no log out. Upgrading from 1.0.1/1.0.2 removes the old copy in /Library. The .dmg now has an uninstall script.
+]]></description>
+      <enclosure url="https://github.com/mikephung/MiKey/releases/download/v1.0.3/MiKey-1.0.3-macOS.pkg" length="2742455" type="application/octet-stream" sparkle:os="macos" sparkle:edSignature="/NFNswIxSAqQXzImZ6jGwxhVy3WjrvfKmNrwPh7b4RQFW1tKuLVOoZPUN0gdEFJ1xmeRsKonRVZiiQNQjZ7yCg=="/>
+      <enclosure url="https://github.com/mikephung/MiKey/releases/download/v1.0.3/MiKey-1.0.3-arm64-Setup.exe" length="3286149" type="application/octet-stream" sparkle:os="windows" mikey:arch="arm64" sparkle:edSignature="V9aNgLhg3Jcly9Z2bgKWe33UYqXDAmOBSdFZb87fxESEuRQ2mTYUp9edlcCrBozmL/9J11mOpAfWsjm3ix3ODQ=="/>
+      <enclosure url="https://github.com/mikephung/MiKey/releases/download/v1.0.3/MiKey-1.0.3-x64-Setup.exe" length="3304213" type="application/octet-stream" sparkle:os="windows" mikey:arch="x64" sparkle:edSignature="SnLWf8zkuZHYzgyJjOfXuUDj7Ex7WkXx+tFJZig9SgrCSw6hsG5Ps/GSjF2i38pq/fwSgmMIpimSsl5yeC+GCQ=="/>
+    </item>
+    <item>
       <title>MiKey 1.0.2</title>
       <pubDate>Fri, 30 Oct 2026 17:23:36 +0000</pubDate>
       <sparkle:version>1.0.2</sparkle:version>
