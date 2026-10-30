@@ -7,7 +7,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.normpath(os.path.join(HERE, ".."))
 SITE = "https://mikey.mikephung.com"
 REPO = "https://github.com/mikephung/MiKey"
-VERSION = "1.0.1"
+VERSION = "1.0.2"
 RELEASE_DATE = "2026-10-30"
 REL = f"{REPO}/releases/download/v{VERSION}"
 e = html.escape
@@ -46,6 +46,19 @@ TELEX_EXAMPLES = [("tooi ddi hocj", "tôi đi học"), ("truwowngf / truowfng", 
                   ("khoer khoong", "khoẻ không"), ("caamf", "cầm"), ("nguyeenx", "nguyễn")]
 
 RELEASES = [  # newest first
+    ("1.0.2", "2026-10-30", {
+        "vi": ["Sửa lỗi nâng cấp.",
+               "Cài đè lên bản cũ không còn làm MiKey biến mất khỏi menu bàn phím: bộ cài đợi macOS xử lý xong bản cũ rồi mới đăng ký, và kiểm tra cho đến khi MiKey ổn định.",
+               "Nếu MiKey đang là bàn phím đang dùng, nó vẫn là bàn phím đang dùng sau khi nâng cấp.",
+               "Đã lên 1.0.1 và mất MiKey? Cài 1.0.2 lên là có lại."],
+        "de": ["Behebt das Update.",
+               "Eine Installation über eine ältere Version lässt MiKey nicht mehr aus dem Eingabemenü verschwinden: Das Installationsprogramm wartet, bis macOS mit der alten Kopie fertig ist, registriert MiKey danach und prüft, bis es stabil gelistet bleibt.",
+               "War MiKey die aktive Eingabequelle, bleibt es das auch nach dem Update.",
+               "Schon auf 1.0.1 aktualisiert und MiKey ist weg? 1.0.2 darüber installieren, dann ist es wieder da."],
+        "en": ["Fixes upgrading.",
+               "Installing over an older version no longer makes MiKey vanish from the input menu: the installer waits until macOS is done with the old copy, then registers MiKey and checks until it stays listed.",
+               "If MiKey was the active input source, it still is after the upgrade.",
+               "Already on 1.0.1 and lost MiKey? Install 1.0.2 over it and it is back."]}),
     ("1.0.1", "2026-10-30", {
         "vi": ["Sửa lỗi cài đặt trên máy mới.",
                "macOS: sau khi cài, MiKey tự xuất hiện trong menu bàn phím (trước đây trên máy mới chỉ hiện như một ứng dụng, phải đăng xuất mới thấy).",

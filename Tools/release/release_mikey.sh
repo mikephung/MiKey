@@ -48,10 +48,17 @@ if [ -n "$USER_NAME" ] && [ "$USER_NAME" != "root" ] && [ "$USER_NAME" != "login
   USER_ID=$(id -u "$USER_NAME")
   USER_HOME=$(dscl . -read "/Users/$USER_NAME" NFSHomeDirectory 2>/dev/null | awk '{print $2}')
   OLD="$USER_HOME/Library/Input Methods/MiKey.app"
+  # was MiKey the active input source? Then it is again afterwards (an upgrade must not change what you type with)
+  SELECT=""
+  if sudo -u "$USER_NAME" defaults read com.apple.HIToolbox AppleSelectedInputSources 2>/dev/null | grep -q "com.mikey.inputmethod.MiKey"; then SELECT="select"; fi
   if [ -d "$OLD" ] && [ "$(defaults read "$OLD/Contents/Info" CFBundleIdentifier 2>/dev/null)" = "com.mikey.inputmethod.MiKey" ]; then
     rm -rf "$OLD"
+    sleep 3   # macOS notices the removal a moment later and then drops the input source; --wait registers again if so
   fi
-  launchctl asuser "$USER_ID" sudo -u "$USER_NAME" "$APP/Contents/MacOS/mikey-register" "$APP" >> /tmp/mikey-install.log 2>&1 || true
+  launchctl asuser "$USER_ID" sudo -u "$USER_NAME" "$APP/Contents/MacOS/mikey-register" "$APP" $SELECT --wait >> /tmp/mikey-install.log 2>&1 || true
+  # macOS can still drop MiKey well after the installer is done (it processes the removal of the old copy late):
+  # one more check in the background, detached from the installer
+  ( sleep 20; launchctl asuser "$USER_ID" sudo -u "$USER_NAME" "$APP/Contents/MacOS/mikey-register" "$APP" --wait >> /tmp/mikey-install.log 2>&1 ) </dev/null >/dev/null 2>&1 &
 fi
 exit 0
 SH
