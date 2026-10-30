@@ -61,3 +61,43 @@ details p { margin: 8px 0 0; color: var(--ink-2); }
 footer { border-top: 1px solid var(--line); padding: 32px 0 48px; font-size: 14px; color: var(--ink-2); }
 footer p { margin: 0 0 8px; }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+/* header nav */
+header.top { flex-wrap: wrap; }
+nav.main { display: flex; flex-wrap: wrap; gap: 4px 18px; font-size: 15px; margin-left: auto; margin-right: 8px; }
+nav.main a { color: var(--ink-2); text-decoration: none; padding: 4px 0; }
+nav.main a:hover { color: var(--accent); }
+@media (max-width: 640px) { nav.main { order: 3; width: 100%; margin: 6px 0 0; } }
+/* buttons */
+.cta .more { align-self: center; font-size: 15px; }
+.cta.center { justify-content: center; }
+.btn.first { order: -1; }
+/* tables */
+caption { caption-side: top; text-align: left; font-size: 14px; color: var(--ink-2); padding: 0 0 8px; }
+.demo-t caption { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+del { text-decoration-thickness: 2px; }
+.fix del { text-decoration: none; }
+td.bad::before, td.good::before { content: none; }
+.files td { vertical-align: top; }
+.files code.sha { font-size: 12px; word-break: break-all; color: var(--ink-2); }
+@media (max-width: 700px) {
+  .files thead { display: none; }
+  .files tr { display: block; padding: 10px 0; border-bottom: 1px solid var(--line); }
+  .files td { display: block; border: 0; padding: 2px 0; }
+}
+/* sections */
+.page-head { padding: 40px 0 24px; }
+.band { background: var(--bg-2); border-radius: var(--radius); padding: 40px 28px; border-top: 0; margin: 24px 0; }
+.final { text-align: center; }
+ol.plain { list-style: none; padding: 0; margin: 0; counter-reset: how; }
+ol.plain li { counter-increment: how; }
+ol.plain li h3::before { content: counter(how) ". "; color: var(--accent); }
+ol.steps.big li { font-size: 18px; }
+code { font-family: var(--mono); font-size: 0.92em; background: var(--bg-2); border: 1px solid var(--line); border-radius: 5px; padding: 0 4px; }
+.toc ol { columns: 2; column-gap: 32px; padding-left: 20px; }
+.toc h2 { font-size: 18px; }
+@media (max-width: 640px) { .toc ol { columns: 1; } }
+.grid.three table { font-size: 15px; }
+.release h2 { font-size: 24px; margin-bottom: 0; }
+.release { padding: 24px 0; border-top: 1px solid var(--line); }
+.nf { padding: 32px 0; border-bottom: 1px solid var(--line); }
+.nf .h1like { font-size: 28px; font-weight: 700; margin: 0 0 8px; }

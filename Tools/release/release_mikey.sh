@@ -51,6 +51,15 @@ if [ -n "$MIKEY_NOTARY_PROFILE" ] && [ -n "$MIKEY_INSTALLER_ID" ]; then
   NOTARIZED=yes
 fi
 (cd $ROOT/build/InputMethod && ditto -c -k --keepParent MiKey.app $DIST/MiKey-$VER-macOS.zip)
+# .dmg: what most Mac users expect to download; it holds the installer and a short read-me
+DMGSRC=$ROOT/build/dmgsrc
+rm -rf $DMGSRC && mkdir -p $DMGSRC
+cp $PKG "$DMGSRC/Cài đặt MiKey.pkg"
+printf 'MiKey %s\n\n1. Bấm đúp "Cài đặt MiKey.pkg".\n   Nếu macOS báo không mở được: System Settings > Privacy & Security > Open Anyway.\n2. System Settings > Keyboard > Input Sources > Edit… > + > Vietnamese > MiKey.\n3. Chọn MiKey trong menu bàn phím trên thanh menu.\n\nHướng dẫn đầy đủ: https://mikey.mikephung.com/download/\n\n---\n1. Double-click "Cài đặt MiKey.pkg" (install MiKey).\n2. System Settings > Keyboard > Input Sources > Edit… > + > Vietnamese > MiKey.\n3. Pick MiKey in the input menu.\n' $VER > "$DMGSRC/Đọc trước - Read me.txt"
+DMG=$DIST/MiKey-$VER-macOS.dmg
+hdiutil create -volname "MiKey $VER" -srcfolder $DMGSRC -fs HFS+ -format UDZO -ov $DMG >/dev/null
+[ -n "$MIKEY_SIGN_ID" ] && codesign --sign "$MIKEY_SIGN_ID" --timestamp $DMG
+hdiutil verify $DMG >/dev/null && echo "dmg: ok"
 
 echo "== update signature + appcast item"
 python3 Tools/release/mikey_appcast.py $VER $DIST
@@ -68,7 +77,7 @@ if [ "$PUBLISH" = "--publish" ]; then
   git push origin "v$VER"
   NOTES=$DIST/notes.md
   [ -f $NOTES ] || NOTES=/dev/null
-  gh release create "v$VER" $DIST/MiKey-$VER-macOS.pkg $DIST/MiKey-$VER-macOS.zip --title "MiKey $VER" --notes-file $NOTES
+  gh release create "v$VER" $DIST/MiKey-$VER-macOS.dmg $DIST/MiKey-$VER-macOS.pkg $DIST/MiKey-$VER-macOS.zip --title "MiKey $VER" --notes-file $NOTES
   echo "Published. GitHub Actions adds the Windows installers to the release (workflow 'windows')."
 else
   echo "Nothing published. Run again with --publish to tag and create the GitHub release."

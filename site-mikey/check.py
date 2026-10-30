@@ -19,7 +19,13 @@ class P(HTMLParser):
                 if a.get(k): self.refs.append(a[k])
 
 bad = 0
-pages = [os.path.join(d, f) for d, _, fs in os.walk(HERE) for f in fs if f.endswith(".html")]
+pages = sorted(os.path.join(d, f) for d, _, fs in os.walk(HERE) for f in fs if f.endswith(".html"))
+# every page exists in all three languages
+rels = {os.path.relpath(p, HERE) for p in pages}
+for r in sorted(rels):
+    if r.startswith(("de/", "en/")) or r == "404.html": continue
+    for pre in ("de/", "en/"):
+        if pre + r not in rels: print(f"FAIL missing translation {pre + r}"); bad += 1
 for page in pages:
     p = P(); p.feed(open(page, encoding="utf-8").read())
     rel = os.path.relpath(page, HERE)
@@ -31,7 +37,8 @@ for page in pages:
     for r in p.refs:
         u = urlparse(r)
         if u.scheme or r.startswith("#") or r.startswith("mailto:"): continue
-        target = os.path.normpath(os.path.join(os.path.dirname(page), u.path))
+        base = HERE if u.path.startswith("/") else os.path.dirname(page)   # /style.css: from the site root (404.html)
+        target = os.path.normpath(os.path.join(base, u.path.lstrip("/")))
         if os.path.isdir(target): target = os.path.join(target, "index.html")
         if not os.path.exists(target): problems.append(f"missing {r}")
     print(("ok   " if not problems else "FAIL ") + rel + ("" if not problems else ": " + ", ".join(problems)))
