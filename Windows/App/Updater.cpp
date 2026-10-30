@@ -27,8 +27,9 @@ static const wchar_t* ARCH = L"arm64";
 static const wchar_t* ARCH = L"x64";
 #endif
 // Sparkle public key (App/Info.plist SUPublicEDKey), base64
-static const char* PUBKEY_B64 = "HieG7HYkZUv8/R1Ve/+QdvpSUw4nL39th5T9FDnsh5U=";
-static const wchar_t* DEFAULT_FEED = L"https://mikey.app/appcast.xml";
+// MiKey's own release key (the private key stays on the release machine, ~/.mikey/release/ed25519_private.pem)
+static const char* PUBKEY_B64 = "P9oBG1wCeUKh0vAzfhPSTzfs3FuFw7AbdbDBGe3AEFM=";
+static const wchar_t* DEFAULT_FEED = L"https://mikey.mikephung.com/appcast.xml";
 
 struct Release { std::wstring version, url, signature, notes; unsigned long long length = 0; };
 static HWND _owner;

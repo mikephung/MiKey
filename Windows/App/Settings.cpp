@@ -395,8 +395,8 @@ static void buildMain() {
     endGroup();
     beginGroup(nullptr);
     toggleRow(L"Mở MiKey khi đăng nhập", L"Tự mở MiKey mỗi khi bạn đăng nhập vào Windows.", C_LOGIN, prefs::launchAtLogin());
-    toggleRow(L"Tự động cập nhật", L"Mỗi ngày MiKey kiểm tra bản mới trên mikey.app, tự tải về và cài khi bạn thoát MiKey hoặc tắt máy.", C_UPDATE, prefs::getInt(L"AutoUpdate", 1) != 0);
-    HWND fb = row(L"Góp ý", L"Báo lỗi hoặc góp ý cho MiKey: mở trang mikey.app/feedback trong trình duyệt.", L"MiKeyButton", C_FEEDBACK, 120, 26, WS_TABSTOP);
+    toggleRow(L"Tự động cập nhật", L"Mỗi ngày MiKey kiểm tra bản mới trên mikey.mikephung.com, tự tải về và cài khi bạn thoát MiKey hoặc tắt máy.", C_UPDATE, prefs::getInt(L"AutoUpdate", 1) != 0);
+    HWND fb = row(L"Góp ý", L"Báo lỗi hoặc góp ý cho MiKey: mở trang GitHub Issues trong trình duyệt.", L"MiKeyButton", C_FEEDBACK, 120, 26, WS_TABSTOP);
     SetWindowTextW(fb, L"Gửi góp ý…"); setBg(fb, GROUP);
     endGroup();
     refreshEnabled();
@@ -427,7 +427,7 @@ static LRESULT CALLBACK mainProc(HWND h, UINT msg, WPARAM wp, LPARAM lp) {
         case C_EMOJI: prefs::setInt(L"EmojiPicker", toggleOn(c)); core::reloadSettings(); emoji::settingsChanged(); afterHotkeyChange(); break;
         case C_LOGIN: prefs::setLaunchAtLogin(toggleOn(c)); setToggle(c, prefs::launchAtLogin()); break;
         case C_UPDATE: prefs::setInt(L"AutoUpdate", toggleOn(c)); break;
-        case C_FEEDBACK: ShellExecuteW(nullptr, L"open", L"https://mikey.app/feedback?platform=windows&v=" VIKEY_VERSION_W, nullptr, nullptr, SW_SHOWNORMAL); break;
+        case C_FEEDBACK: ShellExecuteW(nullptr, L"open", L"https://github.com/mikephung/MiKey/issues/new?labels=windows&title=Windows%20v" VIKEY_VERSION_W, nullptr, nullptr, SW_SHOWNORMAL); break;
         }
         return 0; }
     case WM_REBUILD: buildMain(); return 0;
@@ -671,7 +671,7 @@ static const Credit ACK_WORDS[] = {
     {L"HPLT v2", L"High Performance Language Technologies", L"CC0", L"https://hplt-project.org"},
     {L"MADLAD-400", L"Google", L"ODC-By 1.0", L"https://huggingface.co/datasets/allenai/MADLAD-400"},
     {L"Reddit comments", L"tensorshield/reddit_dataset_157", L"MIT", L"https://huggingface.co/datasets/tensorshield/reddit_dataset_157"},
-    {L"Vietnamese forums and reader comments", L"VnExpress, Tuổi Trẻ, Tinhte, Otofun, Dạy Nhau Học", L"word statistics", L"https://mikey.app/acknowledgements"},
+    {L"Vietnamese forums and reader comments", L"VnExpress, Tuổi Trẻ, Tinhte, Otofun, Dạy Nhau Học", L"word statistics", L"https://mikey.mikephung.com/acknowledgements"},
     {L"Emoji names and keywords (CLDR)", L"Unicode, Inc.", L"Unicode License v3", L"https://cldr.unicode.org"},
     {L"Emojibase", L"Miles Johnson", L"MIT", L"https://emojibase.dev"},
 };
@@ -770,7 +770,7 @@ static LRESULT CALLBACK aboutProc(HWND h, UINT msg, WPARAM wp, LPARAM lp) {
             {{L"Dựa trên ", L"", fSmall, SECONDARY}, {L"OpenKey", L"https://github.com/tuyenvm/OpenKey", fSmall, ACCENT}, {L" của Tuyen Mai", L"", fSmall, SECONDARY}},
             {{L"Mã nguồn mở theo giấy phép GPL-3.0", L"", fSmall, SECONDARY}},
             {},
-            {{L"mikey.app", L"https://mikey.app", fSmall, ACCENT}, {L"  ·  ", L"", fSmall, SECONDARY}, {L"GitHub", L"https://github.com/tonyminibot/MiKey", fSmall, ACCENT}, {L"  ·  ", L"", fSmall, SECONDARY}, {L"Ghi nhận", L"ack:", fSmall, ACCENT}}};
+            {{L"mikey.mikephung.com", L"https://mikey.mikephung.com", fSmall, ACCENT}, {L"  ·  ", L"", fSmall, SECONDARY}, {L"GitHub", L"https://github.com/mikephung/MiKey", fSmall, ACCENT}, {L"  ·  ", L"", fSmall, SECONDARY}, {L"Ghi nhận", L"ack:", fSmall, ACCENT}}};
         for (auto& l : lines) { if (l.empty()) { y += 8; continue; } y += drawSegs(mem, l, 0, y, rc.right, true, _aboutLinks) + 1; }
         BitBlt(dc, 0, 0, rc.right, rc.bottom, mem, 0, 0, SRCCOPY); SelectObject(mem, old); DeleteObject(bmp); DeleteDC(mem);
         EndPaint(h, &ps); return 0; }

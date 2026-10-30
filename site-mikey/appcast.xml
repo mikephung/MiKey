@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" xmlns:mikey="https://mikey.mikephung.com/xmlns">
+  <channel>
+    <title>MiKey</title>
+    <link>https://mikey.mikephung.com</link>
+    <item>
+      <title>MiKey 1.0.0</title>
+      <pubDate>Fri, 30 Oct 2026 11:30:26 +0000</pubDate>
+      <sparkle:version>1.0.0</sparkle:version>
+      <sparkle:shortVersionString>1.0.0</sparkle:shortVersionString>
+      <description><![CDATA[**MiKey 1.0.0** — bộ gõ tiếng Việt Telex cho người Việt ở Đức, Thụy Sĩ, Áo.
+
+- macOS: một input source thật trong menu bàn phím, không cần quyền Accessibility
+- Phím ä ö ü ß é gõ thẳng, không bị Telex làm hỏng (über, Grüße, Café, Zürich)
+- Tự nhận ra tiếng Anh và tiếng Đức: text, wir, der, dass, osx giữ nguyên
+- ⌥Z / Alt+Z chuyển Việt ↔ Anh/Đức
+
+Vietnamese Telex for people who also type German and English. Based on Vikey (Tony Dinh) and OpenKey (Tuyen Mai), GPL-3.0.
+]]></description>
+      <enclosure url="https://github.com/mikephung/MiKey/releases/download/v1.0.0/MiKey-1.0.0-macOS.pkg" length="2720188" type="application/octet-stream" sparkle:os="macos" sparkle:edSignature="Ow4nk0f1qmqH1P+Fls2CsfPvMu4GRAk4MzvKQiAMfCf1FwPSMd+D74KWT0ihKsxVeegceKEkQnF/VGOTXoeEBg=="/>
+    </item>
+  </channel>
+</rss>

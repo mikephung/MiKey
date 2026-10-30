@@ -1,4 +1,4 @@
-// Updates from mikey.app/appcast.xml: the same Sparkle feed as the Mac app, with Windows enclosures
+// Updates from mikey.mikephung.com/appcast.xml: the same Sparkle feed as the Mac app, with Windows enclosures
 // (sparkle:os="windows", mikey:arch="x64"|"arm64") signed with the same EdDSA key.
 // Checks daily when "Tự động cập nhật" is on, downloads and verifies the installer, and installs it
 // when MiKey quits (or at the next launch). "Kiểm tra cập nhật…" checks now and asks.

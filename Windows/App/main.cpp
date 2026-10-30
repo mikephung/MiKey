@@ -100,7 +100,7 @@ static LRESULT CALLBACK wndProc(HWND h, UINT msg, WPARAM wp, LPARAM lp) {
         case ID_SETTINGS: ui::showSettings(GetModuleHandleW(nullptr), false); break;
         case ID_UPDATE: updater::checkNow(h); break;
         case ID_ABOUT: ui::showAbout(GetModuleHandleW(nullptr)); break;
-        case ID_FEEDBACK: ShellExecuteW(nullptr, L"open", L"https://mikey.app/feedback?platform=windows&v=" VIKEY_VERSION_W, nullptr, nullptr, SW_SHOWNORMAL); break;
+        case ID_FEEDBACK: ShellExecuteW(nullptr, L"open", L"https://github.com/mikephung/MiKey/issues/new?labels=windows&title=Windows%20v" VIKEY_VERSION_W, nullptr, nullptr, SW_SHOWNORMAL); break;
         case ID_GUIDE: ui::showOnboarding(GetModuleHandleW(nullptr)); break;
         case ID_LOGTOGGLE: toggle(L"TypingLogEnabled", 0); break;
         case ID_LOG: ui::showTypingLog(GetModuleHandleW(nullptr)); break;

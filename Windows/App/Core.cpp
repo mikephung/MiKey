@@ -3,6 +3,7 @@
 #include "KeyMap.h"
 #include "Prefs.h"
 #include "Engine.h"
+#include "Vietnamese.h"   // _characterMap: character -> engine key (keys on non-US layouts)
 #include <imm.h>
 #ifndef IMC_GETOPENSTATUS
 #define IMC_GETOPENSTATUS 0x0005   // lives in immdev.h in recent SDKs
@@ -283,6 +284,7 @@ void reloadSettings() {
     vUseModernOrthography = prefs::getInt(L"ModernOrthography", 1);
     vUseSmartSwitchKey = prefs::getInt(L"UseSmartSwitchKey", 1);
     vAutoSwitchByTyping = AutoSwitchPaused() ? 0 : prefs::getInt(L"AutoSwitchByTyping", 1);
+    vGermanAware = prefs::getInt(L"GermanAware", 1);   // MiKey: wir, der, dass stay German
     vTypingLogKeys = prefs::getInt(L"TypingLogKeys", 1);
     vTypingLogEnabled = prefs::getInt(L"TypingLogEnabled", 0);
     int hotkey = prefs::getInt(L"SwitchKeyStatus", 0);
@@ -484,6 +486,32 @@ static bool HandleEnglishKeyForAutoSwitch() {
     return true;
 }
 
+// ---- Keys a US keyboard doesn't have (MiKey) --------------------------------------------------
+// On German/Swiss layouts the OEM keys type ü ö ä ß, ' and dead keys (´ ^ ¨), not the US [ ] ; ' \ that
+// engineKey() assumes: ü reached Telex as "[" (ơ) and the ´ dead key as "]" (ư). The character the layout of the
+// app in front gives decides instead. A letter Telex doesn't know ends Telex for the rest of the word.
+static bool _foreignWord = false;
+static bool isOemVk(DWORD vk) {
+    switch (vk) {
+        case VK_OEM_1: case VK_OEM_2: case VK_OEM_3: case VK_OEM_4: case VK_OEM_5: case VK_OEM_6: case VK_OEM_7: case VK_OEM_8:
+        case VK_OEM_102: case VK_OEM_PLUS: case VK_OEM_COMMA: case VK_OEM_MINUS: case VK_OEM_PERIOD: return true;
+    }
+    return false;
+}
+/// The engine key for an OEM key on the active layout; foreign = it types a letter or a dead key Telex doesn't know.
+static Uint16 layoutKey(const KBDLLHOOKSTRUCT* k, Uint16 usKey, bool& foreign) {
+    foreign = false;
+    HWND fg = GetForegroundWindow();
+    HKL hkl = GetKeyboardLayout(fg ? GetWindowThreadProcessId(fg, nullptr) : 0);
+    UINT ch = MapVirtualKeyExW(k->vkCode, MAPVK_VK_TO_CHAR, hkl);
+    if (ch == 0) return usKey;
+    bool dead = (ch & 0x80000000) != 0;
+    ch &= 0xFFFF;
+    if (dead || ch >= 0x80) { foreign = true; return KEY_ESC; }
+    auto it = _characterMap.find((Uint32)ch);                  // Swiss ' is on VK_OEM_4 (US [): a quote, not ơ
+    return it == _characterMap.end() ? KEY_ESC : (Uint16)(it->second & 0xFFFF);
+}
+
 // ---- Hooks --------------------------------------------------------------------------------
 static bool modifierVk(DWORD vk, bool down) {
     unsigned bit = 0;
@@ -513,6 +541,8 @@ static LRESULT CALLBACK keyboardHook(int nCode, WPARAM wParam, LPARAM lParam) {
     if (!down) return CallNextHookEx(_kbHook, nCode, wParam, lParam);
 
     _keycode = engineKey(k->vkCode);
+    bool foreignKey = false;
+    if (isOemVk(k->vkCode) && !(_flag & (F_CONTROL | F_ALT | F_WIN))) _keycode = layoutKey(k, _keycode, foreignKey);
     // emoji picker hotkey (opens and closes it): a key with exactly these modifiers
     if (vEmojiHotkey && GET_SWITCH_KEY(vEmojiHotkey) == _keycode &&
         HAS_CONTROL(vEmojiHotkey) == GET_BOOL(_flag & F_CONTROL) && HAS_OPTION(vEmojiHotkey) == GET_BOOL(_flag & F_ALT) &&
@@ -539,6 +569,29 @@ static LRESULT CALLBACK keyboardHook(int nCode, WPARAM wParam, LPARAM lParam) {
     _autoFixUndo.active = false;
     TLNoteKey(_keycode, _flag);
 
+    // ü ö ä ß or a dead key: put the keys typed so far back as typed ("Caf" + ´e = Café, not Càé), then let the
+    // layout type the key itself. The rest of the word is not Telex: über, Grüße, fährt.
+    if (foreignKey) {
+        bool sent = false;
+        if (vLanguage == 1 && !_foreignWord && vKeyRestoreRawWord()) { SendEngineOutput(); sent = true; }
+        if (vLanguage == 0) ResetEnglishWord(false); else startNewSession();
+        _foreignWord = true;
+        if (!sent) return CallNextHookEx(_kbHook, nCode, wParam, lParam);
+        INPUT in; inputKey(in, (WORD)k->vkCode, true, (k->flags & LLKHF_EXTENDED) ? KEYEVENTF_EXTENDEDKEY : 0);
+        in.ki.wScan = (WORD)k->scanCode;                    // after the restored text; the key up comes from the keyboard
+        SendInput(1, &in, sizeof(INPUT));
+        return 1;
+    }
+    if (_foreignWord) {
+        if (IsLetterKey(_keycode) || (IS_NUMBER_KEY(_keycode) && !(_flag & F_SHIFT))) {
+            if (vLanguage == 0) _enValid = false;
+            return CallNextHookEx(_kbHook, nCode, wParam, lParam);   // still inside "über": typed as is
+        }
+        _foreignWord = false;                               // the word ends here; the next one is Telex again
+        if (vLanguage == 1) vKeyHandleEvent(vKeyEvent::Mouse, vKeyEventState::MouseDown, 0);
+        else ResetEnglishWord(true);
+    }
+
     if (vLanguage == 0) {
         if (vAutoSwitchByTyping && HandleEnglishKeyForAutoSwitch()) return 1;
         return CallNextHookEx(_kbHook, nCode, wParam, lParam);
@@ -564,7 +617,7 @@ static LRESULT CALLBACK mouseHook(int nCode, WPARAM wParam, LPARAM lParam) {
             RECT r; GetWindowRect(vEmojiWindow, &r); POINT p = ((MSLLHOOKSTRUCT*)lParam)->pt;
             if (!PtInRect(&r, p)) PostMessageW(vEmojiWindow, WM_APP + 11, 0, 0);
         }
-        _autoFixUndo.active = false; TLNoteClick();
+        _autoFixUndo.active = false; _foreignWord = false; TLNoteClick();
         if (vLanguage == 0) ResetEnglishWord(true);
         else vKeyHandleEvent(vKeyEvent::Mouse, vKeyEventState::MouseDown, 0);
     }
