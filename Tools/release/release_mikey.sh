@@ -17,6 +17,13 @@ VER=$1
 [ -n "$VER" ] || { echo "usage: $0 <version> [--publish]"; exit 2; }
 PUBLISH=$2
 DIST=$ROOT/dist/$VER
+# the tag must be the code the files are built from: nothing uncommitted (the test binaries check.sh rebuilds
+# and the site's generated feed are ignored)
+if [ "$PUBLISH" = "--publish" ] && ! git diff --quiet HEAD -- . ':!Tools/autoswitch/driver/bench' ':!Tools/autoswitch/driver/drvlazy' \
+     ':!Tools/autoswitch/touch/touchsim' ':!site-mikey/appcast.xml'; then
+  git status --short | grep -v '^??'
+  echo "FAIL: commit these changes first, the release tag would not contain them"; exit 1
+fi
 mkdir -p $DIST
 
 echo "== checks"
@@ -30,47 +37,81 @@ UNIVERSAL=1 VERSION=$VER BUILD=$BUILDNUM Tools/build_inputmethod.sh
 APP=$ROOT/build/InputMethod/MiKey.app
 
 echo "== package"
+# MiKey goes into the logged-in user's ~/Library/Input Methods (installed per user it shows up in the input menu
+# at once; in /Library/Input Methods macOS only takes a new input method after the next log in). The package puts
+# the app in a staging folder; postinstall copies it for the user and turns it on.
 PKGROOT=$ROOT/build/pkgroot
-rm -rf $PKGROOT && mkdir -p "$PKGROOT/Library/Input Methods" $ROOT/build/pkgscripts
-ditto --noextattr --noqtn --norsrc "$APP" "$PKGROOT/Library/Input Methods/MiKey.app"
+STAGE="Library/Application Support/MiKey"
+rm -rf $PKGROOT $ROOT/build/pkgscripts $ROOT/build/pkgres && mkdir -p "$PKGROOT/$STAGE" $ROOT/build/pkgscripts $ROOT/build/pkgres
+ditto --noextattr --noqtn --norsrc "$APP" "$PKGROOT/$STAGE/MiKey.app"
 # com.apple.provenance (set by the local build tools, not removable) still makes pkgbuild store a few ._
-# AppleDouble files; harmless (verified below: codesign --verify --deep --strict after unpacking the .pkg)
+# AppleDouble files; harmless (verified after the build: codesign --verify --deep --strict on the unpacked app)
 cat > $ROOT/build/pkgscripts/postinstall <<'SH'
 #!/bin/sh
-# Runs as root after the files are in /Library/Input Methods.
-APP="/Library/Input Methods/MiKey.app"
-# 1. an older MiKey still running is replaced: macOS starts the new one on the next key
-pkill -f "Input Methods/MiKey.app/Contents/MacOS/MiKey" 2>/dev/null || true
-# 2. the logged-in user: remove a per-user copy (same bundle id, it would compete with this one),
-#    then register MiKey and turn it on in their input menu right away (no log out needed)
+# Runs as root. Copies MiKey from the staging folder into the logged-in user's ~/Library/Input Methods.
+STAGED="/Library/Application Support/MiKey/MiKey.app"
+LOG=/tmp/mikey-install.log
+echo "== $(date) MiKey postinstall" >> $LOG
 USER_NAME=$(stat -f %Su /dev/console)
-if [ -n "$USER_NAME" ] && [ "$USER_NAME" != "root" ] && [ "$USER_NAME" != "loginwindow" ]; then
-  USER_ID=$(id -u "$USER_NAME")
-  USER_HOME=$(dscl . -read "/Users/$USER_NAME" NFSHomeDirectory 2>/dev/null | awk '{print $2}')
-  OLD="$USER_HOME/Library/Input Methods/MiKey.app"
-  # was MiKey the active input source? Then it is again afterwards (an upgrade must not change what you type with)
-  SELECT=""
-  if sudo -u "$USER_NAME" defaults read com.apple.HIToolbox AppleSelectedInputSources 2>/dev/null | grep -q "com.mikey.inputmethod.MiKey"; then SELECT="select"; fi
-  if [ -d "$OLD" ] && [ "$(defaults read "$OLD/Contents/Info" CFBundleIdentifier 2>/dev/null)" = "com.mikey.inputmethod.MiKey" ]; then
-    rm -rf "$OLD"
-    sleep 3   # macOS notices the removal a moment later and then drops the input source; --wait registers again if so
-  fi
-  launchctl asuser "$USER_ID" sudo -u "$USER_NAME" "$APP/Contents/MacOS/mikey-register" "$APP" $SELECT --wait >> /tmp/mikey-install.log 2>&1 || true
-  # macOS can still drop MiKey well after the installer is done (it processes the removal of the old copy late):
-  # one more check in the background, detached from the installer
-  ( sleep 20; launchctl asuser "$USER_ID" sudo -u "$USER_NAME" "$APP/Contents/MacOS/mikey-register" "$APP" --wait >> /tmp/mikey-install.log 2>&1 ) </dev/null >/dev/null 2>&1 &
+if [ -z "$USER_NAME" ] || [ "$USER_NAME" = "root" ] || [ "$USER_NAME" = "loginwindow" ]; then
+  echo "no logged-in user: nothing copied" >> $LOG; exit 0
 fi
+USER_ID=$(id -u "$USER_NAME")
+USER_HOME=$(dscl . -read "/Users/$USER_NAME" NFSHomeDirectory 2>/dev/null | awk '{print $2}')
+[ -d "$USER_HOME" ] || { echo "no home for $USER_NAME" >> $LOG; exit 0; }
+DEST="$USER_HOME/Library/Input Methods"
+# was MiKey the active input source? Then it is again afterwards
+SELECT=""
+if sudo -u "$USER_NAME" defaults read com.apple.HIToolbox AppleSelectedInputSources 2>/dev/null | grep -q "com.mikey.inputmethod.MiKey"; then SELECT="select"; fi
+# the running MiKey (an older version) stops; macOS starts the new one on the next key
+pkill -f "Input Methods/MiKey.app/Contents/MacOS/MiKey" 2>/dev/null || true
+# 1.0.1 and 1.0.2 installed into /Library/Input Methods: one copy only, the user's
+SYS="/Library/Input Methods/MiKey.app"
+if [ -d "$SYS" ] && [ "$(defaults read "$SYS/Contents/Info" CFBundleIdentifier 2>/dev/null)" = "com.mikey.inputmethod.MiKey" ]; then
+  rm -rf "$SYS"; echo "removed the older copy in /Library/Input Methods" >> $LOG
+fi
+# the user's copy, replaced in place (same path as before: an upgrade keeps its place in the input menu)
+sudo -u "$USER_NAME" mkdir -p "$DEST"
+rm -rf "$DEST/MiKey.app"
+ditto "$STAGED" "$DEST/MiKey.app"
+chown -R "$USER_NAME":staff "$DEST/MiKey.app"
+echo "installed $DEST/MiKey.app" >> $LOG
+launchctl asuser "$USER_ID" sudo -u "$USER_NAME" "$DEST/MiKey.app/Contents/MacOS/mikey-register" "$DEST/MiKey.app" $SELECT --wait >> $LOG 2>&1 || true
 exit 0
 SH
 chmod +x $ROOT/build/pkgscripts/postinstall
 # never "relocate": without this, Installer puts the app over any other copy with the same bundle id it finds
 pkgbuild --analyze --root $PKGROOT $ROOT/build/pkgcomponents.plist >/dev/null
 /usr/libexec/PlistBuddy -c "Set :0:BundleIsRelocatable false" $ROOT/build/pkgcomponents.plist
+pkgbuild --root $PKGROOT --component-plist $ROOT/build/pkgcomponents.plist --identifier com.mikey.inputmethod.MiKey.pkg --version $VER \
+         --scripts $ROOT/build/pkgscripts --install-location / $ROOT/build/MiKey-component.pkg
+# the installer's last page: what to do next, in Vietnamese, German and English
+cat > $ROOT/build/pkgres/conclusion.html <<HTML
+<!doctype html><html><head><meta charset="utf-8"><style>body{font:13px -apple-system,sans-serif;line-height:1.5}h3{margin:12px 0 4px}</style></head><body>
+<h3>Đã cài xong MiKey $VER</h3>
+<p>Chọn <b>MiKey</b> trong menu bàn phím trên thanh menu. Chưa thấy? Vào Cài đặt hệ thống › Bàn phím › Nguồn đầu vào › Sửa… › + › Tiếng Việt › MiKey. Nếu vẫn chưa có, đăng xuất rồi đăng nhập lại một lần.</p>
+<h3>MiKey $VER ist installiert</h3>
+<p><b>MiKey</b> im Eingabemenü in der Menüleiste wählen. Nicht da? Systemeinstellungen › Tastatur › Eingabequellen › Bearbeiten… › + › Vietnamesisch › MiKey. Fehlt es dort, einmal ab- und wieder anmelden.</p>
+<h3>MiKey $VER is installed</h3>
+<p>Pick <b>MiKey</b> in the input menu in the menu bar. Not there? System Settings › Keyboard › Input Sources › Edit… › + › Vietnamese › MiKey. Still missing? Log out and back in once.</p>
+</body></html>
+HTML
+cat > $ROOT/build/distribution.xml <<XML
+<?xml version="1.0" encoding="utf-8"?>
+<installer-gui-script minSpecVersion="2">
+  <title>MiKey $VER</title>
+  <conclusion file="conclusion.html" mime-type="text/html"/>
+  <options customize="never" require-scripts="false" hostArchitectures="arm64,x86_64"/>
+  <volume-check><allowed-os-versions><os-version min="13.0"/></allowed-os-versions></volume-check>
+  <choices-outline><line choice="mikey"/></choices-outline>
+  <choice id="mikey" visible="false"><pkg-ref id="com.mikey.inputmethod.MiKey.pkg"/></choice>
+  <pkg-ref id="com.mikey.inputmethod.MiKey.pkg" version="$VER">MiKey-component.pkg</pkg-ref>
+</installer-gui-script>
+XML
 PKG=$DIST/MiKey-$VER-macOS.pkg
 SIGNARGS=()
 [ -n "$MIKEY_INSTALLER_ID" ] && SIGNARGS=(--sign "$MIKEY_INSTALLER_ID" --timestamp)
-pkgbuild --root $PKGROOT --component-plist $ROOT/build/pkgcomponents.plist --identifier com.mikey.inputmethod.MiKey.pkg --version $VER \
-         --scripts $ROOT/build/pkgscripts --install-location / $SIGNARGS $PKG
+productbuild --distribution $ROOT/build/distribution.xml --resources $ROOT/build/pkgres --package-path $ROOT/build $SIGNARGS $PKG
 if [ -n "$MIKEY_NOTARY_PROFILE" ] && [ -n "$MIKEY_INSTALLER_ID" ]; then
   xcrun notarytool submit $PKG --keychain-profile "$MIKEY_NOTARY_PROFILE" --wait
   xcrun stapler staple $PKG
@@ -81,7 +122,7 @@ fi
 DMGSRC=$ROOT/build/dmgsrc
 rm -rf $DMGSRC && mkdir -p $DMGSRC
 cp $PKG "$DMGSRC/Cài đặt MiKey.pkg"
-printf 'MiKey %s\n\n1. Bấm đúp "Cài đặt MiKey.pkg".\n   Nếu macOS báo không mở được: System Settings > Privacy & Security > Open Anyway.\n2. System Settings > Keyboard > Input Sources > Edit… > + > Vietnamese > MiKey.\n3. Chọn MiKey trong menu bàn phím trên thanh menu.\n\nHướng dẫn đầy đủ: https://mikey.mikephung.com/download/\n\n---\n1. Double-click "Cài đặt MiKey.pkg" (install MiKey).\n2. System Settings > Keyboard > Input Sources > Edit… > + > Vietnamese > MiKey.\n3. Pick MiKey in the input menu.\n' $VER > "$DMGSRC/Đọc trước - Read me.txt"
+printf 'MiKey %s\n\n1. Bấm đúp "Cài đặt MiKey.pkg".\n   Nếu macOS báo không mở được: System Settings > Privacy & Security > Open Anyway.\n2. System Settings > Keyboard > Input Sources > Edit… > + > Vietnamese > MiKey.\n3. Chọn MiKey trong menu bàn phím trên thanh menu.\n   Chưa thấy MiKey? Đăng xuất rồi đăng nhập lại một lần.\n\nHướng dẫn đầy đủ: https://mikey.mikephung.com/download/\n\n---\n1. Double-click "Cài đặt MiKey.pkg" (install MiKey).\n2. System Settings > Keyboard > Input Sources > Edit… > + > Vietnamese > MiKey.\n3. Pick MiKey in the input menu (not there? log out and back in once).\n' $VER > "$DMGSRC/Đọc trước - Read me.txt"
 DMG=$DIST/MiKey-$VER-macOS.dmg
 hdiutil create -volname "MiKey $VER" -srcfolder $DMGSRC -fs HFS+ -format UDZO -ov $DMG >/dev/null
 [ -n "$MIKEY_SIGN_ID" ] && codesign --sign "$MIKEY_SIGN_ID" --timestamp $DMG

@@ -7,7 +7,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.normpath(os.path.join(HERE, ".."))
 SITE = "https://mikey.mikephung.com"
 REPO = "https://github.com/mikephung/MiKey"
-VERSION = "1.0.2"
+VERSION = "1.0.3"
 RELEASE_DATE = "2026-10-30"
 REL = f"{REPO}/releases/download/v{VERSION}"
 e = html.escape
@@ -46,6 +46,19 @@ TELEX_EXAMPLES = [("tooi ddi hocj", "tôi đi học"), ("truwowngf / truowfng", 
                   ("khoer khoong", "khoẻ không"), ("caamf", "cầm"), ("nguyeenx", "nguyễn")]
 
 RELEASES = [  # newest first
+    ("1.0.3", "2026-10-30", {
+        "vi": ["Cài xong là gõ được, không cần đăng xuất.",
+               "macOS: MiKey được cài vào thư mục của bạn (~/Library/Input Methods), như bản 1.0.0. Ở thư mục chung /Library, macOS chỉ nhận một bộ gõ mới sau khi đăng nhập lại, nên 1.0.1 và 1.0.2 có thể không hiện trong menu bàn phím.",
+               "Nâng cấp từ 1.0.1/1.0.2: bản cũ trong /Library được gỡ để máy chỉ còn một bản MiKey. Nếu MiKey chưa hiện ngay, đăng xuất rồi đăng nhập lại một lần.",
+               "Trang cuối của bộ cài ghi rõ bước tiếp theo, bằng tiếng Việt, tiếng Đức và tiếng Anh."],
+        "de": ["Nach der Installation sofort tippen, ohne Abmelden.",
+               "macOS: MiKey wird in deinen Benutzerordner installiert (~/Library/Input Methods), wie Version 1.0.0. Im gemeinsamen Ordner /Library übernimmt macOS eine neue Eingabequelle erst nach dem nächsten Anmelden, darum fehlte 1.0.1 und 1.0.2 manchmal im Eingabemenü.",
+               "Update von 1.0.1/1.0.2: Die alte Kopie in /Library wird entfernt, damit es nur ein MiKey gibt. Erscheint MiKey nicht sofort, einmal ab- und wieder anmelden.",
+               "Die letzte Seite des Installationsprogramms sagt, wie es weitergeht, auf Vietnamesisch, Deutsch und Englisch."],
+        "en": ["Type right after installing, no log out needed.",
+               "macOS: MiKey is installed in your user folder (~/Library/Input Methods), as in 1.0.0. In the shared /Library folder macOS only takes a new input method after the next log in, so 1.0.1 and 1.0.2 could be missing from the input menu.",
+               "Upgrading from 1.0.1/1.0.2: the old copy in /Library is removed so there is one MiKey only. If MiKey doesn't show up at once, log out and back in once.",
+               "The installer's last page says what to do next, in Vietnamese, German and English."]}),
     ("1.0.2", "2026-10-30", {
         "vi": ["Sửa lỗi nâng cấp.",
                "Cài đè lên bản cũ không còn làm MiKey biến mất khỏi menu bàn phím: bộ cài đợi macOS xử lý xong bản cũ rồi mới đăng ký, và kiểm tra cho đến khi MiKey ổn định.",
@@ -171,10 +184,10 @@ S = {
   mac=["Tải <b>" + f"MiKey-{VERSION}-macOS.dmg" + "</b>, mở nó, rồi bấm đúp <b>Cài đặt MiKey.pkg</b>. Cùng một file cho Mac Apple Silicon (M1–M4) và Mac Intel.",
        "macOS báo <i>không thể mở vì Apple không thể kiểm tra phần mềm độc hại</i>: bấm <b>Xong</b>. Đây là vì bản cài chưa được ký bằng chứng chỉ Apple.",
        "Mở <b>System Settings › Privacy &amp; Security</b>, kéo xuống, bấm <b>Open Anyway</b> cạnh dòng MiKey, rồi nhập mật khẩu máy.",
-       "Bộ cài chép MiKey vào <code>/Library/Input Methods</code>. Bấm Continue, Install.",
-       "Mở <b>System Settings › Keyboard › Input Sources › Edit…</b>, bấm <b>+</b>, chọn <b>Vietnamese</b> › <b>MiKey</b> › Add. Nếu chưa thấy MiKey, đăng xuất rồi đăng nhập lại.",
+       "Bấm Continue, Install. Bộ cài chép MiKey vào <code>~/Library/Input Methods</code> (thư mục của bạn) và tự bật nó.",
+       "MiKey có ngay trong menu bàn phím. Chưa thấy? Mở <b>System Settings › Keyboard › Input Sources › Edit…</b>, bấm <b>+</b>, chọn <b>Vietnamese</b> › <b>MiKey</b> › Add. Vẫn chưa có thì đăng xuất rồi đăng nhập lại một lần.",
        "Chọn <b>MiKey</b> trong menu bàn phím ở thanh menu (cạnh đồng hồ). Bàn phím bên dưới vẫn là layout bạn đã chọn, ví dụ Schweiz, deutsch."],
-  mac_upd="Cập nhật: tải bản mới và cài đè lên. Gỡ: bỏ MiKey khỏi Input Sources, rồi xoá <code>/Library/Input Methods/MiKey.app</code> (Finder › Go › Go to Folder).",
+  mac_upd="Cập nhật: tải bản mới và cài đè lên. Gỡ: bỏ MiKey khỏi Input Sources, rồi xoá <code>~/Library/Input Methods/MiKey.app</code> (Finder › Go › Go to Folder).",
   win_h="Cài trên Windows",
   win=["Tải <b>" + f"MiKey-{VERSION}-x64-Setup.exe" + "</b> (hoặc bản arm64 cho máy ARM).",
        "Windows SmartScreen báo <i>Windows protected your PC</i>: bấm <b>More info</b> › <b>Run anyway</b>. Lý do giống trên Mac: bản cài chưa được ký.",
@@ -284,10 +297,10 @@ S = {
   mac=["<b>" + f"MiKey-{VERSION}-macOS.dmg" + "</b> laden, öffnen und <b>Cài đặt MiKey.pkg</b> doppelklicken. Dieselbe Datei für Macs mit Apple Silicon (M1–M4) und Intel.",
        "macOS meldet, dass Apple die Software nicht auf Malware prüfen konnte: <b>Fertig</b> klicken. Das liegt daran, dass das Paket nicht mit einem Apple-Zertifikat signiert ist.",
        "<b>Systemeinstellungen › Datenschutz &amp; Sicherheit</b> öffnen, nach unten scrollen, bei MiKey <b>Trotzdem öffnen</b> klicken und das Passwort eingeben.",
-       "Das Installationsprogramm kopiert MiKey nach <code>/Library/Input Methods</code>. Fortfahren, Installieren.",
-       "<b>Systemeinstellungen › Tastatur › Eingabequellen › Bearbeiten…</b>, <b>+</b>, <b>Vietnamesisch</b> › <b>MiKey</b> › Hinzufügen. Fehlt MiKey, ab- und wieder anmelden.",
+       "Fortfahren, Installieren. Das Installationsprogramm kopiert MiKey nach <code>~/Library/Input Methods</code> (dein Benutzerordner) und schaltet es ein.",
+       "MiKey ist sofort im Eingabemenü. Nicht da? <b>Systemeinstellungen › Tastatur › Eingabequellen › Bearbeiten…</b>, <b>+</b>, <b>Vietnamesisch</b> › <b>MiKey</b> › Hinzufügen. Fehlt es dort, einmal ab- und wieder anmelden.",
        "<b>MiKey</b> im Eingabemenü in der Menüleiste wählen. Darunter bleibt dein Layout aktiv, zum Beispiel Schweiz, deutsch."],
-  mac_upd="Update: neue Version laden und darüber installieren. Entfernen: MiKey aus den Eingabequellen nehmen und <code>/Library/Input Methods/MiKey.app</code> löschen (Finder › Gehe zu › Gehe zum Ordner).",
+  mac_upd="Update: neue Version laden und darüber installieren. Entfernen: MiKey aus den Eingabequellen nehmen und <code>~/Library/Input Methods/MiKey.app</code> löschen (Finder › Gehe zu › Gehe zum Ordner).",
   win_h="Installation unter Windows",
   win=["<b>" + f"MiKey-{VERSION}-x64-Setup.exe" + "</b> laden (oder arm64 für ARM-Geräte).",
        "Windows SmartScreen meldet <i>Der Computer wurde durch Windows geschützt</i>: <b>Weitere Informationen</b> › <b>Trotzdem ausführen</b>. Grund wie auf dem Mac: nicht signiert.",
@@ -392,10 +405,10 @@ S = {
   mac=["Download <b>" + f"MiKey-{VERSION}-macOS.dmg" + "</b>, open it and double-click <b>Cài đặt MiKey.pkg</b>. The same file for Apple Silicon (M1–M4) and Intel Macs.",
        "macOS says Apple could not check it for malicious software: click <b>Done</b>. This is because the package isn't signed with an Apple certificate.",
        "Open <b>System Settings › Privacy &amp; Security</b>, scroll down, click <b>Open Anyway</b> next to MiKey and enter your password.",
-       "The installer copies MiKey to <code>/Library/Input Methods</code>. Continue, Install.",
-       "Open <b>System Settings › Keyboard › Input Sources › Edit…</b>, click <b>+</b>, choose <b>Vietnamese</b> › <b>MiKey</b> › Add. If MiKey isn't listed, log out and back in.",
+       "Continue, Install. The installer copies MiKey to <code>~/Library/Input Methods</code> (your user folder) and turns it on.",
+       "MiKey is in the input menu right away. Not there? Open <b>System Settings › Keyboard › Input Sources › Edit…</b>, click <b>+</b>, choose <b>Vietnamese</b> › <b>MiKey</b> › Add. Still missing? Log out and back in once.",
        "Pick <b>MiKey</b> in the input menu in the menu bar. Your layout stays active underneath, for example Swiss German."],
-  mac_upd="Update: download the new version and install it over the old one. Remove: take MiKey out of Input Sources, then delete <code>/Library/Input Methods/MiKey.app</code> (Finder › Go › Go to Folder).",
+  mac_upd="Update: download the new version and install it over the old one. Remove: take MiKey out of Input Sources, then delete <code>~/Library/Input Methods/MiKey.app</code> (Finder › Go › Go to Folder).",
   win_h="Install on Windows",
   win=["Download <b>" + f"MiKey-{VERSION}-x64-Setup.exe" + "</b> (or arm64 for ARM devices).",
        "Windows SmartScreen says <i>Windows protected your PC</i>: click <b>More info</b> › <b>Run anyway</b>. Same reason as on the Mac: not signed.",
