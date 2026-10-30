@@ -105,9 +105,14 @@ static NSString* StringOf(const std::u16string& s) {
         [client insertText:text replacementRange:NSMakeRange(NSNotFound, 0)];
 }
 
+/** The cursor may be somewhere else now (click, shortcut, arrows, Return, another field): forget the word being
+ *  typed and the engine's word history too. Otherwise a Backspace at the start of the next word brings back the
+ *  previous word from the history, and the next keys are glued to it ("looxi" + "ddawng" -> "looxiddawng"). */
 - (void)resetTyping {
     gForeign = false;
-    if (gDriver) gDriver->resetContext();
+    if (!gDriver) return;
+    vKeyHandleEvent(vKeyEvent::Mouse, vKeyEventState::MouseDown, 0);   //like a click: clears the word history
+    gDriver->resetContext();
 }
 
 #pragma mark - Keys
@@ -154,6 +159,11 @@ static bool IsLetterOrDigit(unichar c) { return (c >= 'a' && c <= 'z') || (c >= 
             return NO;
         case 51: {                     // Backspace
             if (gComposing.length == 0 && gForeign) return NO;
+            if (gComposing.length == 0) {
+                // deleting a selection: the cursor is not after the previous word, so don't edit it
+                NSRange sel = [sender selectedRange];
+                if (sel.location != NSNotFound && sel.length > 0) { [self resetTyping]; return NO; }
+            }
             VKEdit e = gDriver->press(KEY_DELETE, false, CFAbsoluteTimeGetCurrent());
             if (gComposing.length == 0 && e.deleteCount == 1 && e.text.empty()) return NO;   // the app deletes (and handles a selection)
             [self apply:e client:sender];

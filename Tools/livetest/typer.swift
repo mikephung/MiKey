@@ -53,6 +53,16 @@ func press(_ code: CGKeyCode, shift: Bool = false, option: Bool = false) {
     usleep(25_000)
 }
 
+func pressCmd(_ code: CGKeyCode) {
+    for down in [true, false] {
+        let e = CGEvent(keyboardEventSource: source, virtualKey: code, keyDown: down)!
+        e.flags = .maskCommand
+        e.post(tap: .cghidEventTap)
+        usleep(12_000)
+    }
+    usleep(60_000)
+}
+
 let args = CommandLine.arguments
 guard args.count >= 2 else { print("usage: typer select <id> | type <text> | current"); exit(2) }
 switch args[1] {
@@ -68,6 +78,13 @@ case "type":
     var text = Substring(args[2])
     while let ch = text.first {
         if text.hasPrefix("{optz}") { let z = map["z"]!; press(z.0, option: true); text = text.dropFirst(6); continue }
+        // ⌘A / ⌘C / ⌘V for clearing and reading any text field
+        if text.hasPrefix("{cmd") && text.count >= 6 {
+            let k = text[text.index(text.startIndex, offsetBy: 4)]
+            if let code = map[k]?.0 { pressCmd(code) }
+            text = text.dropFirst(6); continue
+        }
+        if text.hasPrefix("{del}") { press(51); text = text.dropFirst(5); continue }
         text = text.dropFirst()
         switch ch {
         case "|": press(36)
