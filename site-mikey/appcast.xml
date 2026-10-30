@@ -4,6 +4,21 @@
     <title>MiKey</title>
     <link>https://mikey.mikephung.com</link>
     <item>
+      <title>MiKey 1.0.2</title>
+      <pubDate>Fri, 30 Oct 2026 17:23:36 +0000</pubDate>
+      <sparkle:version>1.0.2</sparkle:version>
+      <sparkle:shortVersionString>1.0.2</sparkle:shortVersionString>
+      <description><![CDATA[**MiKey 1.0.2**
+
+- Sửa lỗi nâng cấp: khi cài đè lên bản cũ, MiKey biến mất khỏi menu bàn phím (chỉ còn menu Emoji & Symbole). Giờ bộ cài đợi macOS xử lý xong bản cũ rồi mới đăng ký, và kiểm tra lại cho đến khi MiKey ổn định trong danh sách.
+- Nếu MiKey đang là bàn phím đang dùng trước khi nâng cấp, nó vẫn là bàn phím đang dùng sau đó.
+- Máy đã lên 1.0.1 và mất MiKey: chỉ cần cài 1.0.2 lên là có lại.
+
+Fixes upgrading: installing over an older version made MiKey vanish from the input menu. The installer now waits for macOS to finish with the old copy, then registers MiKey and checks until it stays listed. If you already upgraded to 1.0.1 and lost MiKey, installing 1.0.2 brings it back.
+]]></description>
+      <enclosure url="https://github.com/mikephung/MiKey/releases/download/v1.0.2/MiKey-1.0.2-macOS.pkg" length="2740678" type="application/octet-stream" sparkle:os="macos" sparkle:edSignature="ysmDESYhZ3rgWsOhaMaCfWx6om9P6zrNR2DENeB8Cfxx5m2EQesBV2qdfCBtMCIAHZykQedHY6CnCJG5JGjJBQ=="/>
+    </item>
+    <item>
       <title>MiKey 1.0.1</title>
       <pubDate>Fri, 30 Oct 2026 16:05:43 +0000</pubDate>
       <sparkle:version>1.0.1</sparkle:version>
