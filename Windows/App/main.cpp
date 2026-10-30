@@ -1,4 +1,4 @@
-// Vikey for Windows: tray icon (V / E), menu, and the message loop the hooks need.
+// MiKey for Windows: tray icon (V / E), menu, and the message loop the hooks need.
 #include <windows.h>
 #include <shellapi.h>
 #include <string>
@@ -55,39 +55,39 @@ static bool darkTaskbar() {
 }
 static void updateTray(int lang) {
     _nid.hIcon = lang ? _iconV : _iconE;
-    wcscpy_s(_nid.szTip, lang ? L"Vikey – Tiếng Việt" : L"Vikey – English");
+    wcscpy_s(_nid.szTip, lang ? L"MiKey – Tiếng Việt" : L"MiKey – English");
     Shell_NotifyIconW(NIM_MODIFY, &_nid);
 }
-static void toggle(const wchar_t* key, int fallback) { vikey::prefs::setInt(key, !vikey::prefs::getInt(key, fallback)); vikey::core::reloadSettings(); }
+static void toggle(const wchar_t* key, int fallback) { mikey::prefs::setInt(key, !mikey::prefs::getInt(key, fallback)); mikey::core::reloadSettings(); }
 static std::wstring hotkeyLabel() {
-    int hk = vikey::prefs::getInt(L"SwitchKeyStatus", 0); if (!hk) hk = 0x7A000206;
+    int hk = mikey::prefs::getInt(L"SwitchKeyStatus", 0); if (!hk) hk = 0x7A000206;
     std::wstring t; if (hk & 0x100) t += L"Ctrl+"; if (hk & 0x200) t += L"Alt+"; if (hk & 0x800) t += L"Shift+"; if (hk & 0x400) t += L"Win+";
     int k = hk & 0xFF; if (k != 0xFE) { unsigned short ch = keyCodeToCharacter((unsigned int)(k | 0x10000)); if (k == 49) t += L"Space"; else if (ch) t += (wchar_t)ch; } else if (!t.empty()) t.pop_back();
     return t;
 }
 static void showMenu() {
-    using namespace vikey;
+    using namespace mikey;
     HMENU m = CreatePopupMenu();
     AppendMenuW(m, MF_STRING | (core::language() ? MF_CHECKED : 0), ID_VIET, (L"Tiếng Việt\t" + hotkeyLabel()).c_str());
     AppendMenuW(m, MF_STRING | (prefs::getInt(L"AutoSwitchByTyping", 1) ? MF_CHECKED : 0), ID_AUTOSWITCH, L"Tự chuyển Anh/Việt");
     AppendMenuW(m, MF_SEPARATOR, 0, nullptr);
-    AppendMenuW(m, MF_STRING, ID_SETTINGS, L"Mở Vikey…");
+    AppendMenuW(m, MF_STRING, ID_SETTINGS, L"Mở MiKey…");
     AppendMenuW(m, MF_SEPARATOR, 0, nullptr);
     AppendMenuW(m, MF_STRING, ID_GUIDE, L"Hướng dẫn…");
     AppendMenuW(m, MF_STRING, ID_FEEDBACK, L"Gửi góp ý…");
     AppendMenuW(m, MF_STRING, ID_UPDATE, L"Kiểm tra cập nhật…");
-    AppendMenuW(m, MF_STRING, ID_ABOUT, L"Giới thiệu Vikey");
+    AppendMenuW(m, MF_STRING, ID_ABOUT, L"Giới thiệu MiKey");
     HMENU dbg = CreatePopupMenu();
     AppendMenuW(dbg, MF_STRING | (prefs::getInt(L"TypingLogEnabled", 0) ? MF_CHECKED : 0), ID_LOGTOGGLE, L"Ghi nhật ký gõ");
     AppendMenuW(dbg, MF_STRING | (prefs::getInt(L"TypingLogEnabled", 0) ? 0 : MF_GRAYED), ID_LOG, L"Xem nhật ký gõ…");
     AppendMenuW(m, MF_POPUP, (UINT_PTR)dbg, L"Gỡ lỗi");
-    AppendMenuW(m, MF_STRING, ID_QUIT, L"Thoát Vikey");
+    AppendMenuW(m, MF_STRING, ID_QUIT, L"Thoát MiKey");
     POINT pt; GetCursorPos(&pt); SetForegroundWindow(_hwnd);
     TrackPopupMenu(m, TPM_RIGHTBUTTON | TPM_BOTTOMALIGN, pt.x, pt.y, 0, _hwnd, nullptr);
     DestroyMenu(m);
 }
 static LRESULT CALLBACK wndProc(HWND h, UINT msg, WPARAM wp, LPARAM lp) {
-    using namespace vikey;
+    using namespace mikey;
     switch (msg) {
     case WM_TRAY:
         if (LOWORD(lp) == WM_LBUTTONUP) ui::showSettings(GetModuleHandleW(nullptr), false);
@@ -100,7 +100,7 @@ static LRESULT CALLBACK wndProc(HWND h, UINT msg, WPARAM wp, LPARAM lp) {
         case ID_SETTINGS: ui::showSettings(GetModuleHandleW(nullptr), false); break;
         case ID_UPDATE: updater::checkNow(h); break;
         case ID_ABOUT: ui::showAbout(GetModuleHandleW(nullptr)); break;
-        case ID_FEEDBACK: ShellExecuteW(nullptr, L"open", L"https://vikey.app/feedback?platform=windows&v=" VIKEY_VERSION_W, nullptr, nullptr, SW_SHOWNORMAL); break;
+        case ID_FEEDBACK: ShellExecuteW(nullptr, L"open", L"https://mikey.app/feedback?platform=windows&v=" VIKEY_VERSION_W, nullptr, nullptr, SW_SHOWNORMAL); break;
         case ID_GUIDE: ui::showOnboarding(GetModuleHandleW(nullptr)); break;
         case ID_LOGTOGGLE: toggle(L"TypingLogEnabled", 0); break;
         case ID_LOG: ui::showTypingLog(GetModuleHandleW(nullptr)); break;
@@ -111,7 +111,7 @@ static LRESULT CALLBACK wndProc(HWND h, UINT msg, WPARAM wp, LPARAM lp) {
     case updater::WM_UPDATER: updater::onEvent(wp); return 0;
     case WM_VIKEY_SETLANG: core::setLanguageQuiet((int)wp); return 1;
     case WM_VIKEY_EMOJI: emoji::toggle(); return 0;
-    case WM_TIMER: if (wp == TIMER_FLUSH) core::flushTypingLog(); else if (wp == TIMER_SITE) vikey::site::poll(); return 0;
+    case WM_TIMER: if (wp == TIMER_FLUSH) core::flushTypingLog(); else if (wp == TIMER_SITE) mikey::site::poll(); return 0;
     case WM_SETTINGCHANGE: { bool dark = darkTaskbar(); DestroyIcon(_iconV); DestroyIcon(_iconE); _iconV = makeIcon(L'V', dark); _iconE = makeIcon(L'E', dark); updateTray(core::language()); return 0; }
     case WM_DESTROY: core::stop(); Shell_NotifyIconW(NIM_DELETE, &_nid); PostQuitMessage(0); return 0;
     }
@@ -119,30 +119,30 @@ static LRESULT CALLBACK wndProc(HWND h, UINT msg, WPARAM wp, LPARAM lp) {
 }
 
 int WINAPI wWinMain(HINSTANCE inst, HINSTANCE, PWSTR, int) {
-    HANDLE single = CreateMutexW(nullptr, TRUE, L"Local\\VikeyRunning");
+    HANDLE single = CreateMutexW(nullptr, TRUE, L"Local\\MiKeyRunning");
     if (GetLastError() == ERROR_ALREADY_EXISTS) {   // already running: opening the app again shows its window, like on macOS
-        HWND t = FindWindowW(L"VikeyTray", nullptr);
-        if (t) { DWORD pid = 0; GetWindowThreadProcessId(t, &pid); AllowSetForegroundWindow(pid); PostMessageW(t, WM_APP + 3, 0, 0); }   // our foreground right goes to the running Vikey: its window comes to the front
+        HWND t = FindWindowW(L"MiKeyTray", nullptr);
+        if (t) { DWORD pid = 0; GetWindowThreadProcessId(t, &pid); AllowSetForegroundWindow(pid); PostMessageW(t, WM_APP + 3, 0, 0); }   // our foreground right goes to the running MiKey: its window comes to the front
         return 0;
     }
     SetProcessDpiAwarenessContext(DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2);
-    if (vikey::updater::installPendingAtLaunch()) return 0;   // an update downloaded earlier installs now and relaunches Vikey
-    vikey::prefs::migrateFromOpenKey();
-    WNDCLASSW wc = {}; wc.lpfnWndProc = wndProc; wc.hInstance = inst; wc.lpszClassName = L"VikeyTray";
+    if (mikey::updater::installPendingAtLaunch()) return 0;   // an update downloaded earlier installs now and relaunches MiKey
+    mikey::prefs::migrateFromOpenKey();
+    WNDCLASSW wc = {}; wc.lpfnWndProc = wndProc; wc.hInstance = inst; wc.lpszClassName = L"MiKeyTray";
     RegisterClassW(&wc);
-    _hwnd = CreateWindowW(L"VikeyTray", L"Vikey", 0, 0, 0, 0, 0, HWND_MESSAGE, nullptr, inst, nullptr);
+    _hwnd = CreateWindowW(L"MiKeyTray", L"MiKey", 0, 0, 0, 0, 0, HWND_MESSAGE, nullptr, inst, nullptr);
     bool dark = darkTaskbar(); _iconV = makeIcon(L'V', dark); _iconE = makeIcon(L'E', dark);
     _nid.cbSize = sizeof(_nid); _nid.hWnd = _hwnd; _nid.uID = 1; _nid.uFlags = NIF_ICON | NIF_MESSAGE | NIF_TIP; _nid.uCallbackMessage = WM_TRAY; _nid.hIcon = _iconV;
-    wcscpy_s(_nid.szTip, L"Vikey");
+    wcscpy_s(_nid.szTip, L"MiKey");
     Shell_NotifyIconW(NIM_ADD, &_nid);
-    vikey::core::setLanguageObserver([](int lang) { updateTray(lang); vikey::ui::languageChanged(lang); });
-    if (!vikey::core::start()) { MessageBoxW(nullptr, L"Không cài được bộ bắt phím (SetWindowsHookEx).", L"Vikey", MB_ICONERROR); return 1; }
-    updateTray(vikey::core::language());
-    vikey::emoji::install(inst);
-    vikey::core::setEmojiHotkeyHandler([] { PostMessageW(_hwnd, WM_VIKEY_EMOJI, 0, 0); });   // not inside the hook: opening can take a moment
-    if (!vikey::prefs::has(L"FirstRunDone")) vikey::ui::showSettings(inst, true);
+    mikey::core::setLanguageObserver([](int lang) { updateTray(lang); mikey::ui::languageChanged(lang); });
+    if (!mikey::core::start()) { MessageBoxW(nullptr, L"Không cài được bộ bắt phím (SetWindowsHookEx).", L"MiKey", MB_ICONERROR); return 1; }
+    updateTray(mikey::core::language());
+    mikey::emoji::install(inst);
+    mikey::core::setEmojiHotkeyHandler([] { PostMessageW(_hwnd, WM_VIKEY_EMOJI, 0, 0); });   // not inside the hook: opening can take a moment
+    if (!mikey::prefs::has(L"FirstRunDone")) mikey::ui::showSettings(inst, true);
     SetTimer(_hwnd, TIMER_FLUSH, 10000, nullptr);
-    vikey::updater::start(_hwnd);
+    mikey::updater::start(_hwnd);
     SetTimer(_hwnd, TIMER_SITE, 1000, nullptr);   // per-website memory: the active tab can change without any event we see
     MSG msg; while (GetMessageW(&msg, nullptr, 0, 0)) { TranslateMessage(&msg); DispatchMessageW(&msg); }
     ReleaseMutex(single); CloseHandle(single);

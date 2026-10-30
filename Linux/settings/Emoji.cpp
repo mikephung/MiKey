@@ -1,4 +1,4 @@
-// The emoji picker on Linux (vikey-settings --emoji), a port of App/Views/EmojiPicker.swift + App/Model/EmojiSearch.swift.
+// The emoji picker on Linux (mikey-settings --emoji), a port of App/Views/EmojiPicker.swift + App/Model/EmojiSearch.swift.
 // The IBus engine starts it when the emoji hotkey is pressed: a borderless panel in the middle of the screen.
 // Typing searches in English and Vietnamese (and the Telex reading of the keys), the arrows move row by row,
 // Enter types the emoji into the app you were in, Esc clears the search and then closes, clicking elsewhere closes.
@@ -20,7 +20,7 @@
 #include <X11/Xutil.h>
 #include <X11/Xatom.h>
 #endif
-using namespace vikey;
+using namespace mikey;
 using namespace ui;
 
 namespace {
@@ -416,7 +416,7 @@ void buildEmoji(GtkApplication* app) {
 
     GtkCssProvider* css = gtk_css_provider_new();
     gtk_css_provider_load_from_string(css,
-        "window.vikey-emoji { background: transparent; }\n"
+        "window.mikey-emoji { background: transparent; }\n"
         ".emoji-panel { background: @popover_bg_color; color: @popover_fg_color; border-radius: 14px; margin: 20px;"
         "  box-shadow: 0 0 0 1px alpha(black, 0.10), 0 2px 4px alpha(black, 0.12), 0 8px 24px alpha(black, 0.22); }\n"
         ".emoji-search { font-size: 17px; }\n"
@@ -428,9 +428,9 @@ void buildEmoji(GtkApplication* app) {
         "button.emoji-tone-item { font-size: 20px; padding: 2px 6px; }\n");
     gtk_style_context_add_provider_for_display(gdk_display_get_default(), GTK_STYLE_PROVIDER(css), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 
-    P.win = gtk_window_new(); gtk_window_set_application(GTK_WINDOW(P.win), app); gtk_window_set_title(GTK_WINDOW(P.win), "Vikey Emoji");
+    P.win = gtk_window_new(); gtk_window_set_application(GTK_WINDOW(P.win), app); gtk_window_set_title(GTK_WINDOW(P.win), "MiKey Emoji");
     gtk_window_set_decorated(GTK_WINDOW(P.win), FALSE); gtk_window_set_resizable(GTK_WINDOW(P.win), FALSE);
-    gtk_widget_remove_css_class(P.win, "background"); gtk_widget_add_css_class(P.win, "vikey-emoji");
+    gtk_widget_remove_css_class(P.win, "background"); gtk_widget_add_css_class(P.win, "mikey-emoji");
     gtk_window_set_default_size(GTK_WINDOW(P.win), WIDTH + 2 * SHADOW, HEIGHT + 2 * SHADOW);
     GtkWidget* panel = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0); gtk_widget_add_css_class(panel, "emoji-panel"); gtk_widget_set_size_request(panel, WIDTH, HEIGHT); gtk_widget_set_overflow(panel, GTK_OVERFLOW_HIDDEN);
     // search field
@@ -460,12 +460,12 @@ void buildEmoji(GtkApplication* app) {
     g_signal_connect_swapped(vadj(), "value-changed", G_CALLBACK(gtk_widget_queue_draw), P.area);
     gtk_box_append(GTK_BOX(panel), overlay);
     GtkWidget* s2 = gtk_separator_new(GTK_ORIENTATION_HORIZONTAL); gtk_widget_add_css_class(s2, "emoji-sep"); gtk_box_append(GTK_BOX(panel), s2);
-    // footer: the emoji in focus + its name · Vikey · skin tone
+    // footer: the emoji in focus + its name · MiKey · skin tone
     GtkWidget* ft = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 10); gtk_widget_set_size_request(ft, -1, 44); gtk_widget_set_margin_start(ft, 14); gtk_widget_set_margin_end(ft, 14);
     P.curEmoji = lbl("", "emoji-cur"); gtk_widget_set_valign(P.curEmoji, GTK_ALIGN_CENTER); gtk_box_append(GTK_BOX(ft), P.curEmoji);
     P.curName = lbl("", "dim-label"); gtk_label_set_ellipsize(GTK_LABEL(P.curName), PANGO_ELLIPSIZE_END); gtk_widget_set_hexpand(P.curName, TRUE); gtk_widget_set_valign(P.curName, GTK_ALIGN_CENTER); gtk_box_append(GTK_BOX(ft), P.curName);
     GtkWidget* brand = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 5); gtk_widget_set_opacity(brand, 0.85); gtk_widget_set_valign(brand, GTK_ALIGN_CENTER);
-    GtkWidget* bi = gtk_image_new_from_icon_name("vikey"); gtk_image_set_pixel_size(GTK_IMAGE(bi), 16); gtk_box_append(GTK_BOX(brand), bi); gtk_box_append(GTK_BOX(brand), wordmark(13));
+    GtkWidget* bi = gtk_image_new_from_icon_name("mikey"); gtk_image_set_pixel_size(GTK_IMAGE(bi), 16); gtk_box_append(GTK_BOX(brand), bi); gtk_box_append(GTK_BOX(brand), wordmark(13));
     gtk_box_append(GTK_BOX(ft), brand);
     GtkWidget* vs = gtk_separator_new(GTK_ORIENTATION_VERTICAL); gtk_widget_set_size_request(vs, -1, 16); gtk_widget_set_valign(vs, GTK_ALIGN_CENTER); gtk_box_append(GTK_BOX(ft), vs);
     P.toneBtn = gtk_menu_button_new(); gtk_menu_button_set_has_frame(GTK_MENU_BUTTON(P.toneBtn), FALSE); gtk_menu_button_set_always_show_arrow(GTK_MENU_BUTTON(P.toneBtn), FALSE); gtk_widget_add_css_class(P.toneBtn, "emoji-tone"); gtk_widget_set_valign(P.toneBtn, GTK_ALIGN_CENTER);

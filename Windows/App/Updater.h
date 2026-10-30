@@ -1,10 +1,10 @@
-// Updates from vikey.app/appcast.xml: the same Sparkle feed as the Mac app, with Windows enclosures
-// (sparkle:os="windows", vikey:arch="x64"|"arm64") signed with the same EdDSA key.
+// Updates from mikey.app/appcast.xml: the same Sparkle feed as the Mac app, with Windows enclosures
+// (sparkle:os="windows", mikey:arch="x64"|"arm64") signed with the same EdDSA key.
 // Checks daily when "Tự động cập nhật" is on, downloads and verifies the installer, and installs it
-// when Vikey quits (or at the next launch). "Kiểm tra cập nhật…" checks now and asks.
+// when MiKey quits (or at the next launch). "Kiểm tra cập nhật…" checks now and asks.
 #pragma once
 #include <windows.h>
-namespace vikey { namespace updater {
+namespace mikey { namespace updater {
 const UINT WM_UPDATER = WM_APP + 4;   // posted to the owner: wParam = Event
 enum Event { EvUpToDate = 1, EvFailed, EvAvailable, EvDownloaded };
 void start(HWND owner);               // first check after a short delay, then daily

@@ -1,4 +1,4 @@
-// Shared pieces of vikey-settings: hotkey names and the shortcut recorder (same bit layout as the Mac/Windows
+// Shared pieces of mikey-settings: hotkey names and the shortcut recorder (same bit layout as the Mac/Windows
 // apps: low byte = key code, 0xFE = modifiers only, 0x100 Ctrl, 0x200 Alt, 0x400 Super, 0x800 Shift, 0x8000 sound),
 // the (?) tip next to a setting's title, and the window entry points.
 #pragma once
@@ -10,7 +10,7 @@
 #define VIKEY_VERSION "0.0.0"
 #endif
 #ifndef VIKEY_DATADIR
-#define VIKEY_DATADIR "/usr/share/vikey"
+#define VIKEY_DATADIR "/usr/share/mikey"
 #endif
 namespace ui {
 int currentHotkey();                            // the Vietnamese/English switch, default Alt+Z

@@ -8,8 +8,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         if let dir = UserDefaults.standard.string(forKey: "emojiSelfTest") { EmojiSelfTest.run(dir: dir); return }
         #endif
         Migration.fromOpenKeyIfNeeded()
-        // people who already use Vikey (permission granted) don't get the first-run guide on update
-        if UserDefaults.standard.object(forKey: OnboardingView.doneKey) == nil && VikeyCore.isAccessibilityTrusted() {
+        // people who already use MiKey (permission granted) don't get the first-run guide on update
+        if UserDefaults.standard.object(forKey: OnboardingView.doneKey) == nil && MiKeyCore.isAccessibilityTrusted() {
             UserDefaults.standard.set(true, forKey: OnboardingView.doneKey)
         }
         AppState.shared.startIfPossible()
@@ -32,26 +32,26 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
         let ws = NSWorkspace.shared.notificationCenter
         ws.addObserver(forName: NSWorkspace.didActivateApplicationNotification, object: nil, queue: .main) { _ in
-            VikeyCore.frontmostAppChanged()
+            MiKeyCore.frontmostAppChanged()
         }
         ws.addObserver(forName: NSWorkspace.activeSpaceDidChangeNotification, object: nil, queue: .main) { _ in
-            VikeyCore.activeSpaceChanged()
+            MiKeyCore.activeSpaceChanged()
         }
         ws.addObserver(forName: NSWorkspace.willSleepNotification, object: nil, queue: .main) { _ in
-            VikeyCore.stop()
+            MiKeyCore.stop()
         }
         ws.addObserver(forName: NSWorkspace.didWakeNotification, object: nil, queue: .main) { _ in
             AppState.shared.startIfPossible()
         }
     }
 
-    /// Opening Vikey again while it runs (Finder, Spotlight, Dock) shows the main window.
+    /// Opening MiKey again while it runs (Finder, Spotlight, Dock) shows the main window.
     func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
         if AppState.shared.needsOnboarding { OnboardingWindow.show() } else { Windows.main.show() }
         return false
     }
 
     func applicationWillTerminate(_ notification: Notification) {
-        VikeyCore.flushTypingLog()
+        MiKeyCore.flushTypingLog()
     }
 }

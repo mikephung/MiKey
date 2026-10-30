@@ -10,7 +10,7 @@
 #pragma comment(lib, "ole32.lib")
 #pragma comment(lib, "oleaut32.lib")
 
-namespace vikey { namespace site {
+namespace mikey { namespace site {
 
 static IUIAutomation* _uia = nullptr;
 
@@ -68,7 +68,7 @@ std::wstring currentHost() {
     return host;
 }
 
-/// Vikey's own windows are in front: UI Automation calls into windows of this very thread stall it for seconds
+/// MiKey's own windows are in front: UI Automation calls into windows of this very thread stall it for seconds
 /// (the main window took ~30 s to show, clicks were late), and there is no site or password field to read there.
 static bool ownWindowInFront() { DWORD pid = 0; GetWindowThreadProcessId(GetForegroundWindow(), &pid); return pid == GetCurrentProcessId(); }
 

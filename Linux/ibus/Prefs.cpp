@@ -7,15 +7,15 @@
 #include <mutex>
 #include <cstring>
 #include <cstdio>
-namespace vikey { namespace prefs {
+namespace mikey { namespace prefs {
 static std::map<std::string, std::string> _v;   // settings.json: raw JSON value text: "123" or "\"str\""
 static std::map<std::string, std::string> _st;  // stats.json (TLStat_* counters): written only by the engine
 static bool isStat(const char* k) { return strncmp(k, "TLStat_", 7) == 0; }
 static std::string statsPath() { return dataDir() + "/stats.json"; }
 static bool _loaded = false; static std::mutex _m;
 static std::string env(const char* n, const std::string& d) { const char* e = getenv(n); return e && *e ? e : d; }
-std::string configDir() { return env("XDG_CONFIG_HOME", env("HOME", "/tmp") + "/.config") + "/vikey"; }
-std::string dataDir() { return env("XDG_DATA_HOME", env("HOME", "/tmp") + "/.local/share") + "/vikey"; }
+std::string configDir() { return env("XDG_CONFIG_HOME", env("HOME", "/tmp") + "/.config") + "/mikey"; }
+std::string dataDir() { return env("XDG_DATA_HOME", env("HOME", "/tmp") + "/.local/share") + "/mikey"; }
 std::string settingsPath() { return configDir() + "/settings.json"; }
 static void mkdirp(const std::string& p) { std::string cur; for (size_t i = 1; i <= p.size(); i++) if (i == p.size() || p[i] == '/') { cur = p.substr(0, i); mkdir(cur.c_str(), 0700); } }
 static std::string jstr(const std::string& s) { std::string o = "\""; for (unsigned char c : s) { if (c == '"' || c == '\\') { o += '\\'; o += c; } else if (c < 0x20) { char b[8]; snprintf(b, 8, "\\u%04x", c); o += b; } else o += c; } return o + "\""; }

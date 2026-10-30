@@ -1,7 +1,7 @@
 #include <windows.h>
 #include "resource.h"
-IDI_APP ICON "Vikey.ico"
-1 24 "Vikey.manifest"
+IDI_APP ICON "MiKey.ico"
+1 24 "MiKey.manifest"
 IDR_SOUND_VI RCDATA "Sounds/SwitchToVietnamese.wav"
 IDR_SOUND_EN RCDATA "Sounds/SwitchToEnglish.wav"
 IDR_EMOJI_JSON RCDATA "../../App/Resources/Emoji.json"
@@ -16,12 +16,12 @@ BEGIN
     BLOCK "040904b0"
     BEGIN
       VALUE "CompanyName", "Tony Dinh"
-      VALUE "FileDescription", "Vikey - Vietnamese typing"
+      VALUE "FileDescription", "MiKey - Vietnamese typing"
       VALUE "FileVersion", VIKEY_VERSION
-      VALUE "InternalName", "Vikey"
+      VALUE "InternalName", "MiKey"
       VALUE "LegalCopyright", "GPL-3.0. Based on OpenKey by Tuyen Mai."
-      VALUE "OriginalFilename", "Vikey.exe"
-      VALUE "ProductName", "Vikey"
+      VALUE "OriginalFilename", "MiKey.exe"
+      VALUE "ProductName", "MiKey"
       VALUE "ProductVersion", VIKEY_VERSION
     END
   END

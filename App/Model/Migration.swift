@@ -1,6 +1,6 @@
 import Foundation
 
-/// First launch of Vikey on a Mac that used OpenKey: bring over the settings, the per-app/per-site
+/// First launch of MiKey on a Mac that used OpenKey: bring over the settings, the per-app/per-site
 /// language memory, macros and the typing log, so nothing has to be set up again.
 enum Migration {
     static func fromOpenKeyIfNeeded() {
@@ -19,7 +19,7 @@ enum Migration {
         let fm = FileManager.default
         if let support = fm.urls(for: .applicationSupportDirectory, in: .userDomainMask).first {
             let from = support.appendingPathComponent("OpenKey/typing-log.jsonl")
-            let toDir = support.appendingPathComponent("Vikey")
+            let toDir = support.appendingPathComponent("MiKey")
             let to = toDir.appendingPathComponent("typing-log.jsonl")
             if fm.fileExists(atPath: from.path), !fm.fileExists(atPath: to.path) {
                 try? fm.createDirectory(at: toDir, withIntermediateDirectories: true)

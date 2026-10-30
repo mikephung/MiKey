@@ -1,6 +1,6 @@
 import Foundation
 
-/// Credits for the code and the data Vikey is built from (shared by the Mac and iOS apps).
+/// Credits for the code and the data MiKey is built from (shared by the Mac and iOS apps).
 /// The same list is in ACKNOWLEDGEMENTS.md.
 struct Credit: Identifiable {
     let name: String, by: String, license: String, url: String
@@ -8,12 +8,12 @@ struct Credit: Identifiable {
 }
 
 enum Acknowledgements {
-    /// Code Vikey uses.
+    /// Code MiKey uses.
     static let code: [Credit] = [
         Credit(name: "OpenKey", by: "Tuyen Mai", license: "GPL-3.0", url: "https://github.com/tuyenvm/OpenKey"),
         Credit(name: "Sparkle", by: "Sparkle Project", license: "MIT", url: "https://sparkle-project.org"),
     ]
-    /// Text Vikey's word statistics are counted from (only counts are built in, no text).
+    /// Text MiKey's word statistics are counted from (only counts are built in, no text).
     static let wordData: [Credit] = [
         Credit(name: "FrequencyWords (OpenSubtitles 2018)", by: "Hermit Dave", license: "CC BY-SA 4.0", url: "https://github.com/hermitdave/FrequencyWords"),
         Credit(name: "FineWeb-2 and FineWeb", by: "Hugging Face", license: "ODC-By 1.0", url: "https://huggingface.co/datasets/HuggingFaceFW/fineweb-2"),

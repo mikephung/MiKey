@@ -16,7 +16,7 @@ void randombytes(unsigned char* b, unsigned long long n) { for (unsigned long lo
 }
 #pragma comment(lib, "winhttp.lib")
 
-namespace vikey { namespace updater {
+namespace mikey { namespace updater {
 
 #ifndef VIKEY_VERSION
 #define VIKEY_VERSION "0.0.0"
@@ -28,7 +28,7 @@ static const wchar_t* ARCH = L"x64";
 #endif
 // Sparkle public key (App/Info.plist SUPublicEDKey), base64
 static const char* PUBKEY_B64 = "HieG7HYkZUv8/R1Ve/+QdvpSUw4nL39th5T9FDnsh5U=";
-static const wchar_t* DEFAULT_FEED = L"https://vikey.app/appcast.xml";
+static const wchar_t* DEFAULT_FEED = L"https://mikey.app/appcast.xml";
 
 struct Release { std::wstring version, url, signature, notes; unsigned long long length = 0; };
 static HWND _owner;
@@ -80,7 +80,7 @@ static bool httpGet(const std::wstring& url, std::vector<unsigned char>& out, un
     out.clear();
     URL_COMPONENTS uc = {sizeof(uc)}; wchar_t host[256], path[2048]; uc.lpszHostName = host; uc.dwHostNameLength = 256; uc.lpszUrlPath = path; uc.dwUrlPathLength = 2048;
     if (!WinHttpCrackUrl(url.c_str(), 0, 0, &uc)) return false;
-    HINTERNET s = WinHttpOpen(L"Vikey/" VIKEY_VERSION, WINHTTP_ACCESS_TYPE_AUTOMATIC_PROXY, WINHTTP_NO_PROXY_NAME, WINHTTP_NO_PROXY_BYPASS, 0);
+    HINTERNET s = WinHttpOpen(L"MiKey/" VIKEY_VERSION, WINHTTP_ACCESS_TYPE_AUTOMATIC_PROXY, WINHTTP_NO_PROXY_NAME, WINHTTP_NO_PROXY_BYPASS, 0);
     if (!s) return false;
     bool ok = false;
     HINTERNET c = WinHttpConnect(s, host, uc.nPort, 0);
@@ -112,7 +112,7 @@ static bool newestInFeed(const std::string& xml, Release& best) {
         size_t q = 0;
         while ((q = item.find("<enclosure", q)) != std::string::npos) {
             size_t qe = item.find('>', q); std::string tag = item.substr(q, qe - q); q = qe;
-            if (attr(tag, "sparkle:os") != L"windows" || attr(tag, "vikey:arch") != ARCH) continue;
+            if (attr(tag, "sparkle:os") != L"windows" || attr(tag, "mikey:arch") != ARCH) continue;
             Release r; r.url = attr(tag, "url"); r.signature = attr(tag, "sparkle:edSignature"); r.length = _wtoi64(attr(tag, "length").c_str());
             r.version = widen(element(item, "sparkle:shortVersionString")); if (r.version.empty()) r.version = widen(element(item, "sparkle:version"));
             r.notes = stripHtml(element(item, "description"));
@@ -130,7 +130,7 @@ static bool verify(const std::vector<unsigned char>& file, const std::wstring& s
     return crypto_sign_open(m.data(), &mlen, sm.data(), sm.size(), pk.data()) == 0;
 }
 static std::wstring updatesDir() { std::wstring d = prefs::appDataDir() + L"\\updates"; CreateDirectoryW(d.c_str(), nullptr); return d; }
-static std::wstring installerPath(const Release& r) { return updatesDir() + L"\\Vikey-" + r.version + L"-" + ARCH + L"-Setup.exe"; }
+static std::wstring installerPath(const Release& r) { return updatesDir() + L"\\MiKey-" + r.version + L"-" + ARCH + L"-Setup.exe"; }
 static void rememberPending(const std::wstring& path, const std::wstring& version) { prefs::setString(L"PendingUpdatePath", path.c_str()); prefs::setString(L"PendingUpdateVersion", version.c_str()); _pendingPath = path; }
 static void forgetPending() { prefs::remove(L"PendingUpdatePath"); prefs::remove(L"PendingUpdateVersion"); _pendingPath.clear(); }
 
@@ -176,15 +176,15 @@ void onEvent(WPARAM ev) {
     if (!_manual) return;   // automatic checks stay silent
     std::wstring cur = widen(VIKEY_VERSION);
     switch (ev) {
-    case EvUpToDate: MessageBoxW(nullptr, (L"Bạn đang dùng bản mới nhất của Vikey (" + cur + L").").c_str(), L"Vikey", MB_OK | MB_ICONINFORMATION | MB_SETFOREGROUND); break;
-    case EvFailed: MessageBoxW(nullptr, _lastError.c_str(), L"Vikey", MB_OK | MB_ICONWARNING | MB_SETFOREGROUND); break;
+    case EvUpToDate: MessageBoxW(nullptr, (L"Bạn đang dùng bản mới nhất của MiKey (" + cur + L").").c_str(), L"MiKey", MB_OK | MB_ICONINFORMATION | MB_SETFOREGROUND); break;
+    case EvFailed: MessageBoxW(nullptr, _lastError.c_str(), L"MiKey", MB_OK | MB_ICONWARNING | MB_SETFOREGROUND); break;
     case EvAvailable: {
-        std::wstring head = L"Vikey " + _found.version + L" đã có", body = L"Bạn đang dùng " + cur + L".";
+        std::wstring head = L"MiKey " + _found.version + L" đã có", body = L"Bạn đang dùng " + cur + L".";
         if (!_found.notes.empty()) body += L"\n\n" + _found.notes;
-        body += L"\n\nVikey sẽ tải về, cài đặt và tự mở lại.";
+        body += L"\n\nMiKey sẽ tải về, cài đặt và tự mở lại.";
         TASKDIALOG_BUTTON btns[] = {{IDYES, L"Cài đặt"}, {IDNO, L"Để sau"}};
         TASKDIALOGCONFIG cfg = {sizeof(cfg)}; cfg.hInstance = GetModuleHandleW(nullptr); cfg.dwFlags = TDF_ALLOW_DIALOG_CANCELLATION | TDF_POSITION_RELATIVE_TO_WINDOW;
-        cfg.pszWindowTitle = L"Vikey"; cfg.pszMainIcon = MAKEINTRESOURCEW(IDI_APP); cfg.pszMainInstruction = head.c_str(); cfg.pszContent = body.c_str();
+        cfg.pszWindowTitle = L"MiKey"; cfg.pszMainIcon = MAKEINTRESOURCEW(IDI_APP); cfg.pszMainInstruction = head.c_str(); cfg.pszContent = body.c_str();
         cfg.pButtons = btns; cfg.cButtons = 2; cfg.nDefaultButton = IDYES;
         int pressed = 0; TaskDialogIndirect(&cfg, &pressed, nullptr, nullptr);
         if (pressed != IDYES) break;
@@ -193,7 +193,7 @@ void onEvent(WPARAM ev) {
         break; }
     case EvDownloaded:
         if (runInstaller(_pendingPath, false)) { forgetPending(); PostMessageW(_owner, WM_CLOSE, 0, 0); }
-        else MessageBoxW(nullptr, L"Không chạy được trình cài đặt.", L"Vikey", MB_OK | MB_ICONWARNING | MB_SETFOREGROUND);
+        else MessageBoxW(nullptr, L"Không chạy được trình cài đặt.", L"MiKey", MB_OK | MB_ICONWARNING | MB_SETFOREGROUND);
         break;
     }
 }

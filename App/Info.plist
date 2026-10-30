@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>vi</string>
 	<key>CFBundleDisplayName</key>
-	<string>Vikey</string>
+	<string>MiKey</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -27,18 +27,18 @@
 	<key>LSUIElement</key>
 	<true/>
 	<key>NSAppleEventsUsageDescription</key>
-	<string>Vikey đọc địa chỉ tab đang mở để nhớ tiếng Anh hay tiếng Việt cho từng trang web. Địa chỉ chỉ dùng trên máy bạn.</string>
+	<string>MiKey đọc địa chỉ tab đang mở để nhớ ngôn ngữ cho từng trang web. Địa chỉ chỉ dùng trên máy bạn.</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>© 2026 Tony Dinh</string>
+	<string>© 2026. Based on Vikey by Tony Dinh. GPL-3.0 License.</string>
 	<key>SUAutomaticallyUpdate</key>
-	<true/>
+	<false/>
 	<key>SUEnableAutomaticChecks</key>
-	<true/>
+	<false/>
 	<key>SUFeedURL</key>
-	<string>https://vikey.app/appcast.xml</string>
+	<string></string>
 	<key>SUPublicEDKey</key>
-	<string>HieG7HYkZUv8/R1Ve/+QdvpSUw4nL39th5T9FDnsh5U=</string>
+	<string></string>
 	<key>SUScheduledCheckInterval</key>
-	<integer>86400</integer>
+	<integer>0</integer>
 </dict>
 </plist>

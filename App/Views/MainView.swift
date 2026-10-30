@@ -1,6 +1,6 @@
 import SwiftUI
 
-/// Vikey's one window: the language switch on top, then every setting, compact.
+/// MiKey's one window: the language switch on top, then every setting, compact.
 struct MainView: View {
     @EnvironmentObject var state: AppState
     @AppStorage(PrefKey.hotkey) private var hotkeyRaw = Hotkey.defaultValue
@@ -35,14 +35,14 @@ struct MainView: View {
                 }
                 Section("Tự chuyển") {
                     Toggle(isOn: flag($autoSwitch)) {
-                        Tip("Tự chuyển Anh/Việt", "Gõ một từ tiếng Anh khi đang ở tiếng Việt (hoặc ngược lại), Vikey tự sửa từ đó và chuyển chế độ. Bấm Xoá ngay sau đó để hoàn tác.")
+                        Tip("Tự chuyển Anh/Việt", "Gõ một từ tiếng Anh khi đang ở tiếng Việt (hoặc ngược lại), MiKey tự sửa từ đó và chuyển chế độ. Bấm Xoá ngay sau đó để hoàn tác.")
                     }
                     Toggle(isOn: flag($pauseAfterManual)) {
-                        Tip("Tạm dừng 5 giây", "Khi bạn tự bấm chuyển Anh/Việt, Vikey không tự chuyển trong 5 giây, để giữ đúng lựa chọn của bạn.")
+                        Tip("Tạm dừng 5 giây", "Khi bạn tự bấm chuyển Anh/Việt, MiKey không tự chuyển trong 5 giây, để giữ đúng lựa chọn của bạn.")
                     }
                     .disabled(autoSwitch == 0)
                     Toggle(isOn: flag($smartSwitch)) {
-                        Tip("Nhớ theo ứng dụng", "Vikey nhớ bạn dùng tiếng Anh hay tiếng Việt ở mỗi ứng dụng và tự chuyển lại khi bạn quay về ứng dụng đó.")
+                        Tip("Nhớ theo ứng dụng", "MiKey nhớ bạn dùng tiếng Anh hay tiếng Việt ở mỗi ứng dụng và tự chuyển lại khi bạn quay về ứng dụng đó.")
                     }
                     Toggle(isOn: Binding(get: { perSite }, set: { setPerSite($0) })) {
                         Tip("Nhớ theo trang web", "Trong Safari, Chrome, Edge, Brave, Arc, Vivaldi, Opera: nhớ tiếng Anh hay tiếng Việt cho từng trang web. Cần quyền đọc địa chỉ tab đang mở, chỉ dùng trên máy bạn.")
@@ -60,7 +60,7 @@ struct MainView: View {
                         Tip("Kiểm tra chính tả", "Chỉ bỏ dấu khi từ đang gõ đúng quy tắc chính tả tiếng Việt.")
                     }
                     Toggle(isOn: flag($restore)) {
-                        Tip("Trả lại phím khi sai", "Khi gõ xong một từ sai chính tả tiếng Việt, Vikey trả lại đúng các phím bạn đã gõ.")
+                        Tip("Trả lại phím khi sai", "Khi gõ xong một từ sai chính tả tiếng Việt, MiKey trả lại đúng các phím bạn đã gõ.")
                     }
                     .disabled(spelling == 0)
                 }
@@ -81,15 +81,15 @@ struct MainView: View {
                 }
                 Section {
                     Toggle(isOn: Binding(get: { launchAtLogin }, set: { LaunchAtLogin.set($0); launchAtLogin = LaunchAtLogin.isEnabled })) {
-                        Tip("Mở Vikey khi đăng nhập", "Tự mở Vikey mỗi khi bạn đăng nhập vào máy Mac.")
+                        Tip("Mở MiKey khi đăng nhập", "Tự mở MiKey mỗi khi bạn đăng nhập vào máy Mac.")
                     }
                     Toggle(isOn: Binding(get: { updater.automatic }, set: { updater.automatic = $0 })) {
-                        Tip("Tự động cập nhật", "Mỗi ngày Vikey kiểm tra bản mới trên vikey.app, tự tải về và cài khi bạn thoát Vikey hoặc tắt máy.")
+                        Tip("Tự động cập nhật", "Mỗi ngày MiKey kiểm tra bản mới trên vikey.app, tự tải về và cài khi bạn thoát MiKey hoặc tắt máy.")
                     }
                     LabeledContent {
                         Button("Gửi góp ý…") { Feedback.open() }
                     } label: {
-                        Tip("Góp ý", "Báo lỗi hoặc góp ý cho Vikey: mở trang vikey.app/feedback trong trình duyệt.")
+                        Tip("Góp ý", "Báo lỗi hoặc góp ý cho MiKey: mở trang vikey.app/feedback trong trình duyệt.")
                     }
                 }
             }
@@ -99,13 +99,13 @@ struct MainView: View {
         }
         .frame(width: 460)
         .fixedSize(horizontal: false, vertical: true)
-        .alert("Vikey chưa được phép đọc địa chỉ trang web", isPresented: $browserDenied) {
+        .alert("MiKey chưa được phép đọc địa chỉ trang web", isPresented: $browserDenied) {
             Button("Mở Cài đặt hệ thống") {
                 NSWorkspace.shared.open(URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Automation")!)
             }
             Button("Để sau", role: .cancel) {}
         } message: {
-            Text("Vào Quyền riêng tư & Bảo mật › Tự động hoá, bật trình duyệt của bạn dưới Vikey, rồi bật lại tuỳ chọn này.")
+            Text("Vào Quyền riêng tư & Bảo mật › Tự động hoá, bật trình duyệt của bạn dưới MiKey, rồi bật lại tuỳ chọn này.")
         }
     }
 
@@ -114,7 +114,7 @@ struct MainView: View {
         perSite = on
         Preferences.apply()
         guard on else { return }
-        VikeyCore.requestBrowserAccess { denied in
+        MiKeyCore.requestBrowserAccess { denied in
             guard denied else { return }
             perSite = false
             Preferences.apply()

@@ -13,7 +13,7 @@ int vLanguage = 1, vSwitchKeyStatus = 0x7A000206, vCheckSpelling = 1, vUseModern
 int vRestoreIfWrongSpelling = 1, vFixRecommendBrowser = 0, vUseSmartSwitchKey = 1, vOtherLanguage = 1;
 int vAutoSwitchByTyping = 1, vPerformLayoutCompat = 0;
 
-namespace vikey { namespace core {
+namespace mikey { namespace core {
 static const int EMPTY_HOTKEY = 0xFE0000FE;
 #define OTHER_CONTROL_KEY ((_flag & F_CONTROL) || (_flag & F_ALT) || (_flag & F_WIN))
 static Output _out;

@@ -1,7 +1,7 @@
 import SwiftUI
 
 @main
-struct VikeyApp: App {
+struct MiKeyApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
     @StateObject private var state = AppState.shared
 
@@ -14,7 +14,7 @@ struct VikeyApp: App {
         }
         .commands {
             CommandGroup(replacing: .appInfo) {
-                Button("Giới thiệu về Vikey") { AboutPanel.show() }   // with the credits
+                Button("Giới thiệu về MiKey") { AboutPanel.show() }   // with the credits
                 Button("Ghi nhận…") { Windows.acknowledgements.show() }
                 Button("Kiểm tra cập nhật…") { Updater.shared.checkForUpdates() }
                 Divider()

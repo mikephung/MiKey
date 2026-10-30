@@ -1,51 +1,70 @@
-# Vikey
+# MiKey
 
-Vietnamese typing for macOS, Windows, Linux, iOS and Android that switches between Vietnamese and English for you.
-
-Made by [Tony Dinh](https://tonydinh.com) (Đinh Quang Trung, [@trungdq88](https://github.com/trungdq88)). Free and open source under GPL-3.0; based on [OpenKey](https://github.com/tuyenvm/OpenKey) by Tuyen Mai.
-
-Type Telex as usual. When you type an English word in Vietnamese mode, or a Vietnamese word in English mode, Vikey fixes the word and switches the language. No more pressing the switch key every few words.
+Vietnamese and German typing for macOS, Windows, and Linux. Forked from [Vikey](https://github.com/trungdq88/Vikey) by Tony Dinh.
 
 ## Features
 
-- **Telex** with modern or classic tone placement (hoà / hòa), spell checking, and keeping your keys as typed when a word isn't Vietnamese.
-- **Auto switch:**
-  - `more` → stays English;
-  - `treen` → `trên`;
-  - `truowfng`, `truongwf`, `truwownfg` → `trường`;
-  - `this makes sense` comes out right in Vietnamese mode, because ambiguous words are fixed once the context is clear.
-- **Programming-aware:**
-  - `var`, `const`, `git push`, `obj.dir` and `my_var` are left alone.
-- **Undo:** press Delete right after an automatic fix to undo it.
-- **Remembers the language** for each app, and for each website in Chrome, Safari, Arc, Brave, Edge, Vivaldi and Opera.
-- **Switch hotkey:** a key with modifiers, or modifiers alone (⌃⇧), with an optional beep.
-- **Works with Dvorak and other layouts:** Vikey steps aside automatically for other input languages (Japanese, Chinese…).
+### Vietnamese Mode (Telex)
+- **Telex** with modern or classic tone placement (hoà / hòa), spell checking
+- **Auto switch:** Automatically detects and switches between Vietnamese and English
+- **Programming-aware:** `var`, `const`, `git push`, `obj.dir` stay unchanged
+- **Undo:** Press Delete right after an automatic fix to undo it
+
+### German Mode (coming soon)
+- Type umlauts easily: `ae` → `ä`, `oe` → `ö`, `ue` → `ü`
+- Eszett support: `ss` → `ß` (optional)
+
+## Telex Guide
+
+| Keys | Result |
+|------|--------|
+| aa | â |
+| aw | ă |
+| ee | ê |
+| oo | ô |
+| ow | ơ |
+| uw | ư |
+| dd | đ |
+| s | sắc (´) |
+| f | huyền (`) |
+| r | hỏi (?) |
+| x | ngã (~) |
+| j | nặng (.) |
+| z | remove tone |
 
 ## Build
 
+### macOS
 Requires Xcode and [XcodeGen](https://github.com/yonaskolb/XcodeGen).
 
 ```sh
 xcodegen generate
-xcodebuild -project Vikey.xcodeproj -scheme Vikey -configuration Release build
+xcodebuild -project MiKey.xcodeproj -scheme MiKey -configuration Release build
 ```
 
-Vikey needs Accessibility permission (to read and rewrite keystrokes). On first launch it walks you through granting it.
-
-## Debug typing log
-
-For tuning auto switch, turn on Gỡ lỗi → Ghi nhật ký gõ in the menu bar. It counts manual vs automatic switches and (optionally) records the keys of each word to `~/Library/Application Support/Vikey/typing-log.jsonl`, never in password fields, password managers or terminals. Off by default. Analyze with `Tools/autoswitch/analyze_log.py`.
-
-## Engine tests
-
-Every typing rule is locked down by tests: rule-tagged cases, golden snapshots of typing a mixed Vietnamese/English corpus, and every Vietnamese syllable.
+### Windows
+Requires Visual Studio with C++ support.
 
 ```sh
-Tools/autoswitch/check.sh
+cd Windows
+cmake -B build
+cmake --build build --config Release
 ```
 
-See [DECISIONS.md](DECISIONS.md) for every rule and why it exists.
+### Linux
+Requires IBus development libraries.
 
-## License and credits
+```sh
+cd Linux
+cmake -B build
+cmake --build build
+sudo cmake --install build
+```
 
-Vikey is based on [OpenKey](https://github.com/tuyenvm/OpenKey) by Tuyen Mai, and is distributed under the GNU General Public License v3.0. See [LICENSE](LICENSE).
+## Credits
+
+MiKey is based on [Vikey](https://github.com/trungdq88/Vikey) by [Tony Dinh](https://tonydinh.com), which is based on [OpenKey](https://github.com/tuyenvm/OpenKey) by Tuyen Mai.
+
+## License
+
+GNU General Public License v3.0. See [LICENSE](LICENSE).
