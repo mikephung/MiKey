@@ -1,0 +1,8 @@
+# MiKey: words that are always English/foreign, on top of en_extra.txt (built into Engine/GermanData.h by build_german.py).
+# Tech names and brands that Telex turns into a rare or invalid syllable. Never add a word whose Telex reading is a
+# common Vietnamese word: gif (gì), hdd (hđ = hợp đồng) and rar (rả: rôm rả) stay Vietnamese; typed in capitals
+# they stay as typed. Check with Tools/autoswitch/check.sh: the Telex lock lists every syllable a word here changes.
+osx macos ios ipados watchos tvos visionos
+exe dmg pkg msi apk
+terraform kubectl devops
+coop migros denner sbb twint

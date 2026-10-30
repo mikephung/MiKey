@@ -13,6 +13,7 @@
 #include <list>
 #include "AutoSwitchData.h"
 #include "BigramData.h"
+#include "GermanData.h"
 #include <string>
 #include <unordered_map>
 #include <cstdio>
@@ -1253,8 +1254,29 @@ static inline int asVietnameseScore(const char* key) {
     return asLookup(kAutoSwitchVnWords, kAutoSwitchVnOffsets, kAutoSwitchVnScores, kAutoSwitchVnCount, key);
 }
 
+//German-aware auto switch (MiKey): German words count as "the other language" like English ones, so
+//"wir", "der", "nur" typed in Vietnamese mode stay as typed. Off unless the app turns it on.
+#ifndef AS_GERMAN_DEFAULT
+#define AS_GERMAN_DEFAULT 0  //EXTRA="-DAS_GERMAN_DEFAULT=1" Tools/autoswitch/check.sh shows what German awareness changes
+#endif
+int vGermanAware = AS_GERMAN_DEFAULT;
+#ifndef AS_DE_PENALTY
+#define AS_DE_PENALTY 0     //points taken off German scores (German counts a bit less than English when > 0)
+#endif
+static inline int asGermanScore(const char* word) {
+    return asLookup(kAutoSwitchDeWords, kAutoSwitchDeOffsets, kAutoSwitchDeScores, kAutoSwitchDeCount, word);
+}
+
 static inline int asEnglishScore(const char* word) {
-    return asLookup(kAutoSwitchEnWords, kAutoSwitchEnOffsets, kAutoSwitchEnScores, kAutoSwitchEnCount, word);
+    int en = asLookup(kAutoSwitchEnWords, kAutoSwitchEnOffsets, kAutoSwitchEnScores, kAutoSwitchEnCount, word);
+    //MiKey extra words (mikey_extra.txt: osx, exe, coop...): always English
+    int mk = asLookup(kAutoSwitchMkWords, kAutoSwitchMkOffsets, kAutoSwitchMkScores, kAutoSwitchMkCount, word);
+    if (mk > en) en = mk;
+    if (vGermanAware) {
+        int de = asGermanScore(word);
+        if (de != AS_MISSING && de - AS_DE_PENALTY > en) en = de - AS_DE_PENALTY;
+    }
+    return en;
 }
 
 /** Normalized key of the word in TypingWord; transformed = it has a tone, ^, w-horn/breve or đ. */
@@ -1951,6 +1973,34 @@ bool vAutoSwitchCheckEnglishWord(const Uint32* keys, const int& count) {
 }
 /*==========================================================================================================*/
 
+
+/** A letter Telex doesn't know (ä ö ü ß é...) was typed inside the current word: the word is foreign
+ *  (Grüße, über, Café). Puts the keys typed so far back on screen when Telex changed them ("ber" stays,
+ *  "Gr" stays) and ends the word. Returns true when there is something to send (hCode = vWillProcess). */
+bool vKeyRestoreRawWord() {
+    hCode = vDoNothing; hBPC = 0; hNCC = 0; hExt = 3;
+    bool changed = _stateIndex != _index || _asDropN > 0;
+    for (int x = 0; !changed && x < _index && x < MAX_BUFF; x++)
+        if ((TypingWord[x] & ~CAPS_MASK) != (KeyStates[x] & ~CAPS_MASK) || ((TypingWord[x] ^ KeyStates[x]) & CAPS_MASK)) changed = true;
+    Uint32 full[MAX_BUFF];
+    int n = 0, del = 0;
+    //after a space or a symbol the engine still holds the previous word: nothing of this word to put back
+    if (changed && _spaceCount == 0 && _specialChar.empty() && _stateIndex > 0 && _stateIndex < MAX_BUFF && _index > 0 && _longWordHelper.empty()) {
+        n = asStatesWithDrops(full, MAX_BUFF - 1);
+        del = _index;
+    }
+    startNewSession();          //resets the hook result: fill it in afterwards
+    _specialChar.clear();
+    _typingStates.clear();
+    _spaceCount = 0;
+    _asPrevCount = 0;
+    hCode = n > 0 ? vWillProcess : vDoNothing;
+    hBPC = del;
+    hNCC = n;
+    hExt = 3;
+    for (int x = 0; x < n; x++) hData[n - 1 - x] = full[x];
+    return n > 0;
+}
 
 void vKeyHandleEvent(const vKeyEvent& event,
                      const vKeyEventState& state,

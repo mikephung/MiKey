@@ -1,0 +1,8 @@
+# Live cases for the MiKey input method (typed for real into TextEdit). Same format as de_cases.tsv:
+# start(1=VN,0=EN)	keys ('|' = Return, '<' = Backspace, ä ö ü from their own keys)	expected text	final lang	why
+1	ddawng 	đăng 	1	ă after đ (reported: came out "đawng")
+1	chuwx ddawng cungx ddang looxi 	chữ đăng cũng đang lỗi 	1	the reported sentence
+1	ddawng kys trene X 	đăng ký trên X 	1	chat
+1	tooi ddi hocj|	tôi đi học|	1	Return ends the word
+1	text, next.	text, next.	0	punctuation right after English words
+1	über alles 	über alles 	1	umlaut key on a QWERTZ keyboard

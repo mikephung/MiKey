@@ -10,9 +10,20 @@ Vietnamese and German typing for macOS, Windows, and Linux. Forked from [Vikey](
 - **Programming-aware:** `var`, `const`, `git push`, `obj.dir` stay unchanged
 - **Undo:** Press Delete right after an automatic fix to undo it
 
-### German Mode (coming soon)
-- Type umlauts easily: `ae` → `ä`, `oe` → `ö`, `ue` → `ü`
-- Eszett support: `ss` → `ß` (optional)
+### For German and Swiss keyboards
+- **Umlaut keys just work:** ä ö ü ß é never go through Telex: "über", "Grüße", "Café" stay as typed
+- **Knows German:** "wir", "der", "dass" stay German instead of "ửi", "dẻ", "das" (can be turned off in the input menu)
+- **Tech words:** "osx", "macos", "exe" are never turned into "õ", "ễ"
+
+## macOS input source (recommended)
+
+MiKey runs as a real macOS input source, next to "Schweiz, deutsch" or "ABC" in the input menu. No Accessibility permission needed.
+
+```sh
+Tools/build_inputmethod.sh install
+```
+
+Then pick **MiKey** in the input menu (or add it in System Settings > Keyboard > Input Sources > Edit > + > Vietnamese). ⌥Z switches Vietnamese ↔ English/German.
 
 ## Telex Guide
 
