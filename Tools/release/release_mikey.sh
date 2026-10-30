@@ -122,7 +122,8 @@ fi
 DMGSRC=$ROOT/build/dmgsrc
 rm -rf $DMGSRC && mkdir -p $DMGSRC
 cp $PKG "$DMGSRC/Cài đặt MiKey.pkg"
-printf 'MiKey %s\n\n1. Bấm đúp "Cài đặt MiKey.pkg".\n   Nếu macOS báo không mở được: System Settings > Privacy & Security > Open Anyway.\n2. System Settings > Keyboard > Input Sources > Edit… > + > Vietnamese > MiKey.\n3. Chọn MiKey trong menu bàn phím trên thanh menu.\n   Chưa thấy MiKey? Đăng xuất rồi đăng nhập lại một lần.\n\nHướng dẫn đầy đủ: https://mikey.mikephung.com/download/\n\n---\n1. Double-click "Cài đặt MiKey.pkg" (install MiKey).\n2. System Settings > Keyboard > Input Sources > Edit… > + > Vietnamese > MiKey.\n3. Pick MiKey in the input menu (not there? log out and back in once).\n' $VER > "$DMGSRC/Đọc trước - Read me.txt"
+cp $ROOT/Tools/uninstall_mikey.sh "$DMGSRC/Gỡ MiKey - Uninstall.sh"
+printf 'MiKey %s\n\n1. Bấm đúp "Cài đặt MiKey.pkg".\n   Nếu macOS báo không mở được: System Settings > Privacy & Security > Open Anyway.\n2. System Settings > Keyboard > Input Sources > Edit… > + > Vietnamese > MiKey.\n3. Chọn MiKey trong menu bàn phím trên thanh menu.\n   Chưa thấy MiKey? Đăng xuất rồi đăng nhập lại một lần.\n\nGỡ MiKey: mở Terminal, gõ  sh  rồi kéo file \"Gỡ MiKey - Uninstall.sh\" vào, bấm Enter.\n\nHướng dẫn đầy đủ: https://mikey.mikephung.com/download/\n\n---\n1. Double-click "Cài đặt MiKey.pkg" (install MiKey).\n2. System Settings > Keyboard > Input Sources > Edit… > + > Vietnamese > MiKey.\n3. Pick MiKey in the input menu (not there? log out and back in once).\n' $VER > "$DMGSRC/Đọc trước - Read me.txt"
 DMG=$DIST/MiKey-$VER-macOS.dmg
 hdiutil create -volname "MiKey $VER" -srcfolder $DMGSRC -fs HFS+ -format UDZO -ov $DMG >/dev/null
 [ -n "$MIKEY_SIGN_ID" ] && codesign --sign "$MIKEY_SIGN_ID" --timestamp $DMG
