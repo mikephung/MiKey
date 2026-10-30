@@ -32,8 +32,9 @@ APP=$ROOT/build/InputMethod/MiKey.app
 echo "== package"
 PKGROOT=$ROOT/build/pkgroot
 rm -rf $PKGROOT && mkdir -p "$PKGROOT/Library/Input Methods" $ROOT/build/pkgscripts
-COPYFILE_DISABLE=1 cp -R $APP "$PKGROOT/Library/Input Methods/"
-xattr -cr "$PKGROOT"   # no ._ AppleDouble files in the payload: inside Contents/MacOS they break the code signature
+ditto --noextattr --noqtn --norsrc "$APP" "$PKGROOT/Library/Input Methods/MiKey.app"
+# com.apple.provenance (set by the local build tools, not removable) still makes pkgbuild store a few ._
+# AppleDouble files; harmless (verified below: codesign --verify --deep --strict after unpacking the .pkg)
 cat > $ROOT/build/pkgscripts/postinstall <<'SH'
 #!/bin/sh
 # Runs as root after the files are in /Library/Input Methods.

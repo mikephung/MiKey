@@ -7,7 +7,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.normpath(os.path.join(HERE, ".."))
 SITE = "https://mikey.mikephung.com"
 REPO = "https://github.com/mikephung/MiKey"
-VERSION = "1.0.0"
+VERSION = "1.0.1"
 RELEASE_DATE = "2026-10-30"
 REL = f"{REPO}/releases/download/v{VERSION}"
 e = html.escape
@@ -46,6 +46,19 @@ TELEX_EXAMPLES = [("tooi ddi hocj", "tôi đi học"), ("truwowngf / truowfng", 
                   ("khoer khoong", "khoẻ không"), ("caamf", "cầm"), ("nguyeenx", "nguyễn")]
 
 RELEASES = [  # newest first
+    ("1.0.1", "2026-10-30", {
+        "vi": ["Sửa lỗi cài đặt trên máy mới.",
+               "macOS: sau khi cài, MiKey tự xuất hiện trong menu bàn phím (trước đây trên máy mới chỉ hiện như một ứng dụng, phải đăng xuất mới thấy).",
+               "Bộ cài luôn cài vào /Library/Input Methods và dọn bản MiKey cũ trong thư mục người dùng.",
+               "Logo và liên kết trong ứng dụng thanh menu: MiKey thay cho Vikey."],
+        "de": ["Behebt die Installation auf einem neuen Mac.",
+               "macOS: Nach der Installation erscheint MiKey sofort im Eingabemenü (auf einem neuen Mac war es zuvor nur als App sichtbar, erst nach dem Abmelden als Eingabequelle).",
+               "Das Installationsprogramm installiert immer nach /Library/Input Methods und räumt eine ältere MiKey-Kopie im Benutzerordner weg.",
+               "Logo und Links in der Menüleisten-App: MiKey statt Vikey."],
+        "en": ["Fixes installing on a new Mac.",
+               "macOS: after installing, MiKey shows up in the input menu right away (on a new Mac it used to appear only as an app, and as an input source only after logging out).",
+               "The installer always installs into /Library/Input Methods and removes an older MiKey copy in the user folder.",
+               "Logo and links in the menu bar app: MiKey instead of Vikey."]}),
     (VERSION, RELEASE_DATE, {
         "vi": ["Bản đầu tiên của MiKey.",
                "macOS: MiKey là một input source thật trong menu bàn phím (InputMethodKit), không cần quyền Accessibility.",

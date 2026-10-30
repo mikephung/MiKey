@@ -4,6 +4,20 @@
     <title>MiKey</title>
     <link>https://mikey.mikephung.com</link>
     <item>
+      <title>MiKey 1.0.1</title>
+      <pubDate>Fri, 30 Oct 2026 16:05:43 +0000</pubDate>
+      <sparkle:version>1.0.1</sparkle:version>
+      <sparkle:shortVersionString>1.0.1</sparkle:shortVersionString>
+      <description><![CDATA[**MiKey 1.0.1**
+
+- macOS: sau khi cài, MiKey tự xuất hiện trong menu bàn phím, không cần đăng xuất. Bản 1.0.0 trên máy mới chỉ hiện như một ứng dụng, chưa thành input source.
+- Bộ cài luôn cài vào /Library/Input Methods và dọn bản MiKey cũ trong thư mục người dùng.
+
+macOS: after installing, MiKey appears in the input menu right away, no log out needed (1.0.0 showed up only as an app on a new Mac).
+]]></description>
+      <enclosure url="https://github.com/mikephung/MiKey/releases/download/v1.0.1/MiKey-1.0.1-macOS.pkg" length="2730830" type="application/octet-stream" sparkle:os="macos" sparkle:edSignature="h6OrN285CSgMM7N/yq3O2Gck6P94lzS56KZiZKN2x2bppM8L1dge3oHvVbfsYQKp/MUpBNybXVRracMPhAm8CA=="/>
+    </item>
+    <item>
       <title>MiKey 1.0.0</title>
       <pubDate>Fri, 30 Oct 2026 14:16:10 +0000</pubDate>
       <sparkle:version>1.0.0</sparkle:version>
