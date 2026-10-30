@@ -39,7 +39,7 @@ struct TypingLogView: View {
         .onAppear { reload() }
         .confirmationDialog("Xoá toàn bộ nhật ký gõ?", isPresented: $confirmClear) {
             Button("Xoá", role: .destructive) {
-                MiKeyCore.clearTypingLog()
+                VikeyCore.clearTypingLog()
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { reload() }
             }
         } message: {
@@ -54,17 +54,17 @@ struct TypingLogView: View {
     }
 
     private func reload() {
-        MiKeyCore.flushTypingLog()
+        VikeyCore.flushTypingLog()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-            stats = (MiKeyCore.typingLogStats() as? [String: [String: Int]]) ?? [:]
-            events = LogEvent.load(from: MiKeyCore.typingLogPath(), limit: 300)
+            stats = (VikeyCore.typingLogStats() as? [String: [String: Int]]) ?? [:]
+            events = LogEvent.load(from: VikeyCore.typingLogPath(), limit: 300)
         }
     }
 
     private func reveal() {
-        MiKeyCore.flushTypingLog()
+        VikeyCore.flushTypingLog()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-            let url = URL(fileURLWithPath: MiKeyCore.typingLogPath())
+            let url = URL(fileURLWithPath: VikeyCore.typingLogPath())
             if FileManager.default.fileExists(atPath: url.path) {
                 NSWorkspace.shared.activateFileViewerSelecting([url])
             } else {

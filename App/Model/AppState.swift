@@ -7,7 +7,7 @@ import SwiftUI
 final class AppState: ObservableObject {
     static let shared = AppState()
 
-    @Published private(set) var language: Int = Int(MiKeyCore.language())
+    @Published private(set) var language: Int = Int(VikeyCore.language())
     @Published private(set) var isRunning = false
     @Published var needsOnboarding = false
 
@@ -15,16 +15,16 @@ final class AppState: ObservableObject {
 
     private init() {
         NotificationCenter.default.addObserver(forName: .MiKeyLanguageDidChange, object: nil, queue: .main) { [weak self] _ in
-            Task { @MainActor in self?.language = Int(MiKeyCore.language()) }
+            Task { @MainActor in self?.language = Int(VikeyCore.language()) }
         }
     }
 
     /// Starts the keyboard core when Accessibility is granted; otherwise shows onboarding and waits.
     func startIfPossible() {
-        if MiKeyCore.isAccessibilityTrusted(), MiKeyCore.start() {
+        if VikeyCore.isAccessibilityTrusted(), VikeyCore.start() {
             isRunning = true
             needsOnboarding = false
-            language = Int(MiKeyCore.language())
+            language = Int(VikeyCore.language())
             permissionTimer?.invalidate()
             permissionTimer = nil
             return
@@ -35,15 +35,15 @@ final class AppState: ObservableObject {
         if permissionTimer == nil {
             permissionTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
                 Task { @MainActor in
-                    if MiKeyCore.isAccessibilityTrusted() { AppState.shared.startIfPossible() }
+                    if VikeyCore.isAccessibilityTrusted() { AppState.shared.startIfPossible() }
                 }
             }
         }
     }
 
     func setLanguage(_ value: Int) {
-        MiKeyCore.setLanguageByUser(Int32(value))
-        language = Int(MiKeyCore.language())
+        VikeyCore.setLanguageByUser(Int32(value))
+        language = Int(VikeyCore.language())
     }
 
     func toggleLanguage() { setLanguage(language == 1 ? 0 : 1) }

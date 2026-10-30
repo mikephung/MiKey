@@ -1,0 +1,573 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0724DFB04BDEBBBE88DD04A2 /* Windows.swift in Sources */ = {isa = PBXBuildFile; fileRef = 329688C09EA9A87C9C00B1E4 /* Windows.swift */; };
+		0F0CDF79FBE3D68A960DA65E /* MenuBarContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = F37F10F6DE208C565449DE76 /* MenuBarContent.swift */; };
+		117D20D099CC10CB55B596EB /* Vietnamese.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 887010783D9E9D75C6DE0EC3 /* Vietnamese.cpp */; };
+		120077CFC121D04143039FAD /* Hotkey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E816948AD516B47351234E /* Hotkey.swift */; };
+		1703A035B94A722524D1DA41 /* Engine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B7457D97B12BCC88C124317 /* Engine.cpp */; };
+		1D497A414385B2E8E339D4CB /* SwitchToEnglish.caf in Resources */ = {isa = PBXBuildFile; fileRef = B040AEA2999DA546EC9B6D8C /* SwitchToEnglish.caf */; };
+		1DE879F3B9A34A030A091897 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A41B1A8C1E16F3B0BC790C5 /* Carbon.framework */; };
+		209724E6BF1E85268AC77C78 /* Updater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0AD4D0BFB62C5D72773391 /* Updater.swift */; };
+		25B335B4B224C03D8F9239BD /* VikeyCore.mm in Sources */ = {isa = PBXBuildFile; fileRef = 964B337DF0EBCD401B4E9889 /* VikeyCore.mm */; };
+		2D777134255CAD2B83980BDA /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 41042133B8F5657D265D970E /* Sparkle */; };
+		2DA4BD138ABFCE3E7EEB7651 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2194C976EF7B09E01EF999EE /* MainView.swift */; };
+		3D634C71778E9606598787B6 /* EmojiSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8361B6BBF599F0E23D46327 /* EmojiSearch.swift */; };
+		3D8D6E1D0D8F6D2195DD9457 /* TouchModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 321662F50A444A5264D2C7B0 /* TouchModel.cpp */; };
+		3F1AEB38128CB93AA219C02F /* Acknowledgements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EE4B30145907D1F9B4B0A59 /* Acknowledgements.swift */; };
+		4B99BD4C029D60E79B55A96A /* Brand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A6CECCD265F2ABF0F614E9 /* Brand.swift */; };
+		5913CECEFA9B7FEB7581D05D /* Driver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F859B696B8C03C6A5AC7FBDD /* Driver.cpp */; };
+		5EABCA8166BD2C0953BAEB92 /* EmojiSelfTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5065679123EF977884DCCA0B /* EmojiSelfTest.swift */; };
+		6533D513A3B2B7EB7B4E8D63 /* Emoji.json in Resources */ = {isa = PBXBuildFile; fileRef = 1D6C3F1258081CC79BDCA886 /* Emoji.json */; };
+		7D06E2DE9094062152D7991C /* HotkeyRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06877BC2FEAC49F1B88BB7D /* HotkeyRecorder.swift */; };
+		84ED5BE4410E97536DEEAFFB /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50D7A6374FF96ECB38B47DD /* Preferences.swift */; };
+		8D827F27F358EB0CF1EDDF96 /* TypingLogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4826D3AD991414536D9D8855 /* TypingLogView.swift */; };
+		918FFD473226369CC4362CF2 /* SwitchToVietnamese.caf in Resources */ = {isa = PBXBuildFile; fileRef = F31F3F02077EC92A188A797F /* SwitchToVietnamese.caf */; };
+		97A3C8FD46BCD5CBF75F485F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF9E17C448A2009DC794D9D3 /* Assets.xcassets */; };
+		A15A0A96E9738A35C5781883 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3BB67024249F91ED702A82A /* ApplicationServices.framework */; };
+		AACDA33FFCF92CAE06495FCE /* KeepWords.inc in Resources */ = {isa = PBXBuildFile; fileRef = 5DEC90B1CB6D1FCC958CFAB0 /* KeepWords.inc */; };
+		AB8D5315B56EB832B27F32E6 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A592C3A3B26BEF59B7E14E1 /* AppState.swift */; };
+		B83A6C223767E858C3AF27F7 /* AcknowledgementsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B502D625AA912046CD1C07D4 /* AcknowledgementsView.swift */; };
+		BE7E1F3B8CD01175E87E0656 /* EmojiPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED65F0FBB6064C53CD0259CE /* EmojiPicker.swift */; };
+		C0810BF62CF1A6FD556BE6B0 /* SmartSwitchKey.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6531EA08DF2A68EF554F841D /* SmartSwitchKey.cpp */; };
+		C105DAFD47DFA51FCE45C2BA /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B828C6FB127374E0BB74DE /* OnboardingView.swift */; };
+		D34C8E32EF3F23BCDE11E966 /* MiKeyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1F24225D17EDC5C4D96EB7 /* MiKeyApp.swift */; };
+		E726CC6C6DCB0B03F8D79BE0 /* MenuBarIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A0FBD109E9B2269DF4E4B2A /* MenuBarIcon.swift */; };
+		EE92D90E46871F72885FF168 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 176890DB5FBC78E2F3ABE093 /* AppDelegate.swift */; };
+		FB1B2840B26D7E71FB542D2B /* Migration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192AB967B417D974691A17E8 /* Migration.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		053CD57FFD46B23B618A24D5 /* AutoSwitchData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AutoSwitchData.h; sourceTree = "<group>"; };
+		0D812B9871339D68D93109F7 /* mac.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mac.h; sourceTree = "<group>"; };
+		11E816948AD516B47351234E /* Hotkey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hotkey.swift; sourceTree = "<group>"; };
+		1302FFA985C048B1EBEC51A8 /* VikeyCore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VikeyCore.h; sourceTree = "<group>"; };
+		176890DB5FBC78E2F3ABE093 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		192AB967B417D974691A17E8 /* Migration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Migration.swift; sourceTree = "<group>"; };
+		1D6C3F1258081CC79BDCA886 /* Emoji.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Emoji.json; sourceTree = "<group>"; };
+		2194C976EF7B09E01EF999EE /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		21D68F6C6EF32403DDAB2AF2 /* MiKey.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MiKey.entitlements; sourceTree = "<group>"; };
+		294E8818A941F95BFD5BEB55 /* Driver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Driver.h; sourceTree = "<group>"; };
+		2A0FBD109E9B2269DF4E4B2A /* MenuBarIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarIcon.swift; sourceTree = "<group>"; };
+		2A592C3A3B26BEF59B7E14E1 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		321662F50A444A5264D2C7B0 /* TouchModel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TouchModel.cpp; sourceTree = "<group>"; };
+		329688C09EA9A87C9C00B1E4 /* Windows.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Windows.swift; sourceTree = "<group>"; };
+		4216A2649DE2169463E87D3E /* DataType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DataType.h; sourceTree = "<group>"; };
+		42754DE6F27291BF3DE7D570 /* SmartSwitchKey.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SmartSwitchKey.h; sourceTree = "<group>"; };
+		4826D3AD991414536D9D8855 /* TypingLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypingLogView.swift; sourceTree = "<group>"; };
+		5065679123EF977884DCCA0B /* EmojiSelfTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiSelfTest.swift; sourceTree = "<group>"; };
+		55A6CECCD265F2ABF0F614E9 /* Brand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Brand.swift; sourceTree = "<group>"; };
+		57B828C6FB127374E0BB74DE /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		5A41B1A8C1E16F3B0BC790C5 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
+		5DEC90B1CB6D1FCC958CFAB0 /* KeepWords.inc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.pascal; path = KeepWords.inc; sourceTree = "<group>"; };
+		651F9F08D13F6C7284A9075E /* TouchModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TouchModel.h; sourceTree = "<group>"; };
+		6531EA08DF2A68EF554F841D /* SmartSwitchKey.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SmartSwitchKey.cpp; sourceTree = "<group>"; };
+		6EE4B30145907D1F9B4B0A59 /* Acknowledgements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Acknowledgements.swift; sourceTree = "<group>"; };
+		887010783D9E9D75C6DE0EC3 /* Vietnamese.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Vietnamese.cpp; sourceTree = "<group>"; };
+		8B7457D97B12BCC88C124317 /* Engine.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Engine.cpp; sourceTree = "<group>"; };
+		8D0AD4D0BFB62C5D72773391 /* Updater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Updater.swift; sourceTree = "<group>"; };
+		964B337DF0EBCD401B4E9889 /* VikeyCore.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = VikeyCore.mm; sourceTree = "<group>"; };
+		A0538798A9A80F45DB1D46F4 /* MiKey.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MiKey.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A367D8EBC6AEE4FC02535DDB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		AE1F24225D17EDC5C4D96EB7 /* MiKeyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiKeyApp.swift; sourceTree = "<group>"; };
+		B040AEA2999DA546EC9B6D8C /* SwitchToEnglish.caf */ = {isa = PBXFileReference; path = SwitchToEnglish.caf; sourceTree = "<group>"; };
+		B4FB5970A68A881EDD82A899 /* BigramData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BigramData.h; sourceTree = "<group>"; };
+		B502D625AA912046CD1C07D4 /* AcknowledgementsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcknowledgementsView.swift; sourceTree = "<group>"; };
+		B50D7A6374FF96ECB38B47DD /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
+		B8361B6BBF599F0E23D46327 /* EmojiSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiSearch.swift; sourceTree = "<group>"; };
+		BF9E17C448A2009DC794D9D3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E06877BC2FEAC49F1B88BB7D /* HotkeyRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotkeyRecorder.swift; sourceTree = "<group>"; };
+		ED65F0FBB6064C53CD0259CE /* EmojiPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiPicker.swift; sourceTree = "<group>"; };
+		EDC5F8C770699496E6A4AD45 /* MiKey-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MiKey-Bridging-Header.h"; sourceTree = "<group>"; };
+		F31F3F02077EC92A188A797F /* SwitchToVietnamese.caf */ = {isa = PBXFileReference; path = SwitchToVietnamese.caf; sourceTree = "<group>"; };
+		F37F10F6DE208C565449DE76 /* MenuBarContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarContent.swift; sourceTree = "<group>"; };
+		F3BB67024249F91ED702A82A /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
+		F3F8DCDACCEA5D843EDCABAA /* Engine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Engine.h; sourceTree = "<group>"; };
+		F76227765F08A3E8F1003C77 /* Vietnamese.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Vietnamese.h; sourceTree = "<group>"; };
+		F859B696B8C03C6A5AC7FBDD /* Driver.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Driver.cpp; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		E37A2D5B7119F769FA48D1D4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1DE879F3B9A34A030A091897 /* Carbon.framework in Frameworks */,
+				A15A0A96E9738A35C5781883 /* ApplicationServices.framework in Frameworks */,
+				2D777134255CAD2B83980BDA /* Sparkle in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		41A727DDFB53A49C26364F4B /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				B502D625AA912046CD1C07D4 /* AcknowledgementsView.swift */,
+				ED65F0FBB6064C53CD0259CE /* EmojiPicker.swift */,
+				5065679123EF977884DCCA0B /* EmojiSelfTest.swift */,
+				E06877BC2FEAC49F1B88BB7D /* HotkeyRecorder.swift */,
+				2194C976EF7B09E01EF999EE /* MainView.swift */,
+				F37F10F6DE208C565449DE76 /* MenuBarContent.swift */,
+				2A0FBD109E9B2269DF4E4B2A /* MenuBarIcon.swift */,
+				57B828C6FB127374E0BB74DE /* OnboardingView.swift */,
+				4826D3AD991414536D9D8855 /* TypingLogView.swift */,
+				329688C09EA9A87C9C00B1E4 /* Windows.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		49B7E02436F7FEC468E9E98F /* platforms */ = {
+			isa = PBXGroup;
+			children = (
+				0D812B9871339D68D93109F7 /* mac.h */,
+			);
+			path = platforms;
+			sourceTree = "<group>";
+		};
+		4C1F2A39F18C30558CE4F839 /* Engine */ = {
+			isa = PBXGroup;
+			children = (
+				053CD57FFD46B23B618A24D5 /* AutoSwitchData.h */,
+				B4FB5970A68A881EDD82A899 /* BigramData.h */,
+				4216A2649DE2169463E87D3E /* DataType.h */,
+				F859B696B8C03C6A5AC7FBDD /* Driver.cpp */,
+				294E8818A941F95BFD5BEB55 /* Driver.h */,
+				8B7457D97B12BCC88C124317 /* Engine.cpp */,
+				F3F8DCDACCEA5D843EDCABAA /* Engine.h */,
+				5DEC90B1CB6D1FCC958CFAB0 /* KeepWords.inc */,
+				6531EA08DF2A68EF554F841D /* SmartSwitchKey.cpp */,
+				42754DE6F27291BF3DE7D570 /* SmartSwitchKey.h */,
+				321662F50A444A5264D2C7B0 /* TouchModel.cpp */,
+				651F9F08D13F6C7284A9075E /* TouchModel.h */,
+				887010783D9E9D75C6DE0EC3 /* Vietnamese.cpp */,
+				F76227765F08A3E8F1003C77 /* Vietnamese.h */,
+				49B7E02436F7FEC468E9E98F /* platforms */,
+			);
+			path = Engine;
+			sourceTree = "<group>";
+		};
+		4E547A008CC817268C813098 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A0538798A9A80F45DB1D46F4 /* MiKey.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		5A262F2DB582503DB02FC656 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				BF9E17C448A2009DC794D9D3 /* Assets.xcassets */,
+				1D6C3F1258081CC79BDCA886 /* Emoji.json */,
+				881D98A23C16EB24C4BA84B6 /* Sounds */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		6A4755902DF9B9EF92F50564 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				EDC5F8C770699496E6A4AD45 /* MiKey-Bridging-Header.h */,
+				1302FFA985C048B1EBEC51A8 /* VikeyCore.h */,
+				964B337DF0EBCD401B4E9889 /* VikeyCore.mm */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		7F5E822A63764A625D912477 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F3BB67024249F91ED702A82A /* ApplicationServices.framework */,
+				5A41B1A8C1E16F3B0BC790C5 /* Carbon.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		881D98A23C16EB24C4BA84B6 /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				B040AEA2999DA546EC9B6D8C /* SwitchToEnglish.caf */,
+				F31F3F02077EC92A188A797F /* SwitchToVietnamese.caf */,
+			);
+			path = Sounds;
+			sourceTree = "<group>";
+		};
+		9754D428316D98E4ABE4D6F2 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				176890DB5FBC78E2F3ABE093 /* AppDelegate.swift */,
+				A367D8EBC6AEE4FC02535DDB /* Info.plist */,
+				21D68F6C6EF32403DDAB2AF2 /* MiKey.entitlements */,
+				AE1F24225D17EDC5C4D96EB7 /* MiKeyApp.swift */,
+				6A4755902DF9B9EF92F50564 /* Core */,
+				ECCEB9E5E3ECBB247D3F0FCA /* Model */,
+				5A262F2DB582503DB02FC656 /* Resources */,
+				41A727DDFB53A49C26364F4B /* Views */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		E0AE216199A78C6E863C092B = {
+			isa = PBXGroup;
+			children = (
+				9754D428316D98E4ABE4D6F2 /* App */,
+				4C1F2A39F18C30558CE4F839 /* Engine */,
+				7F5E822A63764A625D912477 /* Frameworks */,
+				4E547A008CC817268C813098 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		ECCEB9E5E3ECBB247D3F0FCA /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				6EE4B30145907D1F9B4B0A59 /* Acknowledgements.swift */,
+				2A592C3A3B26BEF59B7E14E1 /* AppState.swift */,
+				55A6CECCD265F2ABF0F614E9 /* Brand.swift */,
+				B8361B6BBF599F0E23D46327 /* EmojiSearch.swift */,
+				11E816948AD516B47351234E /* Hotkey.swift */,
+				192AB967B417D974691A17E8 /* Migration.swift */,
+				B50D7A6374FF96ECB38B47DD /* Preferences.swift */,
+				8D0AD4D0BFB62C5D72773391 /* Updater.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		9D005EBC417033621BB67430 /* MiKey */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7BAE00254EF84588174279D4 /* Build configuration list for PBXNativeTarget "MiKey" */;
+			buildPhases = (
+				F85DA846D7D1B4541CEE5EA6 /* Sources */,
+				7D809C0DEAB4B8F7076B8A40 /* Resources */,
+				E37A2D5B7119F769FA48D1D4 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MiKey;
+			packageProductDependencies = (
+				41042133B8F5657D265D970E /* Sparkle */,
+			);
+			productName = MiKey;
+			productReference = A0538798A9A80F45DB1D46F4 /* MiKey.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D878DEF59E000014147BFCE7 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					9D005EBC417033621BB67430 = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 718954AB5A312F82DC8003AD /* Build configuration list for PBXProject "MiKey" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = E0AE216199A78C6E863C092B;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				B98FDE455B92626778F1D6A7 /* XCRemoteSwiftPackageReference "Sparkle" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 4E547A008CC817268C813098 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				9D005EBC417033621BB67430 /* MiKey */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		7D809C0DEAB4B8F7076B8A40 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				97A3C8FD46BCD5CBF75F485F /* Assets.xcassets in Resources */,
+				6533D513A3B2B7EB7B4E8D63 /* Emoji.json in Resources */,
+				AACDA33FFCF92CAE06495FCE /* KeepWords.inc in Resources */,
+				1D497A414385B2E8E339D4CB /* SwitchToEnglish.caf in Resources */,
+				918FFD473226369CC4362CF2 /* SwitchToVietnamese.caf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F85DA846D7D1B4541CEE5EA6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3F1AEB38128CB93AA219C02F /* Acknowledgements.swift in Sources */,
+				B83A6C223767E858C3AF27F7 /* AcknowledgementsView.swift in Sources */,
+				EE92D90E46871F72885FF168 /* AppDelegate.swift in Sources */,
+				AB8D5315B56EB832B27F32E6 /* AppState.swift in Sources */,
+				4B99BD4C029D60E79B55A96A /* Brand.swift in Sources */,
+				5913CECEFA9B7FEB7581D05D /* Driver.cpp in Sources */,
+				BE7E1F3B8CD01175E87E0656 /* EmojiPicker.swift in Sources */,
+				3D634C71778E9606598787B6 /* EmojiSearch.swift in Sources */,
+				5EABCA8166BD2C0953BAEB92 /* EmojiSelfTest.swift in Sources */,
+				1703A035B94A722524D1DA41 /* Engine.cpp in Sources */,
+				120077CFC121D04143039FAD /* Hotkey.swift in Sources */,
+				7D06E2DE9094062152D7991C /* HotkeyRecorder.swift in Sources */,
+				2DA4BD138ABFCE3E7EEB7651 /* MainView.swift in Sources */,
+				0F0CDF79FBE3D68A960DA65E /* MenuBarContent.swift in Sources */,
+				E726CC6C6DCB0B03F8D79BE0 /* MenuBarIcon.swift in Sources */,
+				D34C8E32EF3F23BCDE11E966 /* MiKeyApp.swift in Sources */,
+				FB1B2840B26D7E71FB542D2B /* Migration.swift in Sources */,
+				C105DAFD47DFA51FCE45C2BA /* OnboardingView.swift in Sources */,
+				84ED5BE4410E97536DEEAFFB /* Preferences.swift in Sources */,
+				C0810BF62CF1A6FD556BE6B0 /* SmartSwitchKey.cpp in Sources */,
+				3D8D6E1D0D8F6D2195DD9457 /* TouchModel.cpp in Sources */,
+				8D827F27F358EB0CF1EDDF96 /* TypingLogView.swift in Sources */,
+				209724E6BF1E85268AC77C78 /* Updater.swift in Sources */,
+				117D20D099CC10CB55B596EB /* Vietnamese.cpp in Sources */,
+				25B335B4B224C03D8F9239BD /* VikeyCore.mm in Sources */,
+				0724DFB04BDEBBBE88DD04A2 /* Windows.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		289B57755F0A95048A95BF7B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = App/MiKey.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/Engine",
+					"$(SRCROOT)/Engine/platforms",
+				);
+				INFOPLIST_FILE = App/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.mikey.app;
+				PRODUCT_NAME = MiKey;
+				SDKROOT = macosx;
+				SWIFT_OBJC_BRIDGING_HEADER = "App/Core/MiKey-Bridging-Header.h";
+			};
+			name = Release;
+		};
+		6636F5ADB23B4165C6EDB2F4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 1.0.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.10;
+			};
+			name = Debug;
+		};
+		AFC35C893EC63EA3B9C8F2B4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 1.0.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.10;
+			};
+			name = Release;
+		};
+		D04D299A597E40C3E13904F9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = App/MiKey.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/Engine",
+					"$(SRCROOT)/Engine/platforms",
+				);
+				INFOPLIST_FILE = App/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.mikey.app;
+				PRODUCT_NAME = MiKey;
+				SDKROOT = macosx;
+				SWIFT_OBJC_BRIDGING_HEADER = "App/Core/MiKey-Bridging-Header.h";
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		718954AB5A312F82DC8003AD /* Build configuration list for PBXProject "MiKey" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6636F5ADB23B4165C6EDB2F4 /* Debug */,
+				AFC35C893EC63EA3B9C8F2B4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		7BAE00254EF84588174279D4 /* Build configuration list for PBXNativeTarget "MiKey" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D04D299A597E40C3E13904F9 /* Debug */,
+				289B57755F0A95048A95BF7B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		B98FDE455B92626778F1D6A7 /* XCRemoteSwiftPackageReference "Sparkle" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sparkle-project/Sparkle";
+			requirement = {
+				kind = exactVersion;
+				version = 2.10.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		41042133B8F5657D265D970E /* Sparkle */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B98FDE455B92626778F1D6A7 /* XCRemoteSwiftPackageReference "Sparkle" */;
+			productName = Sparkle;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = D878DEF59E000014147BFCE7 /* Project object */;
+}

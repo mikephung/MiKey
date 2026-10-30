@@ -114,7 +114,7 @@ struct MainView: View {
         perSite = on
         Preferences.apply()
         guard on else { return }
-        MiKeyCore.requestBrowserAccess { denied in
+        VikeyCore.requestBrowserAccess { denied in
             guard denied else { return }
             perSite = false
             Preferences.apply()

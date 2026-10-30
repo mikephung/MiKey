@@ -1,7 +1,7 @@
 import Foundation
 import ServiceManagement
 
-/// UserDefaults keys shared with the keyboard core (MiKeyCore.mm reads them in VKLoadSettings).
+/// UserDefaults keys shared with the keyboard core (VikeyCore.mm reads them in VKLoadSettings).
 enum PrefKey {
     static let spelling = "Spelling"
     static let restoreIfInvalid = "RestoreIfInvalidWord"
@@ -30,7 +30,7 @@ enum Preferences {
     }
 
     /// Call after changing a setting so the keyboard core picks it up.
-    static func apply() { MiKeyCore.reloadSettings() }
+    static func apply() { VikeyCore.reloadSettings() }
 }
 
 enum LaunchAtLogin {

@@ -9,7 +9,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         #endif
         Migration.fromOpenKeyIfNeeded()
         // people who already use MiKey (permission granted) don't get the first-run guide on update
-        if UserDefaults.standard.object(forKey: OnboardingView.doneKey) == nil && MiKeyCore.isAccessibilityTrusted() {
+        if UserDefaults.standard.object(forKey: OnboardingView.doneKey) == nil && VikeyCore.isAccessibilityTrusted() {
             UserDefaults.standard.set(true, forKey: OnboardingView.doneKey)
         }
         AppState.shared.startIfPossible()
@@ -32,13 +32,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
         let ws = NSWorkspace.shared.notificationCenter
         ws.addObserver(forName: NSWorkspace.didActivateApplicationNotification, object: nil, queue: .main) { _ in
-            MiKeyCore.frontmostAppChanged()
+            VikeyCore.frontmostAppChanged()
         }
         ws.addObserver(forName: NSWorkspace.activeSpaceDidChangeNotification, object: nil, queue: .main) { _ in
-            MiKeyCore.activeSpaceChanged()
+            VikeyCore.activeSpaceChanged()
         }
         ws.addObserver(forName: NSWorkspace.willSleepNotification, object: nil, queue: .main) { _ in
-            MiKeyCore.stop()
+            VikeyCore.stop()
         }
         ws.addObserver(forName: NSWorkspace.didWakeNotification, object: nil, queue: .main) { _ in
             AppState.shared.startIfPossible()
@@ -52,6 +52,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func applicationWillTerminate(_ notification: Notification) {
-        MiKeyCore.flushTypingLog()
+        VikeyCore.flushTypingLog()
     }
 }

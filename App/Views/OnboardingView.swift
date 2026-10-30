@@ -151,7 +151,7 @@ struct OnboardingView: View {
             .foregroundStyle(.secondary)
             HStack {
                 Button("Mở Cài đặt hệ thống") {
-                    MiKeyCore.requestAccessibility()
+                    VikeyCore.requestAccessibility()
                     if let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility") {
                         NSWorkspace.shared.open(url)
                     }
@@ -242,7 +242,7 @@ private struct PracticeStep: View {
                             .textFieldStyle(.roundedBorder)
                             .font(.system(size: 15))
                             .focused($focus, equals: i)
-                            .onSubmit { MiKeyCore.resetTyping(); focus = min(i + 1, Self.lines.count - 1) }
+                            .onSubmit { VikeyCore.resetTyping(); focus = min(i + 1, Self.lines.count - 1) }
                         Image(systemName: ok ? "checkmark.circle.fill" : "circle")
                             .foregroundStyle(ok ? Color.green : Color.secondary.opacity(0.4))
                             .font(.title3)
@@ -250,7 +250,7 @@ private struct PracticeStep: View {
                 }
                 .onChange(of: ok) { done in
                     guard done && i + 1 < Self.lines.count else { return }
-                    MiKeyCore.resetTyping()   // the next field starts a new word, as after a click
+                    VikeyCore.resetTyping()   // the next field starts a new word, as after a click
                     focus = i + 1
                 }
             }
