@@ -16,6 +16,9 @@ enum PrefKey {
     static let typingLogKeys = "TypingLogKeys"
     static let typingLogEnabled = "TypingLogEnabled"
     static let hotkey = "SwitchKeyStatus"
+    // German mode settings
+    static let germanMode = "GermanModeEnabled"
+    static let germanSS = "GermanConvertSS"
 }
 
 /// Defaults every setting starts with (registered so @AppStorage and the core agree).
@@ -26,6 +29,7 @@ enum Preferences {
             PrefKey.useMacro: 1, PrefKey.macroInEnglish: 1, PrefKey.autoCapsMacro: 0,
             PrefKey.smartSwitch: 1, PrefKey.smartSwitchPerSite: false, PrefKey.autoSwitch: 1, PrefKey.pauseAfterManual: 1,
             PrefKey.typingLogKeys: 1, PrefKey.typingLogEnabled: 0, PrefKey.hotkey: Hotkey.defaultValue,
+            PrefKey.germanMode: 0, PrefKey.germanSS: 0,
         ])
     }
 

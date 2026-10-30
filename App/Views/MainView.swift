@@ -13,6 +13,8 @@ struct MainView: View {
     @AppStorage(PrefKey.smartSwitchPerSite) private var perSite = true
     @AppStorage(PrefEmoji.enabled) private var emojiOn = 0
     @AppStorage(PrefEmoji.hotkey) private var emojiKey = 0
+    @AppStorage(PrefKey.germanMode) private var germanMode = 0
+    @AppStorage(PrefKey.germanSS) private var germanSS = 0
     @State private var launchAtLogin = LaunchAtLogin.isEnabled
     @State private var browserDenied = false
     @ObservedObject private var updater = Updater.shared
@@ -25,12 +27,12 @@ struct MainView: View {
                     LabeledContent {
                         HotkeyRecorder(raw: Binding(get: { hotkeyRaw }, set: { hotkeyRaw = $0; Preferences.apply() }))
                     } label: {
-                        Tip("Phím chuyển Anh/Việt", "Bấm tổ hợp phím này để chuyển giữa tiếng Việt và tiếng Anh. Bấm vào ô để đặt phím khác.")
+                        Tip("Phím chuyển ngôn ngữ", "Bấm tổ hợp phím này để chuyển giữa các ngôn ngữ. Bấm vào ô để đặt phím khác.")
                     }
                     Toggle(isOn: Binding(
                         get: { Hotkey(raw: hotkeyRaw).beep },
                         set: { var h = Hotkey(raw: hotkeyRaw); h.beep = $0; hotkeyRaw = h.raw; Preferences.apply() })) {
-                        Tip("Âm báo khi chuyển", "Phát một âm ngắn mỗi lần bạn bấm phím chuyển Anh/Việt: lên giọng khi sang tiếng Việt, xuống giọng khi sang tiếng Anh.")
+                        Tip("Âm báo khi chuyển", "Phát một âm ngắn mỗi lần bạn bấm phím chuyển ngôn ngữ.")
                     }
                 }
                 Section("Tự chuyển") {
@@ -63,6 +65,29 @@ struct MainView: View {
                         Tip("Trả lại phím khi sai", "Khi gõ xong một từ sai chính tả tiếng Việt, MiKey trả lại đúng các phím bạn đã gõ.")
                     }
                     .disabled(spelling == 0)
+                }
+                Section("Gõ tiếng Đức") {
+                    Toggle(isOn: flag($germanMode)) {
+                        Tip("Bật chế độ tiếng Đức", "Gõ ae → ä, oe → ö, ue → ü. Chuyển sang tiếng Đức bằng phím chuyển ngôn ngữ.")
+                    }
+                    if germanMode != 0 {
+                        Toggle(isOn: flag($germanSS)) {
+                            Tip("Chuyển ss → ß", "Tự động chuyển ss thành ß (Eszett). Tắt nếu bạn muốn giữ ss.")
+                        }
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("Hướng dẫn gõ tiếng Đức:").font(.callout.weight(.medium))
+                            HStack(spacing: 16) {
+                                germanHelp("ae", "ä")
+                                germanHelp("oe", "ö")
+                                germanHelp("ue", "ü")
+                                if germanSS != 0 {
+                                    germanHelp("ss", "ß")
+                                }
+                            }
+                            .font(.callout)
+                        }
+                        .padding(.vertical, 4)
+                    }
                 }
                 Section {
                     Toggle(isOn: Binding(get: { emojiOn != 0 }, set: { emojiOn = $0 ? 1 : 0; Preferences.apply() })) {
@@ -138,6 +163,27 @@ struct MainView: View {
                 }
             }
             Spacer()
+            languagePicker
+        }
+        .padding(.horizontal, 20)
+        .padding(.top, 6)
+        .padding(.bottom, 4)
+    }
+    
+    @ViewBuilder
+    private var languagePicker: some View {
+        if germanMode != 0 {
+            // 3-way picker when German mode is enabled
+            Picker("", selection: Binding(get: { state.language }, set: { state.setLanguage($0) })) {
+                Text("🇻🇳 VI").tag(1)
+                Text("🇬🇧 EN").tag(0)
+                Text("🇩🇪 DE").tag(2)
+            }
+            .pickerStyle(.segmented)
+            .labelsHidden()
+            .fixedSize()
+        } else {
+            // Original 2-way picker
             Picker("", selection: Binding(get: { state.language }, set: { state.setLanguage($0) })) {
                 Text("Tiếng Việt").tag(1)
                 Text("English").tag(0)
@@ -146,9 +192,20 @@ struct MainView: View {
             .labelsHidden()
             .fixedSize()
         }
-        .padding(.horizontal, 20)
-        .padding(.top, 6)
-        .padding(.bottom, 4)
+    }
+    
+    private func germanHelp(_ keys: String, _ result: String) -> some View {
+        HStack(spacing: 4) {
+            Text(keys)
+                .font(.system(.callout, design: .monospaced).weight(.medium))
+                .padding(.horizontal, 6)
+                .padding(.vertical, 2)
+                .background(.quaternary, in: RoundedRectangle(cornerRadius: 4))
+            Text("→")
+                .foregroundStyle(.tertiary)
+            Text(result)
+                .font(.system(.callout, design: .monospaced))
+        }
     }
 
 }
