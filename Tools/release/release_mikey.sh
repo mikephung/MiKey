@@ -26,6 +26,13 @@ if [ "$PUBLISH" = "--publish" ] && ! git diff --quiet HEAD -- . ':!Tools/autoswi
 fi
 mkdir -p $DIST
 
+# one version everywhere: project.yml is what the Windows and Linux builds read (CI names their files from it)
+if ! grep -q "MARKETING_VERSION: \"$VER\"" project.yml; then
+  if [ "$PUBLISH" = "--publish" ]; then echo "FAIL: set MARKETING_VERSION: \"$VER\" in project.yml and commit it first"; exit 1; fi
+  sed -i '' "s/MARKETING_VERSION: \"[^\"]*\"/MARKETING_VERSION: \"$VER\"/" project.yml
+  echo "project.yml: MARKETING_VERSION set to $VER (commit it before --publish)"
+fi
+
 echo "== checks"
 Tools/autoswitch/check.sh > $DIST/check.log 2>&1 || { tail -30 $DIST/check.log; echo "FAIL: Tools/autoswitch/check.sh"; exit 1; }
 python3 Tools/autoswitch/test/run_de.py > $DIST/de.log 2>&1 || { grep -v ^PASS $DIST/de.log; echo "FAIL: de_cases"; exit 1; }
