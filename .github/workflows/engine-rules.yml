@@ -15,11 +15,11 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Build the Vikey app
+      - name: Build the MiKey app
         run: |
           brew install xcodegen
           xcodegen generate
-          xcodebuild -project Vikey.xcodeproj -scheme Vikey -configuration Release CODE_SIGNING_ALLOWED=NO build
+          xcodebuild -project MiKey.xcodeproj -scheme MiKey -configuration Release CODE_SIGNING_ALLOWED=NO build
   ios:
     runs-on: macos-latest
     steps:

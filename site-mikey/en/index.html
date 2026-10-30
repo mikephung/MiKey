@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MiKey: Vietnamese typing for people who also write German and English</title>
+<meta name="description" content="A Telex input method for macOS and Windows that recognises English and German on its own: text never becomes tẽt, wir never ửi, ü never ơ. Free and open source.">
+<link rel="canonical" href="https://mikey.mikephung.com/en/">
+<link rel="alternate" hreflang="vi" href="https://mikey.mikephung.com/"><link rel="alternate" hreflang="de" href="https://mikey.mikephung.com/de/"><link rel="alternate" hreflang="en" href="https://mikey.mikephung.com/en/"><link rel="alternate" hreflang="x-default" href="https://mikey.mikephung.com/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="MiKey: Vietnamese typing for people who also write German and English">
+<meta property="og:description" content="A Telex input method for macOS and Windows that recognises English and German on its own: text never becomes tẽt, wir never ửi, ü never ơ. Free and open source.">
+<meta property="og:url" content="https://mikey.mikephung.com/en/">
+<meta property="og:image" content="https://mikey.mikephung.com/assets/icon-512.png">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#4F46E5">
+<link rel="icon" type="image/png" href="../assets/favicon.png">
+<link rel="apple-touch-icon" href="../assets/icon-256.png">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="wrap">
+<header class="top">
+  <a class="brand" href="../"><img src="../assets/icon-256.png" alt="" width="32" height="32"><span>Mi<span class="key">Key</span></span></a>
+  <nav class="lang" aria-label="Language"><a href=".././" hreflang="vi" lang="vi">VI<span class="sr"> Tiếng Việt</span></a><a href="../de/" hreflang="de" lang="de">DE<span class="sr"> Deutsch</span></a><a href="../en/" hreflang="en" lang="en" aria-current="true">EN<span class="sr"> English</span></a></nav>
+</header>
+<main id="main">
+<div class="hero">
+  <div>
+    <h1>Type Vietnamese, German and English. Without switching keyboards.</h1>
+    <p class="lead">MiKey is a Vietnamese Telex input method for people living in Switzerland, Germany and Austria. It notices English and German words by itself, and the ä ö ü keys just work.</p>
+    <div class="cta"><a class="btn" href="https://github.com/mikephung/MiKey/releases/latest">Download for macOS</a><a class="btn alt" href="https://github.com/mikephung/MiKey/releases/latest">Download for Windows</a></div>
+    <p class="meta">macOS 13 or later · Windows 10/11 · Free · Open source (GPL-3.0)</p>
+  </div>
+  <div class="demo"><table class="demo-t"><caption class="sr">Example: keys, plain Telex and MiKey</caption><thead><tr><th scope="col">Keys</th><th scope="col">Plain Telex</th><th scope="col">MiKey</th></tr></thead><tbody><tr><td class="keys">text</td><td class="out bad">tẽt</td><td class="out good">text</td></tr><tr><td class="keys">wir</td><td class="out bad">ửi</td><td class="out good">wir</td></tr><tr><td class="keys">der</td><td class="out bad">dẻ</td><td class="out good">der</td></tr><tr><td class="keys">über</td><td class="out bad">ơber</td><td class="out good">über</td></tr><tr><td class="keys">osx</td><td class="out bad">õ</td><td class="out good">osx</td></tr></tbody></table></div>
+</div>
+<section aria-labelledby="why"><h2 id="why">No more silly Telex mistakes</h2><p class="lead">Telex turns the letters s f r x j w into tone marks. Great for Vietnamese, bad for every other word. MiKey knows about 70,000 English and German words and leaves them alone.</p>
+  <table class="fix"><thead><tr><th scope="col">You type</th><th scope="col">Plain Telex</th><th scope="col">MiKey</th></tr></thead><tbody><tr><td class="mono">text</td><td>tẽt</td><td>text</td></tr><tr><td class="mono">wir</td><td>ửi</td><td>wir</td></tr><tr><td class="mono">der</td><td>dẻ</td><td>der</td></tr><tr><td class="mono">dass</td><td>das</td><td>dass</td></tr><tr><td class="mono">wissen</td><td>ưisen</td><td>wissen</td></tr><tr><td class="mono">über</td><td>ơber</td><td>über</td></tr><tr><td class="mono">Café</td><td>Càé</td><td>Café</td></tr><tr><td class="mono">osx</td><td>õ</td><td>osx</td></tr><tr><td class="mono">server</td><td>sẻver</td><td>server</td></tr></tbody></table>
+</section>
+<section aria-label="Features"><div class="grid three"><div class="card"><h3>ä ö ü just work</h3><p>On Swiss and German keyboards ü sits where Telex expects the [ key, so it became ơ. MiKey leaves ä ö ü ß é alone: über, Grüße, Café, Zürich.</p></div><div class="card"><h3>Knows German</h3><p>wir, der, nur, dass, wissen don&#x27;t turn into ửi, dẻ, nủ, das, ưisen. Can be turned off in the menu.</p></div><div class="card"><h3>Knows English and tech words</h3><p>text, server, the best test, osx, macos, exe stay as typed. Common Vietnamese words like gì and ít always stay Vietnamese.</p></div><div class="card"><h3>Switch with ⌥Z / Alt+Z</h3><p>One key for Vietnamese ↔ English/German, with a small VI/EN label at the cursor.</p></div><div class="card"><h3>Wrong guess? Backspace</h3><p>If MiKey gets a word wrong, Backspace right after it brings back what you typed.</p></div><div class="card"><h3>Everything stays on your computer</h3><p>Nothing is sent anywhere. On the Mac, MiKey is a real input source and needs no Accessibility permission.</p></div></div></section>
+<section aria-labelledby="install"><h2 id="install">Install</h2>
+  <div class="grid two">
+    <div class="card"><h3>macOS</h3><ol class="steps"><li>Download <b>MiKey-…-macOS.pkg</b> from the releases page and open it.</li><li>The first time, macOS asks because the package isn't signed by Apple yet: right-click the file › <b>Open</b>, or System Settings › Privacy &amp; Security › <b>Open Anyway</b>.</li><li>System Settings › Keyboard › Input Sources › <b>Edit…</b> › <b>+</b> › Vietnamese › <b>MiKey</b>.</li><li>Pick <b>MiKey</b> in the input menu in the menu bar. Done.</li></ol></div>
+    <div class="card"><h3>Windows</h3><ol class="steps"><li>Download <b>MiKey-…-x64-Setup.exe</b> (or arm64) from the releases page.</li><li>Windows SmartScreen may warn because the installer isn't signed yet: <b>More info</b> › <b>Run anyway</b>.</li><li>MiKey lives in the system tray. <kbd>Alt</kbd>+<kbd>Z</kbd> switches Vietnamese ↔ English/German.</li></ol></div>
+  </div>
+  <p class="note">Linux (IBus): coming soon.</p>
+  <div class="cta"><a class="btn" href="https://github.com/mikephung/MiKey/releases/latest">Download for macOS</a><a class="btn alt" href="https://github.com/mikephung/MiKey/releases/latest">Download for Windows</a></div>
+</section>
+<section aria-labelledby="telex"><h2 id="telex">Telex table</h2><p>Type the mark after the letter, anywhere in the word: truowfng, truongwf and truwowngf all give trường.</p>
+  <table><tbody><tr><td><kbd>aa</kbd></td><td>â</td></tr><tr><td><kbd>aw</kbd></td><td>ă</td></tr><tr><td><kbd>ee</kbd></td><td>ê</td></tr><tr><td><kbd>oo</kbd></td><td>ô</td></tr><tr><td><kbd>ow</kbd></td><td>ơ</td></tr><tr><td><kbd>uw</kbd></td><td>ư</td></tr><tr><td><kbd>dd</kbd></td><td>đ</td></tr><tr><td><kbd>s</kbd></td><td>´ sắc</td></tr><tr><td><kbd>f</kbd></td><td>` huyền</td></tr><tr><td><kbd>r</kbd></td><td>̉ hỏi</td></tr><tr><td><kbd>x</kbd></td><td>~ ngã</td></tr><tr><td><kbd>j</kbd></td><td>. nặng</td></tr><tr><td><kbd>z</kbd></td><td>×</td></tr></tbody></table>
+</section>
+<section aria-labelledby="faq"><h2 id="faq">FAQ</h2><details><summary>Is MiKey free?</summary><p>Yes. MiKey is free and open source (GPL-3.0). The code is on GitHub.</p></details><details><summary>Does MiKey send what I type anywhere?</summary><p>No. Everything happens on your computer. No ads, no analytics, no account.</p></details><details><summary>Does it need the Accessibility permission on the Mac?</summary><p>No. MiKey is a macOS input source, like ABC or Swiss German.</p></details><details><summary>What if a word is guessed wrong?</summary><p>Press Backspace right after it to get back exactly what you typed. If you don&#x27;t need German detection, turn off &quot;Nhận biết tiếng Đức&quot; in the input menu.</p></details><details><summary>Does it work with a Swiss or German (QWERTZ) keyboard?</summary><p>Yes, that&#x27;s what it&#x27;s made for. It reads the characters of the layout you use, so z/y and ä ö ü are right.</p></details><details><summary>How is it different from Vikey and OpenKey?</summary><p>MiKey is based on Vikey (Tony Dinh), which is based on OpenKey (Tuyen Mai). MiKey adds what Vietnamese people in German-speaking countries need: umlaut keys, German words, tech words.</p></details></section>
+</main>
+<footer>
+  <p>MiKey is based on <a href="https://github.com/trungdq88/Vikey">Vikey</a> by Tony Dinh and <a href="https://github.com/tuyenvm/OpenKey">OpenKey</a> by Tuyen Mai. Word frequencies: FrequencyWords (Hermit Dave, OpenSubtitles 2018, CC BY-SA 4.0).</p>
+  <p>GPL-3.0 license · <a href="https://github.com/mikephung/MiKey">Source on GitHub</a> · <a href="https://github.com/mikephung/MiKey/issues">Report a problem</a></p>
+  <p>Made by <a href="https://mikephung.com">Mike Phung</a>.</p>
+</footer>
+</div>
+</body>
+</html>
