@@ -1,0 +1,18 @@
+# Swiss German keyboard (mikey_livetest cases_ch.tsv 00000807): ü ö ä é come from their own keys, z/y are swapped.
+# name	start	keys	expected   (expected = Tools/autoswitch/test/de_cases.tsv, the engine's output for the same keys)
+umlaut_first	vi	über 	über 
+umlaut_inside	vi	für dich 	für dich 
+umlaut_end	vi	schön 	schön 
+umlaut_middle_tones_after	vi	fährt 	fährt 
+accent_e	vi	Café 	Café 
+city_in_vietnamese	vi	tooi soongs owr Zürich 	tôi sống ở Zürich 
+german_words	vi	wir 	wir 
+german_der	vi	der 	der 
+text_not_tet	vi	text 	text 
+osx_not_o	vi	osx 	osx 
+vietnamese_still	vi	tieengs vieetj 	tiếng việt 
+vietnamese_sentence	vi	tooi ddi hocj owr truwowngf ddaij hocj 	tôi đi học ở trường đại học 
+z_key_removes_tone	vi	asz 	a 
+y_key_letter	vi	tuy 	tuy 
+english_mode_german	en	der Mann ist hier 	der Mann ist hier 
+english_mode_vietnamese	en	treen 	trên 

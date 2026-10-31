@@ -42,7 +42,23 @@ jobs:
           $ver = (Select-String -Path project.yml -Pattern 'MARKETING_VERSION: "([^"]+)"').Matches[0].Groups[1].Value
           "VIKEY_VERSION=$ver" >> $env:GITHUB_ENV
           cmake -S Windows -B Windows/build -G Ninja -DCMAKE_BUILD_TYPE=Release
-          cmake --build Windows/build --config Release --target mikey
+          cmake --build Windows/build --config Release --target mikey mikey_livetest
+        shell: pwsh
+      # Real typing through MiKey's keyboard hook: the test types with SendInput into its own window and reads the
+      # text back. US layout (Windows/Tests/cases.tsv), then Swiss German (cases_ch.tsv: ü ö ä é on their own keys).
+      - name: Live typing test (US and Swiss German keyboard)
+        if: hashFiles('Windows/App/CMakeLists.txt') != ''
+        run: |
+          New-Item -Path HKCU:\Software\MiKey -Force | Out-Null
+          Set-ItemProperty -Path HKCU:\Software\MiKey -Name FirstRunDone -Value 1 -Type DWord   # no welcome window over the test
+          Start-Process -FilePath Windows/build/App/MiKey.exe
+          Start-Sleep -Seconds 5
+          if (-not (Get-Process MiKey -ErrorAction SilentlyContinue)) { throw "MiKey.exe did not start" }
+          $fail = 0
+          & Windows/build/App/mikey_livetest.exe Windows/Tests/cases.tsv; if ($LASTEXITCODE) { $fail = 1 }
+          & Windows/build/App/mikey_livetest.exe Windows/Tests/cases_ch.tsv 00000807; if ($LASTEXITCODE) { $fail = 1 }
+          Stop-Process -Name MiKey -Force -ErrorAction SilentlyContinue
+          exit $fail
         shell: pwsh
       - uses: actions/upload-artifact@v4
         if: hashFiles('Windows/App/CMakeLists.txt') != ''
