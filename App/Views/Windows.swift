@@ -120,11 +120,11 @@ enum AboutPanel {
         add("Dựa trên ")
         add("OpenKey", link: "https://github.com/tuyenvm/OpenKey")
         add(" của Tuyen Mai\nMã nguồn mở theo giấy phép GPL-3.0\n\n")
-        add("vikey.app", link: "https://vikey.app")
+        add("mikey.mikephung.com", link: "https://mikey.mikephung.com")
         add("  ·  ")
-        add("GitHub", link: "https://github.com/tonyminibot/MiKey")
+        add("GitHub", link: "https://github.com/mikephung/MiKey")
         add("  ·  ")
-        add("Ghi nhận", link: "https://vikey.app/acknowledgements")
+        add("Ghi nhận", link: "https://mikey.mikephung.com/acknowledgements/")
         NSApp.orderFrontStandardAboutPanel(options: [.credits: credits, .applicationName: "MiKey"])
     }
 }

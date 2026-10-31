@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Các thay đổi của MiKey</title>
+<meta name="description" content="Những gì mới trong từng phiên bản MiKey.">
+<link rel="canonical" href="https://mikey.mikephung.com/changelog/">
+<link rel="alternate" hreflang="vi" href="https://mikey.mikephung.com/changelog/"><link rel="alternate" hreflang="de" href="https://mikey.mikephung.com/de/changelog/"><link rel="alternate" hreflang="en" href="https://mikey.mikephung.com/en/changelog/"><link rel="alternate" hreflang="x-default" href="https://mikey.mikephung.com/changelog/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="MiKey">
+<meta property="og:title" content="Các thay đổi của MiKey">
+<meta property="og:description" content="Những gì mới trong từng phiên bản MiKey.">
+<meta property="og:url" content="https://mikey.mikephung.com/changelog/">
+<meta property="og:image" content="https://mikey.mikephung.com/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:creator" content="@m1k3_png">
+<meta name="theme-color" content="#4F46E5">
+<link rel="icon" type="image/png" href="../assets/favicon.png">
+<link rel="apple-touch-icon" href="../assets/icon-256.png">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<a class="skip" href="#main">Bỏ qua, đến nội dung</a>
+<div class="wrap">
+<header class="top">
+  <a class="brand" href="../"><img src="../assets/icon-256.png" alt="" width="32" height="32"><span>Mi<span class="key">Key</span></span></a>
+  <nav class="main" aria-label="Menu"><a href="../download/">Tải về</a><a href="../guide/">Hướng dẫn</a><a href="../#faq">Câu hỏi</a><a href="../changelog/">Thay đổi</a></nav>
+  <nav class="lang" aria-label="Language"><a href="../changelog/" hreflang="vi" lang="vi" aria-current="true">VI<span class="sr"> Tiếng Việt</span></a><a href="../de/changelog/" hreflang="de" lang="de">DE<span class="sr"> Deutsch</span></a><a href="../en/changelog/" hreflang="en" lang="en">EN<span class="sr"> English</span></a></nav>
+</header>
+<main id="main">
+<div class="page-head"><h1>Các thay đổi</h1><p class="lead">Phiên bản mới nhất ở trên cùng.</p></div><article class="release" id="v1.0.3"><h2>MiKey 1.0.3</h2><p class="meta"><time datetime="2026-10-30">2026-10-30</time> · <a href="https://github.com/mikephung/MiKey/releases/tag/v1.0.3">GitHub</a></p><p>Cài đặt gọn và nâng cấp an toàn.</p><ul><li>macOS: MiKey được cài vào thư mục của bạn (~/Library/Input Methods) và tự bật. Lần cài đầu tiên cần đăng xuất một lần để menu bàn phím hiện MiKey; trang cuối của bộ cài nhắc bước này.</li><li>Nâng cấp từ 1.0.1/1.0.2: bản cũ trong /Library được gỡ để máy chỉ còn một MiKey. Các lần nâng cấp sau ở nguyên chỗ cũ, không cần đăng xuất.</li><li>Trang cuối của bộ cài ghi rõ bước tiếp theo, bằng tiếng Việt, tiếng Đức và tiếng Anh.</li></ul></article><article class="release" id="v1.0.2"><h2>MiKey 1.0.2</h2><p class="meta"><time datetime="2026-10-30">2026-10-30</time> · <a href="https://github.com/mikephung/MiKey/releases/tag/v1.0.2">GitHub</a></p><p>Sửa lỗi nâng cấp.</p><ul><li>Cài đè lên bản cũ không còn làm MiKey biến mất khỏi menu bàn phím: bộ cài đợi macOS xử lý xong bản cũ rồi mới đăng ký, và kiểm tra cho đến khi MiKey ổn định.</li><li>Nếu MiKey đang là bàn phím đang dùng, nó vẫn là bàn phím đang dùng sau khi nâng cấp.</li><li>Đã lên 1.0.1 và mất MiKey? Cài 1.0.2 lên là có lại.</li></ul></article><article class="release" id="v1.0.1"><h2>MiKey 1.0.1</h2><p class="meta"><time datetime="2026-10-30">2026-10-30</time> · <a href="https://github.com/mikephung/MiKey/releases/tag/v1.0.1">GitHub</a></p><p>Sửa lỗi cài đặt trên máy mới.</p><ul><li>macOS: sau khi cài, MiKey tự xuất hiện trong menu bàn phím (trước đây trên máy mới chỉ hiện như một ứng dụng, phải đăng xuất mới thấy).</li><li>Bộ cài luôn cài vào /Library/Input Methods và dọn bản MiKey cũ trong thư mục người dùng.</li><li>Logo và liên kết trong ứng dụng thanh menu: MiKey thay cho Vikey.</li></ul></article><article class="release" id="v1.0.3"><h2>MiKey 1.0.3</h2><p class="meta"><time datetime="2026-10-30">2026-10-30</time> · <a href="https://github.com/mikephung/MiKey/releases/tag/v1.0.3">GitHub</a></p><p>Bản đầu tiên của MiKey.</p><ul><li>macOS: MiKey là một input source thật trong menu bàn phím (InputMethodKit), không cần quyền Accessibility.</li><li>Phím ä ö ü ß é và các dead key (´ ^ ¨) trên bàn phím Đức/Thụy Sĩ gõ thẳng, không còn bị Telex biến thành ơ, ư.</li><li>Nhận biết khoảng 30.000 từ tiếng Đức (wir, der, dass…) cùng với tiếng Anh.</li><li>Từ công nghệ như osx, macos, exe không còn bị bỏ dấu.</li><li>Sửa lỗi từ mới bị dính vào từ trước sau khi xoá hay click (đawng, tootho).</li><li>Windows: cùng các sửa lỗi bàn phím Đức/Thụy Sĩ, bộ cài MiKey riêng, tự cập nhật có chữ ký.</li></ul></article>
+</main>
+<footer>
+  <p>MiKey dựa trên <a href="https://github.com/trungdq88/Vikey">Vikey</a> của Tony Dinh và <a href="https://github.com/tuyenvm/OpenKey">OpenKey</a> của Tuyen Mai.</p>
+  <p><a href="../acknowledgements/">Ghi công</a> · <a href="../privacy/">Quyền riêng tư</a> · <a href="https://github.com/mikephung/MiKey">Mã nguồn</a> · <a href="https://github.com/mikephung/MiKey/issues">Báo lỗi</a></p>
+  <p>Giấy phép GPL-3.0. Làm bởi <a href="https://mikephung.com">Mike Phung</a>.</p>
+</footer>
+</div>
+<script src="../os.js" defer></script>
+</body>
+</html>

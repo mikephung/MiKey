@@ -100,6 +100,12 @@ extern int vOtherLanguage;
 extern int vAutoSwitchByTyping;
 
 /**
+ * MiKey: German words (GermanData.h) count as the other language, like English ones.
+ * 0: No (default, keeps the locked Vikey behavior); 1: Yes
+ */
+extern int vGermanAware;
+
+/**
  * Set by the engine when a keystroke should switch the language:
  * -1: no request, 0: switch to English, 1: switch to Vietnamese.
  * The platform layer applies it after sending the key's output, then resets it to -1.
@@ -202,6 +208,12 @@ void vKeyHandleEvent(const vKeyEvent& event,
  * Start a new word
  */
 void startNewSession();
+
+/**
+ * A letter Telex doesn't know (ä ö ü ß é...) was typed in the current word: put its keys back as typed
+ * if Telex changed them, and end the word. Returns true when hData/hBPC/hNCC hold text to send.
+ */
+bool vKeyRestoreRawWord();
 
 /**
  * reset spelling value

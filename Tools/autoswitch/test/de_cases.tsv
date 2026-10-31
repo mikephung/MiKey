@@ -1,0 +1,41 @@
+# German/Swiss user cases (MiKey). Run with: python3 run_de.py   (harness with VIKEY_GERMAN=1)
+# start(1=VN,0=EN)	keys (UTF-8: ä ö ü ß é are foreign letters from a German/Swiss keyboard; '|' = Enter)	expected text	final lang	why
+1	text 	text 	0	the reported bug: never tẽt
+1	ein text 	ein text 	0	after a German word
+1	(text 	(text 	0	after an opening bracket
+1	the text|	the text|	0	Enter ends the word
+1	über 	über 	1	umlaut first: the rest of the word is not Telex (not übẻ)
+1	für dich 	für dich 	1	umlaut inside the word
+1	Grüße 	Grüße 	1	umlaut and ß
+1	schön 	schön 	1	ö at the end
+1	Café 	Café 	1	é: the f before it is put back (not Càé)
+1	fährt 	fährt 	1	ä in the middle, tone keys after it stay letters
+1	wir 	wir 	0	German word without umlaut: not ửi
+1	der 	der 	0	not dẻ
+1	nur 	nur 	0	not nủ
+1	dass 	dass 	0	not das
+1	wissen 	wissen 	0	not wisen
+1	uns 	uns 	0	not ún
+1	fuer 	fuer 	1	umlaut typed as ue (no umlaut key)
+1	schoen 	schoen 	1	umlaut typed as oe
+1	Strasse 	Strasse 	1	Swiss ss
+1	ich habe das gesehen 	ich habe das gesehen 	0	plain German sentence
+1	wir sind morgen in der Schule 	wir sind morgen in der Schule 	0	German sentence keeps going in German
+0	wir sind der Meinung 	wir sind der Meinung 	0	English/German mode: German words never turn Vietnamese
+0	der Mann ist hier 	der Mann ist hier 	0	English/German mode: der, ist stay
+1	tooi ddi hocj owr truwowngf ddaij hocj 	tôi đi học ở trường đại học 	1	plain Vietnamese never switches
+1	khoer khoong 	khoẻ không 	1	plain Vietnamese never switches
+1	anh owi, mai minh ddi uoongs cafe nhes. 	anh ơi, mai minh đi uống cafe nhé. 	1	Vietnamese chat
+1	em ddi ra ngoaif mootj chuts 	em đi ra ngoài một chút 	1	Vietnamese chat
+1	ias 	ía 	1	single tone key is still Telex
+1	ddi hocj é Zürich 	đi học é Zürich 	1	city name with ü inside Vietnamese
+1	tooi soongs owr Zürich 	tôi sống ở Zürich 	1	city name with ü inside Vietnamese
+0	treen 	trên 	1	English mode: clear Vietnamese still converts
+# tech words (mikey_extra.txt)
+1	osx 	osx 	0	reported: came out õ
+0	osx 	osx 	0	English mode: never õ
+1	dungf osx vaf ios 	dùng osx và ios 	0	inside a Vietnamese sentence (the mode follows the last word: English)
+1	file exe 	file exe 	0	not ễ
+1	mua owr coop 	mua ở coop 	0	Swiss supermarket, not côp (the mode follows the last word: English)
+1	cais gif 	cái gì 	1	gif stays gì: one of the most common Vietnamese words
+1	ddawng 	đăng 	1	reported: came out đawng

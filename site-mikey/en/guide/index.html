@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MiKey guide</title>
+<meta name="description" content="Telex table, how MiKey recognises English and German, switching, undo with Backspace, tips and limits.">
+<link rel="canonical" href="https://mikey.mikephung.com/en/guide/">
+<link rel="alternate" hreflang="vi" href="https://mikey.mikephung.com/guide/"><link rel="alternate" hreflang="de" href="https://mikey.mikephung.com/de/guide/"><link rel="alternate" hreflang="en" href="https://mikey.mikephung.com/en/guide/"><link rel="alternate" hreflang="x-default" href="https://mikey.mikephung.com/guide/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="MiKey">
+<meta property="og:title" content="MiKey guide">
+<meta property="og:description" content="Telex table, how MiKey recognises English and German, switching, undo with Backspace, tips and limits.">
+<meta property="og:url" content="https://mikey.mikephung.com/en/guide/">
+<meta property="og:image" content="https://mikey.mikephung.com/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:creator" content="@m1k3_png">
+<meta name="theme-color" content="#4F46E5">
+<link rel="icon" type="image/png" href="../../assets/favicon.png">
+<link rel="apple-touch-icon" href="../../assets/icon-256.png">
+<link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="wrap">
+<header class="top">
+  <a class="brand" href="../../en/"><img src="../../assets/icon-256.png" alt="" width="32" height="32"><span>Mi<span class="key">Key</span></span></a>
+  <nav class="main" aria-label="Menu"><a href="../../en/download/">Download</a><a href="../../en/guide/">Guide</a><a href="../../en/#faq">FAQ</a><a href="../../en/changelog/">Changelog</a></nav>
+  <nav class="lang" aria-label="Language"><a href="../../guide/" hreflang="vi" lang="vi">VI<span class="sr"> Tiếng Việt</span></a><a href="../../de/guide/" hreflang="de" lang="de">DE<span class="sr"> Deutsch</span></a><a href="../../en/guide/" hreflang="en" lang="en" aria-current="true">EN<span class="sr"> English</span></a></nav>
+</header>
+<main id="main">
+<div class="page-head"><h1>Guide</h1><p class="lead">Everything you need to type fast with MiKey, and the special cases.</p></div>
+<nav class="toc" aria-labelledby="toc-h"><h2 id="toc-h">Contents</h2><ol><li><a href="#telex">Telex table</a></li><li><a href="#placement">Tone placement</a></li><li><a href="#switch">Switching language</a></li><li><a href="#auto">How MiKey recognises English and German</a></li><li><a href="#umlaut">ä ö ü and dead keys</a></li><li><a href="#german">German detection</a></li><li><a href="#undo">Undo with Backspace</a></li><li><a href="#tips">Tips</a></li><li><a href="#limits">Kept Vietnamese on purpose</a></li></ol></nav>
+<section id="telex"><h2>Telex table</h2><p>Type the mark after the letter, anywhere in the word: <code>truowfng</code>, <code>truongwf</code> and <code>truwowngf</code> all give <b>trường</b>. Pressing the tone key twice removes the tone and keeps the letter: <code>vaff</code> gives <b>vaf</b>.</p><div class="grid three"><table class=""><caption>Circumflex, horn, breve and đ</caption><thead><tr><th scope="col">Keys</th><th scope="col">MiKey</th></tr></thead><tbody><tr><td><kbd>aa</kbd></td><td>â</td></tr><tr><td><kbd>aw</kbd></td><td>ă</td></tr><tr><td><kbd>ee</kbd></td><td>ê</td></tr><tr><td><kbd>oo</kbd></td><td>ô</td></tr><tr><td><kbd>ow</kbd></td><td>ơ</td></tr><tr><td><kbd>uw</kbd></td><td>ư</td></tr><tr><td><kbd>w</kbd></td><td>ư</td></tr><tr><td><kbd>dd</kbd></td><td>đ</td></tr></tbody></table><table class=""><caption>Tones</caption><thead><tr><th scope="col">Keys</th><th scope="col">a +</th><th scope="col"></th></tr></thead><tbody><tr><td><kbd>s</kbd></td><td>á</td><td>sắc</td></tr><tr><td><kbd>f</kbd></td><td>à</td><td>huyền</td></tr><tr><td><kbd>r</kbd></td><td>ả</td><td>hỏi</td></tr><tr><td><kbd>x</kbd></td><td>ã</td><td>ngã</td></tr><tr><td><kbd>j</kbd></td><td>ạ</td><td>nặng</td></tr><tr><td><kbd>z</kbd></td><td>a</td><td>×</td></tr></tbody></table><table class=""><caption>Examples</caption><thead><tr><th scope="col">Keys</th><th scope="col">MiKey</th></tr></thead><tbody><tr><td class="mono">tooi ddi hocj</td><td>tôi đi học</td></tr><tr><td class="mono">truwowngf / truowfng</td><td>trường</td></tr><tr><td class="mono">Vieetj Nam</td><td>Việt Nam</td></tr><tr><td class="mono">khoer khoong</td><td>khoẻ không</td></tr><tr><td class="mono">caamf</td><td>cầm</td></tr><tr><td class="mono">nguyeenx</td><td>nguyễn</td></tr></tbody></table></div></section>
+<section id="placement"><h2>Tone placement</h2><p>By default MiKey uses the modern placement: <b>hoà, thuý, khoẻ</b>. For the classic one (<b>hòa, thúy, khỏe</b>) turn off "Bỏ dấu kiểu mới" in the input menu on the Mac.</p></section>
+<section id="switch"><h2>Switching language</h2><ul><li><kbd>⌥</kbd>+<kbd>Z</kbd> on the Mac, <kbd>Alt</kbd>+<kbd>Z</kbd> on Windows: Vietnamese ↔ English/German. On the Mac a small <b>VI</b> or <b>EN</b> shows at the cursor.</li><li>On the Mac also from the input menu: <b>Tiếng Việt (Telex)</b> or <b>English / Deutsch</b>.</li><li>After you switch by hand, MiKey doesn't switch by itself for 5 seconds, so your choice holds.</li></ul></section>
+<section id="auto"><h2>How MiKey recognises English and German</h2><ol><li>MiKey only decides when a word ends: a space, punctuation (, . ; : ? ! ) ") or Enter.</li><li>In Vietnamese mode: if your keys are a real English or German word and the Vietnamese reading is rare or impossible, the keys come back and MiKey switches to English/German. <code>text</code> → <b>text</b>, <code>wir</code> → <b>wir</b>.</li><li>In English/German mode: if you type a clearly Vietnamese word, MiKey adds the marks and switches back. <code>treen</code> → <b>trên</b>, <code>ddi hocj</code> → <b>đi học</b>.</li><li>When a word has two readings (car / cả, too / tô), MiKey looks at the word before it and uses the reading that is more common in real text.</li><li>Common Vietnamese words are never switched to English or German.</li></ol></section>
+<section id="umlaut"><h2>ä ö ü and dead keys</h2><p>On ä ö ü ß é è à ç or a dead key (´ ` ^ ¨), MiKey puts back the keys typed so far and turns Telex off until the word ends. So <b>über</b>, <b>fährt</b>, <b>Grüße</b>, <b>Café</b>, <b>Zürich</b> are always right, even inside a Vietnamese sentence: <i>đi học ở Zürich</i>.</p></section>
+<section id="german"><h2>German detection</h2><p>On by default. MiKey knows about 30,000 German words, also written without umlauts (fuer, schoen) and with the Swiss ss (Strasse). On the Mac, turn it off in the input menu: <b>Nhận biết tiếng Đức</b>.</p></section>
+<section id="undo"><h2>Undo with Backspace</h2><p>Right after MiKey changes a word, press <kbd>Backspace</kbd> once: the word is back exactly as you typed it and the language is as before. If you keep typing on that word, MiKey checks the whole word again.</p></section>
+<section id="tips"><h2>Tips</h2><ul><li><b>Acronyms and capitalised names</b>: words with two or more capitals stay as typed (NAS, HDD, USA, GoPro). Whole sentences with Caps Lock still become Vietnamese: <code>TOOI DDI HOCJ</code> → <b>TÔI ĐI HỌC</b>.</li><li><b>Code, files, paths</b>: words after . _ - / stay as typed: <code>file.txt</code>, <code>my_var</code>, <code>git push</code>.</li><li><b>Numbers</b>: <code>5trawm</code> → <b>5trăm</b>; <code>100k</code> and <code>md5sum</code> stay.</li><li><b>Words with two readings</b>: type them in capitals (GIF, HDD), or switch with ⌥Z/Alt+Z first.</li></ul></section>
+<section id="limits"><h2>Kept Vietnamese on purpose</h2><p>A few words are both common Vietnamese and English/German. MiKey prefers Vietnamese, because a wrongly switched Vietnamese word is more annoying:</p><table class=""><caption>Kept Vietnamese on purpose</caption><thead><tr><th scope="col">Keys</th><th scope="col">MiKey</th></tr></thead><tbody><tr><td class="mono">gif</td><td>gì</td></tr><tr><td class="mono">hdd</td><td>hđ (hợp đồng, contract)</td></tr><tr><td class="mono">rar</td><td>rả (rôm rả)</td></tr><tr><td class="mono">ist (start of a sentence)</td><td>ít</td></tr></tbody></table><p>After a German word, <code>ist</code> stays <b>ist</b>: <i>das ist gut</i>. A word often comes out wrong? Report it on GitHub.</p></section>
+</main>
+<footer>
+  <p>MiKey is based on <a href="https://github.com/trungdq88/Vikey">Vikey</a> by Tony Dinh and <a href="https://github.com/tuyenvm/OpenKey">OpenKey</a> by Tuyen Mai.</p>
+  <p><a href="../../en/acknowledgements/">Acknowledgements</a> · <a href="../../en/privacy/">Privacy</a> · <a href="https://github.com/mikephung/MiKey">Source</a> · <a href="https://github.com/mikephung/MiKey/issues">Report a problem</a></p>
+  <p>GPL-3.0 license. Made by <a href="https://mikephung.com">Mike Phung</a>.</p>
+</footer>
+</div>
+<script src="../../os.js" defer></script>
+</body>
+</html>

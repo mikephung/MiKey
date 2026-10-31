@@ -2,7 +2,7 @@ name: linux
 on:
   push:
     branches: [linux, main]
-    tags: ['v*']
+    # MiKey: no automatic upload on release tags until the Linux packages are MiKey (workflow_dispatch to upload)
     paths: [Engine/**, Tools/autoswitch/**, Linux/**, .github/workflows/linux.yml]
   pull_request:
     paths: [Engine/**, Tools/autoswitch/**, Linux/**, .github/workflows/linux.yml]

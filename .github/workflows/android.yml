@@ -2,7 +2,8 @@ name: android
 on:
   push:
     branches: [main, android]
-    tags: ['v*']
+    # MiKey: no automatic upload on release tags; the Android app is still Vikey-branded (upload by hand with
+    # workflow_dispatch + release_tag once it is MiKey)
     paths: ['Android/**', 'Engine/**', 'project.yml', '.github/workflows/android.yml']
   pull_request:
     paths: ['Android/**', 'Engine/**']

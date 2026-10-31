@@ -109,12 +109,12 @@ struct MainView: View {
                         Tip("Mở MiKey khi đăng nhập", "Tự mở MiKey mỗi khi bạn đăng nhập vào máy Mac.")
                     }
                     Toggle(isOn: Binding(get: { updater.automatic }, set: { updater.automatic = $0 })) {
-                        Tip("Tự động cập nhật", "Mỗi ngày MiKey kiểm tra bản mới trên vikey.app, tự tải về và cài khi bạn thoát MiKey hoặc tắt máy.")
+                        Tip("Tự động cập nhật", "Mỗi ngày MiKey kiểm tra bản mới trên mikey.mikephung.com, tự tải về và cài khi bạn thoát MiKey hoặc tắt máy.")
                     }
                     LabeledContent {
                         Button("Gửi góp ý…") { Feedback.open() }
                     } label: {
-                        Tip("Góp ý", "Báo lỗi hoặc góp ý cho MiKey: mở trang vikey.app/feedback trong trình duyệt.")
+                        Tip("Góp ý", "Báo lỗi hoặc góp ý cho MiKey: mở trang GitHub Issues của MiKey trong trình duyệt.")
                     }
                 }
             }

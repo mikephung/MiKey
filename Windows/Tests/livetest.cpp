@@ -45,9 +45,18 @@ static std::wstring editText() { int n = GetWindowTextLengthW(_edit); std::wstri
 static std::wstring fromUtf8(const std::string& s) { int n = MultiByteToWideChar(CP_UTF8, 0, s.c_str(), (int)s.size(), nullptr, 0); std::wstring w(n, 0); MultiByteToWideChar(CP_UTF8, 0, s.c_str(), (int)s.size(), &w[0], n); return w; }
 static std::string toUtf8(const std::wstring& w) { int n = WideCharToMultiByte(CP_UTF8, 0, w.c_str(), (int)w.size(), nullptr, 0, nullptr, nullptr); std::string s(n, 0); WideCharToMultiByte(CP_UTF8, 0, w.c_str(), (int)w.size(), &s[0], n, nullptr, nullptr); return s; }
 
+// usage: mikey_livetest <cases.tsv> [keyboard layout id, e.g. 00000807 Swiss German, 00000407 German]
+// With a layout id the test window types on that layout: VkKeyScanW then finds ü ö ä on their own keys, and
+// MiKey reads them through the layout of the window in front, like on a real Swiss or German keyboard.
 int wmain(int argc, wchar_t** argv) {
     SetConsoleOutputCP(CP_UTF8);
     std::wstring casesPath = argc > 1 ? argv[1] : L"cases.tsv";
+    if (argc > 2) {
+        HKL hkl = LoadKeyboardLayoutW(argv[2], KLF_ACTIVATE | KLF_SETFORPROCESS);
+        wchar_t name[KL_NAMELENGTH] = {}; GetKeyboardLayoutNameW(name);
+        printf("keyboard layout: asked %ls, active %ls%s\n", argv[2], name, hkl ? "" : " (LoadKeyboardLayout failed)");
+        if (!hkl) return 97;
+    }
     std::ifstream f(casesPath); if (!f) { printf("cannot open cases file\n"); return 99; }
     HINSTANCE inst = GetModuleHandleW(nullptr);
     WNDCLASSW wc = {}; wc.lpfnWndProc = testWndProc; wc.hInstance = inst; wc.lpszClassName = L"MiKeyLiveTest"; wc.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1); RegisterClassW(&wc);

@@ -1,12 +1,11 @@
 import AppKit
+#if canImport(Sparkle)
 import Sparkle
-
-/// Updates from vikey.app/appcast.xml (Sparkle, EdDSA-signed). Checks daily; installs on its own when allowed.
+/// Updates from mikey.mikephung.com/appcast.xml (Sparkle, EdDSA-signed). Checks daily; installs on its own when allowed.
 final class Updater: ObservableObject {
     static let shared = Updater()
     private let controller = SPUStandardUpdaterController(startingUpdater: true, updaterDelegate: nil, userDriverDelegate: nil)
     private var updater: SPUUpdater { controller.updater }
-
     /// Checks and installs updates without asking.
     var automatic: Bool {
         get { updater.automaticallyChecksForUpdates && updater.automaticallyDownloadsUpdates }
@@ -16,9 +15,19 @@ final class Updater: ObservableObject {
             objectWillChange.send()
         }
     }
-
     func checkForUpdates() {
         NSApp.activate(ignoringOtherApps: true)   // a menu bar app: bring Sparkle's window to the front
         updater.checkForUpdates()
     }
 }
+#else
+/// Local build without Xcode/Sparkle (Tools/build_local.sh): no automatic updates.
+final class Updater: ObservableObject {
+    static let shared = Updater()
+    var automatic: Bool {
+        get { false }
+        set { objectWillChange.send() }
+    }
+    func checkForUpdates() {}
+}
+#endif

@@ -43,11 +43,30 @@ static void applyOutput(Uint16 key, bool caps) {
     if (H->code == vRestoreAndStartNewSession) startNewSession();
 }
 
+// A letter Telex doesn't know (ä ö ü ß é, from a German/Swiss keyboard): like VikeyCore.mm, the word is foreign
+// from here to its end. Vietnamese mode puts the keys typed so far back; the rest of the word is passed through.
+static bool foreignWord = false;
+static void pressForeign(char16_t ch) {
+    if (vLanguage == 1) {
+        if (vKeyRestoreRawWord()) {
+            for (int i = 0; i < H->backspaceCount && !screen.empty(); i++) screen.pop_back();
+            for (int i = H->newCharCount - 1; i >= 0; i--) screen.push_back(charOf(H->charData[i]));
+        }
+    } else { enValid = false; prevN = 0; }
+    foreignWord = true;
+    screen.push_back(ch);
+}
+
 static void press(char c) {
     bool shifted = c == '"' || c == ')' || c == '(' || c == '?';
     bool caps = (c >= 'A' && c <= 'Z') || shifted;
     char lc = (c >= 'A' && c <= 'Z') ? c + 32 : c;
     Uint16 key = keyOf(lc);
+    if (foreignWord) {
+        if (isLetter(lc)) { screen.push_back(c); return; }
+        foreignWord = false;
+        if (vLanguage == 1) startNewSession(); else { enCount = 0; enValid = false; }
+    }
     if (vLanguage == 1) {
         vAutoSwitchRequest = -1;
         vKeyHandleEvent(vKeyEvent::Keyboard, vKeyEventState::KeyDown, key, caps ? 1 : 0, false);
@@ -104,19 +123,33 @@ static std::string utf8(const std::u16string& s) {
     return o;
 }
 
+/** Types a UTF-8 string: ASCII as keys ('|' = Enter), anything else as a foreign letter (pressForeign). */
+static void feed(const char* p) {
+    while (*p) {
+        unsigned char b = (unsigned char)*p;
+        if (b < 0x80) { press(*p == '|' ? '\n' : *p); p++; continue; }
+        char32_t cp; int n;
+        if ((b & 0xE0) == 0xC0) { cp = b & 0x1F; n = 1; } else if ((b & 0xF0) == 0xE0) { cp = b & 0x0F; n = 2; } else { cp = b & 0x07; n = 3; }
+        p++;
+        for (int i = 0; i < n && *p; i++, p++) cp = (cp << 6) | ((unsigned char)*p & 0x3F);
+        pressForeign((char16_t)cp);
+    }
+}
+
 // usage: harness <startLang 0|1> <keys>   or   harness bench
 int main(int argc, char** argv) {
     H = (vKeyHookState*)vKeyInit();
     if (getenv("VIKEY_AUTO_OFF")) { vAutoSwitchByTyping = 0; vRestoreIfWrongSpelling = 0; }   // a plain Telex input method, for comparison
+    if (getenv("VIKEY_GERMAN")) vGermanAware = atoi(getenv("VIKEY_GERMAN"));                 // MiKey: German words count as foreign
     if (argc >= 2 && strcmp(argv[1], "lines") == 0) {
         // stdin: "<lang>\t<keys>" per line -> prints "<final text>\t<switches>\t<final lang>"
         char buf[4096];
         while (fgets(buf, sizeof buf, stdin)) {
             char* tab = strchr(buf, '\t'); if (!tab) continue;
             buf[strcspn(buf, "\n")] = 0;
-            screen.clear(); switches = 0; enCount = 0; enValid = true; prevN = 0; enAfterDouble = false; startNewSession(); vAutoSwitchForget();
+            screen.clear(); switches = 0; enCount = 0; enValid = true; prevN = 0; enAfterDouble = false; foreignWord = false; startNewSession(); vAutoSwitchForget();
             vLanguage = atoi(buf);
-            for (char* p = tab + 1; *p; p++) press(*p == '|' ? '\n' : *p);
+            feed(tab + 1);
             printf("%s\t%d\t%d\n", utf8(screen).c_str(), switches, vLanguage);
         }
         return 0;

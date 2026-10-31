@@ -23,6 +23,24 @@ If every listed change is intended, accept them with `Tools/autoswitch/check.sh 
 
 ---
 
+## M1. MiKey: Vietnamese typing for people in Germany and Switzerland
+
+**Status:** Built 2026-10-30 (MiKey fork), not in a release yet.
+
+**User story.** As a Vietnamese user in Germany or Switzerland, on a QWERTZ keyboard with ä ö ü keys, I type Vietnamese, German and English in the same day and never want "tẽt", "ửi", "übẻ" or "õ".
+
+**Decided**
+
+- **Letters Telex doesn't know end Telex for the word.** On German/Swiss layouts ü ä ö sit where QWERTY has `[ ' ;`, so the layout mapping fed them to Telex as brackets ("ü" became "ơ", the ¨ dead key "ư"). Now ä ö ü ß é è à ç and dead keys put the keys typed so far back as typed (`vKeyRestoreRawWord`) and the rest of the word is passed through: über, Grüße, Café, fährt, Zürich.
+- **German words count as the other language** (`vGermanAware`, `Engine/GermanData.h` from `build_german.py`: 29,608 words of FrequencyWords de_50k, ASCII spellings, ä→ae ö→oe ü→ue ß→ss added). "wir der nur uns dass wissen" stay as typed. Off in the engine by default (the Vikey rule lock is unchanged); the MiKey input method turns it on, with a menu switch.
+- **Always-English tech words** (`mikey_extra.txt`): osx, macos, ios, exe, dmg, coop… Not gif (gì), hdd (hđ = hợp đồng) or rar (rả: rôm rả): a common Vietnamese reading wins; capitals stay as typed. Telex lock: only "coop" changed (côp → coop).
+- **Trade-off kept:** "ist" can still become "ít" at the start of a sentence (ít is very common Vietnamese); after a German word it stays "ist".
+- **MiKey as a real input source** (`InputMethod/`, InputMethodKit, `Tools/build_inputmethod.sh install`): no Accessibility permission, the word being typed is marked text, keys are read as the characters of the active layout. ⌥Z switches, with a VI/EN label at the caret.
+
+**Locked by:** `Tools/autoswitch/test/de_cases.tsv` (`python3 Tools/autoswitch/test/run_de.py`, 38 cases), `Tools/autoswitch/check.sh` (unchanged with German off), live typing `python3 Tools/livetest/livetest.py`.
+
+---
+
 ## 46. Linux: no per-website memory, no automatic install (approved)
 
 **Status:** Approved by Tony, 2026-10-30 (Telegram 247): "This is ok and approved." Do not raise these again.

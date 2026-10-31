@@ -17,11 +17,11 @@ extension Color {
     }()
 }
 
-/// "Vi" in the text color, "key" in brand indigo, bold.
+/// "Mi" in the text color, "Key" in brand indigo, bold.
 struct Wordmark: View {
     var size: CGFloat = 17
     var body: some View {
-        (Text("Vi").foregroundColor(.primary) + Text("key").foregroundColor(.brand))
+        (Text("Mi").foregroundColor(.primary) + Text("Key").foregroundColor(.brand))
             .font(.system(size: size, weight: .bold))
             .accessibilityLabel("MiKey")
     }
