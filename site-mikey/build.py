@@ -20,10 +20,6 @@ FILES = [  # key, file name, platform, note key
     ("mac_dmg", f"MiKey-{VERSION}-macOS.dmg", "mac", "f_mac_dmg"),
     ("mac_pkg", f"MiKey-{VERSION}-macOS.pkg", "mac", "f_mac_pkg"),
     ("mac_zip", f"MiKey-{VERSION}-macOS.zip", "mac", "f_mac_zip"),
-    ("win_x64", f"MiKey-{VERSION}-x64-Setup.exe", "win", "f_win_x64"),
-    ("win_arm", f"MiKey-{VERSION}-arm64-Setup.exe", "win", "f_win_arm"),
-    ("win_x64_zip", f"MiKey-{VERSION}-x64-portable.zip", "win", "f_win_zip"),
-    ("win_arm_zip", f"MiKey-{VERSION}-arm64-portable.zip", "win", "f_win_zip_arm"),
 ]
 DIST = os.path.join(ROOT, "dist", VERSION)
 def file_info(name):
@@ -32,8 +28,6 @@ def file_info(name):
     data = open(p, "rb").read()
     return {"size": len(data), "sha256": hashlib.sha256(data).hexdigest()}
 INFO = {k: file_info(n) for k, n, _, _ in FILES}
-# Windows installers come from GitHub Actions; until they are in dist/ the page says they are on the way
-WIN_READY = INFO["win_x64"] is not None
 def mb(n): return f"{n / 1048576:.1f} MB"
 
 # ---- real engine output (VIKEY_AUTO_OFF=1 Tools/autoswitch/test/harness); über/Café: Swiss keyboard before MiKey ---
@@ -91,28 +85,23 @@ RELEASES = [  # newest first
                "Phím ä ö ü ß é và các dead key (´ ^ ¨) trên bàn phím Đức/Thụy Sĩ gõ thẳng, không còn bị Telex biến thành ơ, ư.",
                "Nhận biết khoảng 30.000 từ tiếng Đức (wir, der, dass…) cùng với tiếng Anh.",
                "Từ công nghệ như osx, macos, exe không còn bị bỏ dấu.",
-               "Sửa lỗi từ mới bị dính vào từ trước sau khi xoá hay click (đawng, tootho).",
-               "Windows: cùng các sửa lỗi bàn phím Đức/Thụy Sĩ, bộ cài MiKey riêng, tự cập nhật có chữ ký."],
+               "Sửa lỗi từ mới bị dính vào từ trước sau khi xoá hay click (đawng, tootho)."],
         "de": ["Erste Version von MiKey.",
                "macOS: MiKey ist eine echte Eingabequelle im Eingabemenü (InputMethodKit), ohne Bedienungshilfen-Berechtigung.",
                "ä ö ü ß é und die Tottasten (´ ^ ¨) auf deutschen und Schweizer Tastaturen werden nicht mehr von Telex zu ơ oder ư gemacht.",
                "Erkennt rund 30'000 deutsche Wörter (wir, der, dass…), zusätzlich zu Englisch.",
                "Tech-Wörter wie osx, macos, exe bekommen keine Akzente mehr.",
-               "Behoben: Nach Löschen oder Klicken klebte das neue Wort am vorherigen (đawng, tootho).",
-               "Windows: dieselben Korrekturen für deutsche/Schweizer Tastaturen, eigenes Installationsprogramm, signierte Updates."],
+               "Behoben: Nach Löschen oder Klicken klebte das neue Wort am vorherigen (đawng, tootho)."],
         "en": ["First MiKey release.",
                "macOS: MiKey is a real input source in the input menu (InputMethodKit), no Accessibility permission needed.",
                "ä ö ü ß é and the dead keys (´ ^ ¨) on German and Swiss keyboards are no longer turned into ơ or ư by Telex.",
                "Recognises about 30,000 German words (wir, der, dass…) as well as English.",
                "Tech words such as osx, macos, exe no longer get tone marks.",
-               "Fixed: after deleting or clicking, the next word was glued to the previous one (đawng, tootho).",
-               "Windows: the same German/Swiss keyboard fixes, its own installer, signed updates."]}),
+               "Fixed: after deleting or clicking, the next word was glued to the previous one (đawng, tootho)."]}),
 ]
 
 CREDITS_CODE = [("Vikey", "Tony Dinh", "GPL-3.0", "https://github.com/trungdq88/Vikey"),
-                ("OpenKey", "Tuyen Mai", "GPL-3.0", "https://github.com/tuyenvm/OpenKey"),
-                ("TweetNaCl (Windows updates)", "Daniel J. Bernstein et al.", "public domain", "https://tweetnacl.cr.yp.to"),
-                ("Inno Setup (Windows installer)", "Jordan Russell, Martijn Laan", "Inno Setup License", "https://jrsoftware.org/isinfo.php")]
+                ("OpenKey", "Tuyen Mai", "GPL-3.0", "https://github.com/tuyenvm/OpenKey")]
 CREDITS_WORDS = [("FrequencyWords (OpenSubtitles 2018): English, Vietnamese, German", "Hermit Dave", "CC BY-SA 4.0", "https://github.com/hermitdave/FrequencyWords"),
                  ("FineWeb-2 and FineWeb", "Hugging Face", "ODC-By 1.0", "https://huggingface.co/datasets/HuggingFaceFW/fineweb-2"),
                  ("HPLT v2", "High Performance Language Technologies", "CC0", "https://hplt-project.org"),
@@ -132,14 +121,14 @@ CREDITS_TEST = [("ViLexNorm", "Nguyen et al., EACL 2024", "CC BY-NC-SA 4.0", "ht
 S = {
 "vi": dict(
   skip="Bỏ qua, đến nội dung", nav=[("download/", "Tải về"), ("guide/", "Hướng dẫn"), ("#faq", "Câu hỏi"), ("changelog/", "Thay đổi")],
-  dl_mac="Tải cho macOS", dl_win="Tải cho Windows", dl_win_soon="Windows: sắp có", dl_all="Tất cả bản tải", version=f"Phiên bản {VERSION}",
-  meta="macOS 13 trở lên · Windows 10/11 · Miễn phí · Mã nguồn mở",
+  dl_mac="Tải cho macOS", dl_all="Tất cả bản tải", version=f"Phiên bản {VERSION}",
+  meta="macOS 13+ · Miễn phí · Mã nguồn mở",
   foot_credits='MiKey dựa trên <a href="https://github.com/trungdq88/Vikey">Vikey</a> của Tony Dinh và <a href="https://github.com/tuyenvm/OpenKey">OpenKey</a> của Tuyen Mai.',
   foot_links=[("acknowledgements/", "Ghi công"), ("privacy/", "Quyền riêng tư"), (REPO, "Mã nguồn"), (REPO + "/issues", "Báo lỗi")],
   foot_license="Giấy phép GPL-3.0. Làm bởi <a href=\"https://mikephung.com\">Mike Phung</a>.",
   # home
   home_title="MiKey: bộ gõ tiếng Việt cho người Việt ở Thụy Sĩ, Đức và Áo",
-  home_desc="Bộ gõ Telex cho macOS và Windows, tự nhận ra tiếng Anh và tiếng Đức: text không thành tẽt, wir không thành ửi, ü không thành ơ. Miễn phí, mã nguồn mở, không gửi dữ liệu.",
+  home_desc="Bộ gõ Telex cho macOS, tự nhận ra tiếng Anh và tiếng Đức: text không thành tẽt, wir không thành ửi, ü không thành ơ. Miễn phí, mã nguồn mở, không gửi dữ liệu.",
   h1="Gõ tiếng Việt, tiếng Đức và tiếng Anh. Không cần đổi bàn phím.",
   lead="MiKey là bộ gõ Telex cho người Việt sống ở Thụy Sĩ, Đức, Áo. Nó tự nhận ra khi bạn gõ tiếng Anh hay tiếng Đức, và các phím ä ö ü cứ thế mà dùng.",
   d_keys="Phím gõ", d_bad="Telex thường", d_good="MiKey", demo_cap="Cùng một chuỗi phím: Telex thường và MiKey",
@@ -150,14 +139,14 @@ S = {
          ("Hiểu tiếng Đức", "Khoảng 30.000 từ tiếng Đức: wir, der, nur, dass, wissen giữ nguyên. Tắt được nếu không cần."),
          ("Hiểu tiếng Anh", "Khoảng 40.000 từ tiếng Anh và từ công nghệ: text, server, deploy, osx, macos giữ nguyên."),
          ("Tiếng Việt vẫn là tiếng Việt", "Từ tiếng Việt thường gặp không bao giờ bị đổi: gì, ít, có, tô. Câu tiếng Việt gõ bình thường."),
-         ("Một phím để chuyển", "⌥Z trên Mac, Alt+Z trên Windows: Việt ↔ Anh/Đức, có nhãn VI/EN hiện ở con trỏ."),
+         ("Một phím để chuyển", "⌥Z trên Mac: Việt ↔ Anh/Đức, có nhãn VI/EN hiện ở con trỏ."),
          ("Đoán sai thì Backspace", "Bấm Backspace ngay sau một từ MiKey vừa sửa là lấy lại đúng phím bạn gõ.")],
   how_h="Cách MiKey quyết định",
   how=[("Bạn gõ một từ", "Telex chạy như bình thường trong lúc bạn gõ."),
        ("Bạn kết thúc từ", "Khi bạn bấm cách, dấu câu hay Enter, MiKey xem từ vừa gõ: là âm tiết tiếng Việt, hay là một từ tiếng Anh, tiếng Đức có thật?"),
        ("MiKey giữ đúng chữ", "Nếu là tiếng Anh hay tiếng Đức, từ trở lại đúng các phím bạn gõ và MiKey chuyển sang chế độ Anh/Đức. Gặp một từ rõ ràng là tiếng Việt, nó tự chuyển về.")],
   inst_h="Cài trong 3 bước",
-  inst=["Tải MiKey cho máy của bạn.", "Mở bộ cài. Lần đầu, macOS hoặc Windows sẽ hỏi lại vì bản cài chưa được ký: xem hướng dẫn chi tiết.", "Chọn MiKey trong menu bàn phím (Mac) hoặc thấy nó ở khay hệ thống (Windows). Gõ thôi."],
+  inst=["Tải MiKey cho Mac của bạn.", "Mở bộ cài. Lần đầu, macOS sẽ hỏi lại vì bản cài chưa được ký: xem hướng dẫn chi tiết.", "Chọn MiKey trong menu bàn phím (cạnh đồng hồ). Gõ thôi."],
   inst_more="Hướng dẫn cài chi tiết",
   priv_h="Những gì bạn gõ ở lại trên máy bạn",
   priv_p="MiKey không gửi gì lên mạng, không có tài khoản, không quảng cáo, không đo đếm. Trên Mac nó là một input source như bàn phím ABC, nên không cần quyền Accessibility. Mã nguồn mở, ai cũng kiểm tra được.",
@@ -165,21 +154,18 @@ S = {
   faq_h="Câu hỏi thường gặp",
   faq=[("MiKey có miễn phí không?", "Có. MiKey miễn phí, mã nguồn mở theo giấy phép GPL-3.0."),
        ("Có cần quyền Accessibility trên Mac không?", "Không. MiKey là một input source của macOS, giống \"ABC\" hay \"Schweiz, deutsch\"."),
-       ("Vì sao macOS/Windows cảnh báo khi cài?", "Vì bản cài chưa được ký bằng chứng chỉ của Apple hay Microsoft (tốn phí hằng năm). Mã nguồn công khai trên GitHub, và trang Tải về có mã SHA-256 để bạn kiểm tra file."),
+       ("Vì sao macOS cảnh báo khi cài?", "Vì bản cài chưa được ký bằng chứng chỉ của Apple (tốn phí hằng năm). Mã nguồn công khai trên GitHub, và trang Tải về có mã SHA-256 để bạn kiểm tra file."),
        ("Tôi dùng bàn phím Thụy Sĩ hoặc Đức (QWERTZ) được không?", "Được, MiKey được làm cho chính các bàn phím đó. Nó đọc chữ in trên phím của layout bạn đang dùng, nên z/y và ä ö ü đều đúng."),
        ("Một từ bị đoán sai thì làm sao?", "Bấm Backspace ngay sau đó để lấy lại đúng chữ đã gõ. Nếu một từ tiếng Việt hay bị đổi sang tiếng Đức, tắt \"Nhận biết tiếng Đức\" trong menu bàn phím và báo cho mình trên GitHub."),
        ("Có bản cho Linux, iPhone, Android không?", "Chưa. Linux (IBus) đang được làm. Vikey, bản gốc của MiKey, đã có cho iPhone và Android."),
        ("MiKey khác Vikey thế nào?", "MiKey là bản fork của Vikey (Tony Dinh), thêm những gì người Việt ở vùng nói tiếng Đức cần: phím umlaut, từ tiếng Đức, từ công nghệ, và một input source thật trên Mac.")],
   final_h="Thử MiKey ngay", final_p="Miễn phí, cài trong một phút, gỡ cũng nhanh như vậy.",
   # download
-  dl_title="Tải MiKey cho macOS và Windows", dl_desc=f"Tải MiKey {VERSION} cho macOS (Apple Silicon và Intel) và Windows (x64, ARM64), kèm hướng dẫn cài, cập nhật và gỡ.",
+  dl_title="Tải MiKey cho macOS", dl_desc=f"Tải MiKey {VERSION} cho macOS (Apple Silicon và Intel), kèm hướng dẫn cài, cập nhật và gỡ.",
   dl_h1="Tải MiKey", dl_lead=f"Phiên bản {VERSION}, phát hành {RELEASE_DATE}. Miễn phí, không cần tài khoản.",
   f_head=("File", "Dành cho", "Dung lượng", "SHA-256"), f_cap="Các file của phiên bản này",
   f_mac_dmg="macOS 13+, Apple Silicon (M1–M4) và Intel. Nên dùng.", f_mac_pkg="Chỉ bộ cài, giống trong file .dmg.", f_mac_zip="macOS, bản .app để tự chép vào Input Methods.",
-  f_win_x64="Windows 10/11, hầu hết máy tính. Nên dùng.", f_win_arm="Windows 11 trên ARM (Snapdragon, Surface Pro X).",
-  f_win_zip="Windows x64, không cần cài.", f_win_zip_arm="Windows ARM64, không cần cài.",
-  win_soon="Bộ cài Windows đang được hoàn thiện và sẽ có trên trang phát hành trong vài ngày tới.",
-  req_h="Yêu cầu", req=["macOS 13 Ventura trở lên, Mac Apple Silicon hoặc Intel.", "Windows 10 hoặc 11, x64 hoặc ARM64.", "Bất kỳ layout bàn phím nào: Schweiz, deutsch · Deutsch · ABC/US · Österreich."],
+  req_h="Yêu cầu", req=["macOS 13 Ventura trở lên, Mac Apple Silicon hoặc Intel.", "Bất kỳ layout bàn phím nào: Schweiz, deutsch · Deutsch · ABC/US · Österreich."],
   mac_h="Cài trên macOS",
   mac=["Tải <b>" + f"MiKey-{VERSION}-macOS.dmg" + "</b>, mở nó, rồi bấm đúp <b>Cài đặt MiKey.pkg</b>. Cùng một file cho Mac Apple Silicon (M1–M4) và Mac Intel.",
        "macOS báo <i>không thể mở vì Apple không thể kiểm tra phần mềm độc hại</i>: bấm <b>Xong</b>. Đây là vì bản cài chưa được ký bằng chứng chỉ Apple.",
@@ -188,13 +174,7 @@ S = {
        "<b>Lần cài đầu tiên: đăng xuất rồi đăng nhập lại</b> ( › Log Out). macOS chỉ đưa một bộ gõ mới vào menu bàn phím sau lần đăng nhập kế tiếp. Nâng cấp sau này thì không cần.",
        "Chọn <b>MiKey</b> trong menu bàn phím ở thanh menu (cạnh đồng hồ). Bàn phím bên dưới vẫn là layout bạn đã chọn, ví dụ Schweiz, deutsch."],
   mac_upd="Cập nhật: tải bản mới và cài đè lên. Gỡ: bỏ MiKey khỏi Input Sources, rồi xoá <code>~/Library/Input Methods/MiKey.app</code> (Finder › Go › Go to Folder).",
-  win_h="Cài trên Windows",
-  win=["Tải <b>" + f"MiKey-{VERSION}-x64-Setup.exe" + "</b> (hoặc bản arm64 cho máy ARM).",
-       "Windows SmartScreen báo <i>Windows protected your PC</i>: bấm <b>More info</b> › <b>Run anyway</b>. Lý do giống trên Mac: bản cài chưa được ký.",
-       "MiKey được cài cho riêng tài khoản của bạn, không cần quyền quản trị.",
-       "MiKey nằm ở khay hệ thống (góc dưới bên phải). <kbd>Alt</kbd>+<kbd>Z</kbd> để chuyển Việt ↔ Anh/Đức."],
-  win_upd="Cập nhật: MiKey tự kiểm tra bản mới mỗi ngày và chỉ cài bản có chữ ký của MiKey. Gỡ: Settings › Apps › MiKey › Uninstall.",
-  verify_h="Kiểm tra file", verify_p="Mã SHA-256 ở bảng trên phải khớp với file bạn tải về. Trên Mac: <code>shasum -a 256 MiKey-*.pkg</code>. Trên Windows (PowerShell): <code>Get-FileHash MiKey-*.exe</code>.",
+  verify_h="Kiểm tra file", verify_p="Mã SHA-256 ở bảng trên phải khớp với file bạn tải về. Trên Mac: <code>shasum -a 256 MiKey-*.pkg</code>.",
   older="Các bản cũ và mã nguồn: trang phát hành trên GitHub.",
   # guide
   g_title="Hướng dẫn sử dụng MiKey", g_desc="Bảng Telex, cách MiKey nhận ra tiếng Anh và tiếng Đức, chuyển ngôn ngữ, sửa sai bằng Backspace, mẹo và giới hạn.",
@@ -203,8 +183,8 @@ S = {
   g_telex_h="Bảng Telex", g_marks="Dấu mũ, móc, trăng và đ", g_tones="Dấu thanh", g_ex="Ví dụ",
   g_telex_p="Gõ dấu sau chữ cái, ở đâu trong từ cũng được: <code>truowfng</code>, <code>truongwf</code> và <code>truwowngf</code> đều ra <b>trường</b>. Bấm phím dấu hai lần để bỏ dấu và giữ chữ cái: <code>vaff</code> ra <b>vaf</b>.",
   g_place_h="Kiểu bỏ dấu", g_place_p="Mặc định MiKey bỏ dấu kiểu mới: <b>hoà, thuý, khoẻ</b>. Muốn kiểu cũ (<b>hòa, thúy, khỏe</b>) thì tắt \"Bỏ dấu kiểu mới\" trong menu bàn phím trên Mac.",
-  g_switch_h="Chuyển ngôn ngữ", g_switch=["<kbd>⌥</kbd>+<kbd>Z</kbd> trên Mac, <kbd>Alt</kbd>+<kbd>Z</kbd> trên Windows: Tiếng Việt ↔ English/Deutsch. Trên Mac, một nhãn nhỏ <b>VI</b> hoặc <b>EN</b> hiện ở con trỏ.",
-       "Trên Mac cũng chọn được trong menu bàn phím: <b>Tiếng Việt (Telex)</b> hoặc <b>English / Deutsch</b>.",
+  g_switch_h="Chuyển ngôn ngữ", g_switch=["<kbd>⌥</kbd>+<kbd>Z</kbd> trên Mac: Tiếng Việt ↔ English/Deutsch. Một nhãn nhỏ <b>VI</b> hoặc <b>EN</b> hiện ở con trỏ.",
+       "Cũng chọn được trong menu bàn phím: <b>Tiếng Việt (Telex)</b> hoặc <b>English / Deutsch</b>.",
        "Sau khi bạn tự chuyển, MiKey tạm không tự chuyển trong 5 giây, để không đổi lại ngay điều bạn vừa chọn."],
   g_auto_h="MiKey nhận ra tiếng Anh và tiếng Đức thế nào",
   g_auto=["MiKey chỉ quyết định khi một từ kết thúc: bấm cách, dấu câu (, . ; : ? ! ) \") hoặc Enter.",
@@ -229,9 +209,7 @@ S = {
   # privacy
   p_title="Quyền riêng tư", p_desc="MiKey không thu thập dữ liệu. Những gì bộ gõ và trang web làm, nói rõ.", p_h1="Quyền riêng tư", p_lead=f"Cập nhật {RELEASE_DATE}. Ngắn gọn: MiKey không thu thập gì cả.",
   p_sections=[("Bộ gõ", ["Mọi xử lý diễn ra trên máy bạn. MiKey không gửi những gì bạn gõ đi đâu cả.",
-                          "Trên Mac, input method MiKey không kết nối mạng.",
-                          "Trên Windows, MiKey kiểm tra bản cập nhật mỗi ngày một lần bằng cách tải <code>mikey.mikephung.com/appcast.xml</code>. Yêu cầu này giống mọi lần mở trang web (địa chỉ IP, loại trình duyệt) và không chứa gì về bạn hay những gì bạn gõ. Tắt được trong cài đặt.",
-                          "Trên Windows có một \"nhật ký gõ\" để gỡ lỗi. Nó tắt sẵn, chỉ lưu trên máy bạn, và không bao giờ ghi trong ô mật khẩu."]),
+                          "Input method MiKey không kết nối mạng."]),
               ("Trang web này", ["Trang web là các file HTML tĩnh: không cookie, không đo đếm, không quảng cáo, không phông chữ hay script từ bên ngoài.",
                                  "Trang được phục vụ qua Cloudflare. Như mọi máy chủ web, Cloudflare xử lý địa chỉ IP của bạn để gửi trang và chống tấn công.",
                                  "Nút tải dẫn tới GitHub. GitHub có chính sách quyền riêng tư riêng."]),
@@ -247,13 +225,13 @@ S = {
 ),
 "de": dict(
   skip="Zum Inhalt springen", nav=[("download/", "Download"), ("guide/", "Anleitung"), ("#faq", "FAQ"), ("changelog/", "Änderungen")],
-  dl_mac="Für macOS laden", dl_win="Für Windows laden", dl_win_soon="Windows: bald", dl_all="Alle Downloads", version=f"Version {VERSION}",
-  meta="macOS 13 oder neuer · Windows 10/11 · Gratis · Open Source",
+  dl_mac="Für macOS laden", dl_all="Alle Downloads", version=f"Version {VERSION}",
+  meta="macOS 13+ · Gratis · Open Source",
   foot_credits='MiKey basiert auf <a href="https://github.com/trungdq88/Vikey">Vikey</a> von Tony Dinh und <a href="https://github.com/tuyenvm/OpenKey">OpenKey</a> von Tuyen Mai.',
   foot_links=[("acknowledgements/", "Danksagung"), ("privacy/", "Datenschutz"), (REPO, "Quellcode"), (REPO + "/issues", "Fehler melden")],
   foot_license="Lizenz GPL-3.0. Gemacht von <a href=\"https://mikephung.com\">Mike Phung</a>.",
   home_title="MiKey: vietnamesisch tippen in der Schweiz, in Deutschland und Österreich",
-  home_desc="Telex-Eingabe für macOS und Windows, die Englisch und Deutsch selbst erkennt: aus text wird nicht tẽt, aus wir nicht ửi, aus ü nicht ơ. Gratis, Open Source, ohne Datensammlung.",
+  home_desc="Telex-Eingabe für macOS, die Englisch und Deutsch selbst erkennt: aus text wird nicht tẽt, aus wir nicht ửi, aus ü nicht ơ. Gratis, Open Source, ohne Datensammlung.",
   h1="Vietnamesisch, Deutsch und Englisch tippen. Ohne die Tastatur zu wechseln.",
   lead="MiKey ist eine vietnamesische Telex-Eingabe für alle, die in der Schweiz, in Deutschland oder Österreich leben. Sie erkennt englische und deutsche Wörter selbst, und die Tasten ä ö ü funktionieren einfach.",
   d_keys="Tasten", d_bad="Normales Telex", d_good="MiKey", demo_cap="Dieselben Tasten: normales Telex und MiKey",
@@ -264,14 +242,14 @@ S = {
          ("Versteht Deutsch", "Rund 30'000 deutsche Wörter: wir, der, nur, dass, wissen bleiben stehen. Abschaltbar."),
          ("Versteht Englisch", "Rund 40'000 englische Wörter und Tech-Begriffe: text, server, deploy, osx, macos bleiben stehen."),
          ("Vietnamesisch bleibt Vietnamesisch", "Häufige vietnamesische Wörter werden nie umgestellt: gì, ít, có, tô."),
-         ("Eine Taste zum Umschalten", "⌥Z auf dem Mac, Alt+Z unter Windows: Vietnamesisch ↔ Englisch/Deutsch, mit VI/EN-Hinweis beim Cursor."),
+         ("Eine Taste zum Umschalten", "⌥Z auf dem Mac: Vietnamesisch ↔ Englisch/Deutsch, mit VI/EN-Hinweis beim Cursor."),
          ("Falsch erkannt? Rücktaste", "Direkt nach einer Korrektur holt die Rücktaste genau das Getippte zurück.")],
   how_h="Wie MiKey entscheidet",
   how=[("Du tippst ein Wort", "Telex arbeitet ganz normal, während du tippst."),
        ("Du beendest das Wort", "Bei Leerzeichen, Satzzeichen oder Enter prüft MiKey das Wort: vietnamesische Silbe oder ein echtes englisches oder deutsches Wort?"),
        ("MiKey behält das Richtige", "Bei Englisch oder Deutsch kommen genau deine Tasten zurück und MiKey wechselt auf Englisch/Deutsch. Kommt ein klar vietnamesisches Wort, wechselt es von selbst zurück.")],
   inst_h="In 3 Schritten installiert",
-  inst=["MiKey für dein System laden.", "Das Installationsprogramm öffnen. Beim ersten Mal fragt macOS oder Windows nach, weil es nicht signiert ist: siehe Anleitung.", "MiKey im Eingabemenü wählen (Mac) oder im Infobereich finden (Windows). Fertig."],
+  inst=["MiKey für deinen Mac laden.", "Das Installationsprogramm öffnen. Beim ersten Mal fragt macOS nach, weil es nicht signiert ist: siehe Anleitung.", "MiKey im Eingabemenü wählen. Fertig."],
   inst_more="Ausführliche Installationsanleitung",
   priv_h="Was du tippst, bleibt auf deinem Gerät",
   priv_p="MiKey schickt nichts ins Internet, hat kein Konto, keine Werbung, keine Statistik. Auf dem Mac ist es eine Eingabequelle wie ABC und braucht keine Bedienungshilfen-Berechtigung. Der Code ist offen und prüfbar.",
@@ -279,20 +257,17 @@ S = {
   faq_h="Häufige Fragen",
   faq=[("Ist MiKey gratis?", "Ja. MiKey ist gratis und Open Source unter der GPL-3.0."),
        ("Braucht MiKey auf dem Mac die Bedienungshilfen-Berechtigung?", "Nein. MiKey ist eine macOS-Eingabequelle, wie \"ABC\" oder \"Schweiz, deutsch\"."),
-       ("Warum warnt macOS/Windows bei der Installation?", "Weil das Installationsprogramm (noch) nicht mit einem kostenpflichtigen Apple- oder Microsoft-Zertifikat signiert ist. Der Quellcode ist auf GitHub, und auf der Download-Seite stehen SHA-256-Prüfsummen."),
+       ("Warum warnt macOS bei der Installation?", "Weil das Installationsprogramm (noch) nicht mit einem kostenpflichtigen Apple-Zertifikat signiert ist. Der Quellcode ist auf GitHub, und auf der Download-Seite stehen SHA-256-Prüfsummen."),
        ("Geht das mit einer Schweizer oder deutschen Tastatur (QWERTZ)?", "Ja, genau dafür ist MiKey gemacht. Es liest die Zeichen deines Layouts, also stimmen z/y und ä ö ü."),
        ("Was, wenn ein Wort falsch erkannt wird?", "Direkt danach die Rücktaste: das Getippte kommt zurück. Wird ein vietnamesisches Wort oft als Deutsch erkannt, \"Nhận biết tiếng Đức\" im Eingabemenü abschalten und es auf GitHub melden."),
        ("Gibt es MiKey für Linux, iPhone, Android?", "Noch nicht. Linux (IBus) ist in Arbeit. Vikey, das Original, gibt es für iPhone und Android."),
        ("Was ist der Unterschied zu Vikey?", "MiKey ist ein Fork von Vikey (Tony Dinh) mit dem, was Vietnamesinnen und Vietnamesen im deutschsprachigen Raum brauchen: Umlaut-Tasten, deutsche Wörter, Tech-Wörter und eine echte Mac-Eingabequelle.")],
   final_h="MiKey ausprobieren", final_p="Gratis, in einer Minute installiert und genauso schnell wieder entfernt.",
-  dl_title="MiKey für macOS und Windows laden", dl_desc=f"MiKey {VERSION} für macOS (Apple Silicon und Intel) und Windows (x64, ARM64), mit Anleitung zu Installation, Update und Deinstallation.",
+  dl_title="MiKey für macOS laden", dl_desc=f"MiKey {VERSION} für macOS (Apple Silicon und Intel), mit Anleitung zu Installation, Update und Deinstallation.",
   dl_h1="MiKey laden", dl_lead=f"Version {VERSION}, erschienen am {RELEASE_DATE}. Gratis, ohne Konto.",
   f_head=("Datei", "Für", "Grösse", "SHA-256"), f_cap="Die Dateien dieser Version",
   f_mac_dmg="macOS 13+, Apple Silicon (M1–M4) und Intel. Empfohlen.", f_mac_pkg="Nur das Installationsprogramm, wie im .dmg.", f_mac_zip="macOS, die .app zum selbst Kopieren in Input Methods.",
-  f_win_x64="Windows 10/11, die meisten PCs. Empfohlen.", f_win_arm="Windows 11 auf ARM (Snapdragon, Surface Pro X).",
-  f_win_zip="Windows x64, ohne Installation.", f_win_zip_arm="Windows ARM64, ohne Installation.",
-  win_soon="Das Windows-Installationsprogramm wird gerade fertiggestellt und erscheint in den nächsten Tagen auf der Release-Seite.",
-  req_h="Voraussetzungen", req=["macOS 13 Ventura oder neuer, Mac mit Apple Silicon oder Intel.", "Windows 10 oder 11, x64 oder ARM64.", "Jedes Tastaturlayout: Schweiz, deutsch · Deutsch · ABC/US · Österreich."],
+  req_h="Voraussetzungen", req=["macOS 13 Ventura oder neuer, Mac mit Apple Silicon oder Intel.", "Jedes Tastaturlayout: Schweiz, deutsch · Deutsch · ABC/US · Österreich."],
   mac_h="Installation auf dem Mac",
   mac=["<b>" + f"MiKey-{VERSION}-macOS.dmg" + "</b> laden, öffnen und <b>Cài đặt MiKey.pkg</b> doppelklicken. Dieselbe Datei für Macs mit Apple Silicon (M1–M4) und Intel.",
        "macOS meldet, dass Apple die Software nicht auf Malware prüfen konnte: <b>Fertig</b> klicken. Das liegt daran, dass das Paket nicht mit einem Apple-Zertifikat signiert ist.",
@@ -301,13 +276,7 @@ S = {
        "<b>Bei der ersten Installation: einmal ab- und wieder anmelden</b> ( › Abmelden). macOS nimmt eine neue Eingabequelle erst nach dem nächsten Anmelden ins Eingabemenü auf. Bei Updates ist das nicht nötig.",
        "<b>MiKey</b> im Eingabemenü in der Menüleiste wählen. Darunter bleibt dein Layout aktiv, zum Beispiel Schweiz, deutsch."],
   mac_upd="Update: neue Version laden und darüber installieren. Entfernen: MiKey aus den Eingabequellen nehmen und <code>~/Library/Input Methods/MiKey.app</code> löschen (Finder › Gehe zu › Gehe zum Ordner).",
-  win_h="Installation unter Windows",
-  win=["<b>" + f"MiKey-{VERSION}-x64-Setup.exe" + "</b> laden (oder arm64 für ARM-Geräte).",
-       "Windows SmartScreen meldet <i>Der Computer wurde durch Windows geschützt</i>: <b>Weitere Informationen</b> › <b>Trotzdem ausführen</b>. Grund wie auf dem Mac: nicht signiert.",
-       "MiKey wird nur für dein Benutzerkonto installiert, ohne Administratorrechte.",
-       "MiKey sitzt im Infobereich (unten rechts). <kbd>Alt</kbd>+<kbd>Z</kbd> schaltet Vietnamesisch ↔ Englisch/Deutsch."],
-  win_upd="Update: MiKey sucht einmal täglich nach neuen Versionen und installiert nur von MiKey signierte. Entfernen: Einstellungen › Apps › MiKey › Deinstallieren.",
-  verify_h="Datei prüfen", verify_p="Die SHA-256-Prüfsumme oben muss zu deiner Datei passen. Mac: <code>shasum -a 256 MiKey-*.pkg</code>. Windows (PowerShell): <code>Get-FileHash MiKey-*.exe</code>.",
+  verify_h="Datei prüfen", verify_p="Die SHA-256-Prüfsumme oben muss zu deiner Datei passen. Mac: <code>shasum -a 256 MiKey-*.pkg</code>.",
   older="Ältere Versionen und Quellcode: Release-Seite auf GitHub.",
   g_title="MiKey-Anleitung", g_desc="Telex-Tabelle, wie MiKey Englisch und Deutsch erkennt, Umschalten, Korrektur mit der Rücktaste, Tipps und Grenzen.",
   g_h1="Anleitung", g_lead="Alles, um mit MiKey schnell zu tippen, und die Sonderfälle.",
@@ -315,7 +284,7 @@ S = {
   g_telex_h="Telex-Tabelle", g_marks="Zirkumflex, Hörnchen, Breve und đ", g_tones="Töne", g_ex="Beispiele",
   g_telex_p="Das Zeichen nach dem Buchstaben tippen, egal wo im Wort: <code>truowfng</code>, <code>truongwf</code> und <code>truwowngf</code> ergeben alle <b>trường</b>. Zweimal die Tontaste entfernt den Ton und behält den Buchstaben: <code>vaff</code> ergibt <b>vaf</b>.",
   g_place_h="Tonsetzung", g_place_p="Standard ist die neue Schreibweise: <b>hoà, thuý, khoẻ</b>. Für die alte (<b>hòa, thúy, khỏe</b>) auf dem Mac im Eingabemenü \"Bỏ dấu kiểu mới\" ausschalten.",
-  g_switch_h="Sprache wechseln", g_switch=["<kbd>⌥</kbd>+<kbd>Z</kbd> auf dem Mac, <kbd>Alt</kbd>+<kbd>Z</kbd> unter Windows: Vietnamesisch ↔ Englisch/Deutsch. Auf dem Mac erscheint kurz <b>VI</b> oder <b>EN</b> beim Cursor.",
+  g_switch_h="Sprache wechseln", g_switch=["<kbd>⌥</kbd>+<kbd>Z</kbd> auf dem Mac: Vietnamesisch ↔ Englisch/Deutsch. Es erscheint kurz <b>VI</b> oder <b>EN</b> beim Cursor.",
        "Auf dem Mac auch im Eingabemenü: <b>Tiếng Việt (Telex)</b> oder <b>English / Deutsch</b>.",
        "Nach einem Wechsel von Hand stellt MiKey 5 Sekunden lang nicht selbst um, damit deine Wahl gilt."],
   g_auto_h="Wie MiKey Englisch und Deutsch erkennt",
@@ -339,9 +308,7 @@ S = {
   c_title="Änderungen in MiKey", c_desc="Was in jeder MiKey-Version neu ist.", c_h1="Änderungen", c_lead="Die neueste Version steht oben.",
   p_title="Datenschutz", p_desc="MiKey sammelt keine Daten. Was die Eingabe und die Website tun, klar beschrieben.", p_h1="Datenschutz", p_lead=f"Stand {RELEASE_DATE}. Kurz: MiKey sammelt nichts.",
   p_sections=[("Die Eingabe", ["Alles passiert auf deinem Gerät. MiKey schickt nicht, was du tippst.",
-                               "Auf dem Mac stellt die MiKey-Eingabequelle keine Netzwerkverbindung her.",
-                               "Unter Windows prüft MiKey einmal täglich auf Updates, indem es <code>mikey.mikephung.com/appcast.xml</code> lädt. Diese Anfrage ist wie jeder Website-Aufruf (IP-Adresse, Browser-Typ) und enthält nichts über dich oder dein Getipptes. In den Einstellungen abschaltbar.",
-                               "Unter Windows gibt es ein \"Tipp-Protokoll\" zur Fehlersuche. Es ist ausgeschaltet, bleibt auf deinem Gerät und zeichnet nie in Passwortfeldern auf."]),
+                               "Die MiKey-Eingabequelle stellt keine Netzwerkverbindung her."]),
               ("Diese Website", ["Die Website besteht aus statischen HTML-Dateien: keine Cookies, keine Statistik, keine Werbung, keine externen Schriften oder Skripte.",
                                  "Ausgeliefert wird sie über Cloudflare. Wie jeder Webserver verarbeitet Cloudflare deine IP-Adresse, um die Seite zu senden und Angriffe abzuwehren.",
                                  "Die Download-Knöpfe führen zu GitHub, mit eigener Datenschutzerklärung."]),
@@ -355,13 +322,13 @@ S = {
 ),
 "en": dict(
   skip="Skip to content", nav=[("download/", "Download"), ("guide/", "Guide"), ("#faq", "FAQ"), ("changelog/", "Changelog")],
-  dl_mac="Download for macOS", dl_win="Download for Windows", dl_win_soon="Windows: coming soon", dl_all="All downloads", version=f"Version {VERSION}",
-  meta="macOS 13 or later · Windows 10/11 · Free · Open source",
+  dl_mac="Download for macOS", dl_all="All downloads", version=f"Version {VERSION}",
+  meta="macOS 13+ · Free · Open source",
   foot_credits='MiKey is based on <a href="https://github.com/trungdq88/Vikey">Vikey</a> by Tony Dinh and <a href="https://github.com/tuyenvm/OpenKey">OpenKey</a> by Tuyen Mai.',
   foot_links=[("acknowledgements/", "Acknowledgements"), ("privacy/", "Privacy"), (REPO, "Source"), (REPO + "/issues", "Report a problem")],
   foot_license="GPL-3.0 license. Made by <a href=\"https://mikephung.com\">Mike Phung</a>.",
   home_title="MiKey: Vietnamese typing for people in Switzerland, Germany and Austria",
-  home_desc="A Telex input method for macOS and Windows that recognises English and German: text never becomes tẽt, wir never ửi, ü never ơ. Free, open source, no data collected.",
+  home_desc="A Telex input method for macOS that recognises English and German: text never becomes tẽt, wir never ửi, ü never ơ. Free, open source, no data collected.",
   h1="Type Vietnamese, German and English. Without switching keyboards.",
   lead="MiKey is a Vietnamese Telex input method for people living in Switzerland, Germany and Austria. It notices English and German words by itself, and the ä ö ü keys just work.",
   d_keys="Keys", d_bad="Plain Telex", d_good="MiKey", demo_cap="The same keys: plain Telex and MiKey",
@@ -372,14 +339,14 @@ S = {
          ("Knows German", "About 30,000 German words: wir, der, nur, dass, wissen stay as typed. Can be turned off."),
          ("Knows English", "About 40,000 English words and tech terms: text, server, deploy, osx, macos stay as typed."),
          ("Vietnamese stays Vietnamese", "Common Vietnamese words are never switched: gì, ít, có, tô."),
-         ("One key to switch", "⌥Z on the Mac, Alt+Z on Windows: Vietnamese ↔ English/German, with a VI/EN label at the cursor."),
+         ("One key to switch", "⌥Z on the Mac: Vietnamese ↔ English/German, with a VI/EN label at the cursor."),
          ("Wrong guess? Backspace", "Right after a correction, Backspace brings back exactly what you typed.")],
   how_h="How MiKey decides",
   how=[("You type a word", "Telex works as usual while you type."),
        ("You finish the word", "On a space, punctuation or Enter, MiKey looks at the word: a Vietnamese syllable, or a real English or German word?"),
        ("MiKey keeps the right one", "For English or German your exact keys come back and MiKey switches to English/German. When a clearly Vietnamese word comes, it switches back by itself.")],
   inst_h="Installed in 3 steps",
-  inst=["Download MiKey for your computer.", "Open the installer. The first time, macOS or Windows asks again because it isn't signed: see the detailed steps.", "Pick MiKey in the input menu (Mac) or find it in the system tray (Windows). Start typing."],
+  inst=["Download MiKey for your Mac.", "Open the installer. The first time, macOS asks again because it isn't signed: see the detailed steps.", "Pick MiKey in the input menu (beside the clock). Start typing."],
   inst_more="Detailed install steps",
   priv_h="What you type stays on your computer",
   priv_p="MiKey sends nothing anywhere: no account, no ads, no analytics. On the Mac it is an input source like ABC, so it needs no Accessibility permission. The code is open for anyone to check.",
@@ -387,20 +354,17 @@ S = {
   faq_h="FAQ",
   faq=[("Is MiKey free?", "Yes. MiKey is free and open source under the GPL-3.0."),
        ("Does it need the Accessibility permission on the Mac?", "No. MiKey is a macOS input source, like \"ABC\" or \"Swiss German\"."),
-       ("Why does macOS/Windows warn me when installing?", "Because the installer isn't (yet) signed with a paid Apple or Microsoft certificate. The source is on GitHub, and the download page lists SHA-256 checksums."),
+       ("Why does macOS warn me when installing?", "Because the installer isn't (yet) signed with a paid Apple certificate. The source is on GitHub, and the download page lists SHA-256 checksums."),
        ("Does it work with a Swiss or German (QWERTZ) keyboard?", "Yes, that's what it's made for. It reads the characters of your layout, so z/y and ä ö ü are right."),
        ("What if a word is guessed wrong?", "Press Backspace right after it to get back what you typed. If a Vietnamese word is often taken for German, turn off \"Nhận biết tiếng Đức\" in the input menu and report it on GitHub."),
        ("Is there a version for Linux, iPhone, Android?", "Not yet. Linux (IBus) is in progress. Vikey, the original, is available for iPhone and Android."),
        ("How is it different from Vikey?", "MiKey is a fork of Vikey (Tony Dinh) with what Vietnamese people in German-speaking countries need: umlaut keys, German words, tech words, and a real Mac input source.")],
   final_h="Try MiKey now", final_p="Free, installed in a minute, removed just as fast.",
-  dl_title="Download MiKey for macOS and Windows", dl_desc=f"Download MiKey {VERSION} for macOS (Apple Silicon and Intel) and Windows (x64, ARM64), with install, update and uninstall steps.",
+  dl_title="Download MiKey for macOS", dl_desc=f"Download MiKey {VERSION} for macOS (Apple Silicon and Intel), with install, update and uninstall steps.",
   dl_h1="Download MiKey", dl_lead=f"Version {VERSION}, released {RELEASE_DATE}. Free, no account.",
   f_head=("File", "For", "Size", "SHA-256"), f_cap="The files of this version",
   f_mac_dmg="macOS 13+, Apple Silicon (M1–M4) and Intel. Recommended.", f_mac_pkg="The installer alone, as in the .dmg.", f_mac_zip="macOS, the .app to copy into Input Methods yourself.",
-  f_win_x64="Windows 10/11, most PCs. Recommended.", f_win_arm="Windows 11 on ARM (Snapdragon, Surface Pro X).",
-  f_win_zip="Windows x64, no install.", f_win_zip_arm="Windows ARM64, no install.",
-  win_soon="The Windows installer is being finished and will be on the releases page in the next few days.",
-  req_h="Requirements", req=["macOS 13 Ventura or later, Apple Silicon or Intel Mac.", "Windows 10 or 11, x64 or ARM64.", "Any keyboard layout: Swiss German · German · ABC/US · Austrian."],
+  req_h="Requirements", req=["macOS 13 Ventura or later, Apple Silicon or Intel Mac.", "Any keyboard layout: Swiss German · German · ABC/US · Austrian."],
   mac_h="Install on macOS",
   mac=["Download <b>" + f"MiKey-{VERSION}-macOS.dmg" + "</b>, open it and double-click <b>Cài đặt MiKey.pkg</b>. The same file for Apple Silicon (M1–M4) and Intel Macs.",
        "macOS says Apple could not check it for malicious software: click <b>Done</b>. This is because the package isn't signed with an Apple certificate.",
@@ -409,13 +373,7 @@ S = {
        "<b>First install: log out and back in once</b> ( › Log Out). macOS only adds a new input method to the input menu after the next log in. Updates don't need this.",
        "Pick <b>MiKey</b> in the input menu in the menu bar. Your layout stays active underneath, for example Swiss German."],
   mac_upd="Update: download the new version and install it over the old one. Remove: take MiKey out of Input Sources, then delete <code>~/Library/Input Methods/MiKey.app</code> (Finder › Go › Go to Folder).",
-  win_h="Install on Windows",
-  win=["Download <b>" + f"MiKey-{VERSION}-x64-Setup.exe" + "</b> (or arm64 for ARM devices).",
-       "Windows SmartScreen says <i>Windows protected your PC</i>: click <b>More info</b> › <b>Run anyway</b>. Same reason as on the Mac: not signed.",
-       "MiKey is installed for your user account only, no administrator rights needed.",
-       "MiKey lives in the system tray (bottom right). <kbd>Alt</kbd>+<kbd>Z</kbd> switches Vietnamese ↔ English/German."],
-  win_upd="Update: MiKey checks for a new version once a day and only installs ones signed by MiKey. Remove: Settings › Apps › MiKey › Uninstall.",
-  verify_h="Verify the file", verify_p="The SHA-256 above must match your download. Mac: <code>shasum -a 256 MiKey-*.pkg</code>. Windows (PowerShell): <code>Get-FileHash MiKey-*.exe</code>.",
+  verify_h="Verify the file", verify_p="The SHA-256 above must match your download. Mac: <code>shasum -a 256 MiKey-*.pkg</code>.",
   older="Older versions and source code: the releases page on GitHub.",
   g_title="MiKey guide", g_desc="Telex table, how MiKey recognises English and German, switching, undo with Backspace, tips and limits.",
   g_h1="Guide", g_lead="Everything you need to type fast with MiKey, and the special cases.",
@@ -423,8 +381,8 @@ S = {
   g_telex_h="Telex table", g_marks="Circumflex, horn, breve and đ", g_tones="Tones", g_ex="Examples",
   g_telex_p="Type the mark after the letter, anywhere in the word: <code>truowfng</code>, <code>truongwf</code> and <code>truwowngf</code> all give <b>trường</b>. Pressing the tone key twice removes the tone and keeps the letter: <code>vaff</code> gives <b>vaf</b>.",
   g_place_h="Tone placement", g_place_p="By default MiKey uses the modern placement: <b>hoà, thuý, khoẻ</b>. For the classic one (<b>hòa, thúy, khỏe</b>) turn off \"Bỏ dấu kiểu mới\" in the input menu on the Mac.",
-  g_switch_h="Switching language", g_switch=["<kbd>⌥</kbd>+<kbd>Z</kbd> on the Mac, <kbd>Alt</kbd>+<kbd>Z</kbd> on Windows: Vietnamese ↔ English/German. On the Mac a small <b>VI</b> or <b>EN</b> shows at the cursor.",
-       "On the Mac also from the input menu: <b>Tiếng Việt (Telex)</b> or <b>English / Deutsch</b>.",
+  g_switch_h="Switching language", g_switch=["<kbd>⌥</kbd>+<kbd>Z</kbd> on the Mac: Vietnamese ↔ English/German. A small <b>VI</b> or <b>EN</b> shows at the cursor.",
+       "Also from the input menu: <b>Tiếng Việt (Telex)</b> or <b>English / Deutsch</b>.",
        "After you switch by hand, MiKey doesn't switch by itself for 5 seconds, so your choice holds."],
   g_auto_h="How MiKey recognises English and German",
   g_auto=["MiKey only decides when a word ends: a space, punctuation (, . ; : ? ! ) \") or Enter.",
@@ -447,9 +405,7 @@ S = {
   c_title="MiKey changelog", c_desc="What is new in each MiKey version.", c_h1="Changelog", c_lead="Newest version first.",
   p_title="Privacy", p_desc="MiKey collects no data. What the input method and the website do, plainly.", p_h1="Privacy", p_lead=f"Updated {RELEASE_DATE}. In short: MiKey collects nothing.",
   p_sections=[("The input method", ["Everything happens on your computer. MiKey does not send what you type anywhere.",
-                                    "On the Mac, the MiKey input method makes no network connections.",
-                                    "On Windows, MiKey checks for updates once a day by downloading <code>mikey.mikephung.com/appcast.xml</code>. This request is like any page visit (IP address, browser type) and contains nothing about you or what you type. It can be turned off in the settings.",
-                                    "On Windows there is a \"typing log\" for debugging. It is off by default, stays on your computer and never records in password fields."]),
+                                    "The MiKey input method makes no network connections."]),
               ("This website", ["The website is static HTML files: no cookies, no analytics, no ads, no external fonts or scripts.",
                                 "It is served through Cloudflare. Like any web server, Cloudflare processes your IP address to deliver the page and block attacks.",
                                 "The download buttons lead to GitHub, which has its own privacy policy."]),
@@ -537,14 +493,12 @@ def asset(name): return f"{REL}/{name}"
 
 def buttons(code, slug, cls=""):
     t = S[code]
-    win = asset(f"MiKey-{VERSION}-x64-Setup.exe") if WIN_READY else rel_link(code, slug, "download/#windows")
     return (f'<div class="cta {cls}"><a class="btn" data-os="mac" href="{asset(f"MiKey-{VERSION}-macOS.dmg")}">{e(t["dl_mac"])}</a>'
-            f'<a class="btn alt" data-os="win" href="{win}">{e(t["dl_win"] if WIN_READY else t["dl_win_soon"])}</a>'
             f'<a class="more" href="{rel_link(code, slug, "download/")}">{e(t["dl_all"])} ›</a></div>')
 
 def software_ld(code):
     return {"@context": "https://schema.org", "@type": "SoftwareApplication", "name": "MiKey", "applicationCategory": "UtilitiesApplication",
-            "operatingSystem": "macOS 13+, Windows 10/11", "softwareVersion": VERSION, "inLanguage": ["vi", "de", "en"],
+            "operatingSystem": "macOS 13+", "softwareVersion": VERSION, "inLanguage": ["vi", "de", "en"],
             "offers": {"@type": "Offer", "price": "0", "priceCurrency": "CHF"}, "license": "https://www.gnu.org/licenses/gpl-3.0.html",
             "downloadUrl": f"{REPO}/releases/latest", "url": url(code), "description": S[code]["home_desc"],
             "author": {"@type": "Person", "name": "Mike Phung", "url": "https://mikephung.com"}}
@@ -589,20 +543,16 @@ def download(code):
     rows = ""
     for key, name, plat, note in FILES:
         info = INFO[key]
-        if plat == "win" and not WIN_READY: continue
         size = mb(info["size"]) if info else "–"
         sha = f'<code class="sha">{info["sha256"]}</code>' if info else "–"
         rows += f'<tr><td><a href="{asset(name)}">{e(name)}</a></td><td>{e(t[note])}</td><td>{size}</td><td>{sha}</td></tr>'
     files = table(t["f_cap"], t["f_head"], rows, "files")
-    soon = "" if WIN_READY else f'<p class="note">{e(t["win_soon"])}</p>'
     req = "".join(f"<li>{e(r)}</li>" for r in t["req"])
     mac = "".join(f"<li>{s}</li>" for s in t["mac"])
-    win = "".join(f"<li>{s}</li>" for s in t["win"])
     body = f"""<div class="page-head"><h1>{e(t['dl_h1'])}</h1><p class="lead">{e(t['dl_lead'])}</p>{buttons(code, slug)}</div>
-<section aria-label="{e(t['f_cap'])}">{files}{soon}<p><a href="{REPO}/releases">{e(t['older'])}</a></p></section>
+<section aria-label="{e(t['f_cap'])}">{files}<p><a href="{REPO}/releases">{e(t['older'])}</a></p></section>
 <section aria-labelledby="req"><h2 id="req">{e(t['req_h'])}</h2><ul>{req}</ul></section>
 <section aria-labelledby="mac" id="macos"><h2 id="mac">{e(t['mac_h'])}</h2><ol class="steps">{mac}</ol><p class="note">{t['mac_upd']}</p></section>
-<section aria-labelledby="win" id="windows"><h2 id="win">{e(t['win_h'])}</h2>{soon}<ol class="steps">{win}</ol><p class="note">{t['win_upd']}</p></section>
 <section aria-labelledby="verify"><h2 id="verify">{e(t['verify_h'])}</h2><p>{t['verify_p']}</p></section>"""
     return layout(code, slug, t["dl_title"], t["dl_desc"], body, software_ld(code))
 
@@ -693,6 +643,5 @@ write("robots.txt", f"User-agent: *\nAllow: /\nSitemap: {SITE}/sitemap.xml\n")
 write("CNAME", "mikey.mikephung.com\n")
 # stable short links for posts: /mac and /windows always point to the current files
 write("_redirects", f"/mac {asset(f'MiKey-{VERSION}-macOS.dmg')} 302\n"
-      + (f"/windows {asset(f'MiKey-{VERSION}-x64-Setup.exe')} 302\n" if WIN_READY else "/windows /download/#windows 302\n")
       + f"/github {REPO} 302\n")
-print("windows files:", "yes" if WIN_READY else "not yet (the page says so)")
+print("Build complete: macOS only")
